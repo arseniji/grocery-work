@@ -5,7 +5,7 @@ services:
   postgres:
     image: postgres:13
     environment:
-      POSTGRES_DB: shop
+      POSTGRES_DB: shop_development
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
     ports:
@@ -30,27 +30,27 @@ services:
       timeout: 5s
       retries: 5
 
-  api:
-    build: .
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails server -p 3000 -b '0.0.0.0'"
-    volumes:
-      - .:/app
-    ports:
-      - "3000:3000"
-    depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-    environment:
-      POSTGRES_HOST: postgres
-      POSTGRES_PORT: 5432
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      REDIS_URL: redis://redis:6379/0
-      RAILS_ENV: development
-    stdin_open: true
-    tty: true
+  # api:
+  #   build: .
+  #   command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails server -p 3000 -b '0.0.0.0'"
+  #   volumes:
+  #     - .:/app
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #     redis:
+  #       condition: service_healthy
+  #   environment:
+  #     POSTGRES_HOST: postgres
+  #     POSTGRES_PORT: 5432
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: password
+  #     REDIS_URL: redis://redis:6379/0
+  #     RAILS_ENV: development
+  #   stdin_open: true
+  #   tty: true
 
 volumes:
   postgres_data:
