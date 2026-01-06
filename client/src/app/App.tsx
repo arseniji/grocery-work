@@ -1,3 +1,4 @@
+import { HomePage } from "@/pages/home-page";
 import { Header } from "@/widgets";
 import { BrowserRouter, Route, Routes } from "react-router";
 import styled from "styled-components";
@@ -8,7 +9,7 @@ function App() {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path="/" element={<></>} />
+          <Route path="/" element={<HomePage />} />
         </Routes>
       </BrowserRouter>
     </Container>
