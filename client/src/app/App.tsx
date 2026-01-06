@@ -5,8 +5,8 @@ import styled from "styled-components";
 function App() {
   return (
     <Container>
-      <Header />
       <BrowserRouter>
+        <Header />
         <Routes>
           <Route path="/" element={<></>} />
         </Routes>
