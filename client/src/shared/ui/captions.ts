@@ -40,6 +40,18 @@ export const BodyL = styled.p`
   ${BaseBodyL}
 `;
 
+export const BaseTextM = css`
+  color: #000;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 26px;
+  font-family: Nunito;
+`;
+
+export const TextM = styled.p`
+  ${BaseTextM}
+`;
+
 export const BaseTextXL = css`
   color: #000;
   font-weight: 500;

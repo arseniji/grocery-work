@@ -2,6 +2,12 @@ import { Container } from "@/shared/ui/container";
 import styled from "styled-components";
 
 export const Main = styled.main`
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+`;
+
+export const Introduce = styled.div`
   padding: 245px 0;
   background: linear-gradient(180deg, #ffffff 0%, #fcfcf7 6%, #f5eead 100%);
 `;
@@ -23,4 +29,23 @@ export const ContentWrapper = styled.div`
 export const Image = styled.img`
   width: 605px;
   height: 500px;
+`;
+
+export const AdjContainer = styled.section`
+  ${Container}
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const Adj = styled.div`
+  display: flex;
+  gap: 15px;
+  align-items: center;
+`;
+
+export const AdjTextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
