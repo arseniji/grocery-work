@@ -73,12 +73,13 @@ export const Button = (props: ButtonProps) => {
   const { onClick } = props as { onClick?: () => void };
 
   const handleClick = () => {
-    if (disabled || !onClick) return;
-    onClick();
+    if (disabled) return;
+    if (onClick) onClick();
   };
 
   return (
     <ButtonNative
+      disabled={disabled}
       variant={variant}
       onClick={handleClick}
       type={props.type || "button"}

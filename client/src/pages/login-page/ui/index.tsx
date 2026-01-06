@@ -9,12 +9,15 @@ import {
 } from "./styled";
 import { Button, Input } from "@/shared/ui";
 import { TitleL } from "@/shared/ui/captions";
+import { authApi } from "@/lib/api/auth";
 
 export const LoginPage = () => {
   const [loading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log(1);
+    authApi.register();
   };
 
   return (
@@ -32,7 +35,7 @@ export const LoginPage = () => {
           <Label htmlFor="password">Пароль</Label>
           <Input id="password" type="password" placeholder="Пароль" />
         </InputGroup>
-        <Button variant="primary" disabled={loading}>
+        <Button variant="primary" disabled={loading} type="submit">
           {loading ? "Вход..." : "Войти"}
         </Button>
       </Form>
