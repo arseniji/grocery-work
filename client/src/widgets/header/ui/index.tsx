@@ -33,7 +33,9 @@ export const Header = () => {
         <CartIcon />
 
         <AuthWrapper>
-          <Button onClick={() => {}}>Войти</Button>
+          <Button as="link" href="/login">
+            Войти
+          </Button>
           <Button onClick={() => {}}>Регистрация</Button>
         </AuthWrapper>
       </HeaderWrapper>

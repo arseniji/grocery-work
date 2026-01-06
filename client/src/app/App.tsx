@@ -1,15 +1,14 @@
 import { HomePage } from "@/pages/home-page";
-import { Header, Footer } from "@/widgets";
+import { LoginPage } from "@/pages/login-page";
 import { BrowserRouter, Route, Routes } from "react-router";
 
 function App() {
   return (
     <BrowserRouter>
-      <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<LoginPage />} />
       </Routes>
-      <Footer />
     </BrowserRouter>
   );
 }
