@@ -25,8 +25,16 @@ export const RegistrationPage = () => {
       </LogoContainer>
       <Form onSubmit={handleSubmit}>
         <InputGroup>
-          <Label htmlFor="email">Почта</Label>
-          <Input id="email" type="email" placeholder="Почта" />
+          <Label htmlFor="fio">ФИО</Label>
+          <Input id="fio" type="text" placeholder="ФИО" />
+        </InputGroup>
+        <InputGroup>
+          <Label htmlFor="login">Логин</Label>
+          <Input id="login" type="text" placeholder="Логин" />
+        </InputGroup>
+        <InputGroup>
+          <Label htmlFor="phone">Телефон</Label>
+          <Input id="phone" type="tel" placeholder="Телефон" />
         </InputGroup>
         <InputGroup>
           <Label htmlFor="password">Пароль</Label>
