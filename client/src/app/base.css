@@ -88,3 +88,11 @@ svg {
 a {
   text-decoration: none;
 }
+
+input {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  outline: none;
+}
