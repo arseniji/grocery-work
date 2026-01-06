@@ -1,6 +1,7 @@
 import { CartIcon, LogoIcon, SearchIcon } from "@/shared/icons";
 import {
   AuthWrapper,
+  HeaderContainer,
   HeaderWrapper,
   LogoWrapper,
   NavContainer,
@@ -12,28 +13,30 @@ import { Button, Input } from "@/shared/ui";
 
 export const Header = () => {
   return (
-    <HeaderWrapper>
-      <NavContainer>
-        <LogoWrapper to={"/"}>
-          <LogoIcon />
-          <TitleXS>Green Grocer</TitleXS>
-        </LogoWrapper>
-        {routes.map((route) => (
-          <NavLink key={route.to} to={route.to}>
-            <BodyM>{route.text}</BodyM>
-          </NavLink>
-        ))}
-      </NavContainer>
+    <HeaderContainer>
+      <HeaderWrapper>
+        <NavContainer>
+          <LogoWrapper to={"/"}>
+            <LogoIcon />
+            <TitleXS>Green Grocer</TitleXS>
+          </LogoWrapper>
+          {routes.map((route) => (
+            <NavLink key={route.to} to={route.to}>
+              <BodyM>{route.text}</BodyM>
+            </NavLink>
+          ))}
+        </NavContainer>
 
-      <Input icon={SearchIcon} />
+        <Input icon={SearchIcon} />
 
-      {/* TODO: Сделать либо переход на новую страницу либо модалку */}
-      <CartIcon />
+        {/* TODO: Сделать либо переход на новую страницу либо модалку */}
+        <CartIcon />
 
-      <AuthWrapper>
-        <Button onClick={() => {}}>Войти</Button>
-        <Button onClick={() => {}}>Регистрация</Button>
-      </AuthWrapper>
-    </HeaderWrapper>
+        <AuthWrapper>
+          <Button onClick={() => {}}>Войти</Button>
+          <Button onClick={() => {}}>Регистрация</Button>
+        </AuthWrapper>
+      </HeaderWrapper>
+    </HeaderContainer>
   );
 };
