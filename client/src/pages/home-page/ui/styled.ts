@@ -49,3 +49,20 @@ export const AdjTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
+export const EcoContainer = styled.div`
+  ${Container}
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 70px 120px;
+  background: linear-gradient(45deg, #def1bd 0%, #f5eead 100%);
+  border-radius: 10px;
+  transform: rotate(-1deg);
+  gap: 100px;
+`;
+
+export const EcoImage = styled.img`
+  width: 420px;
+  height: 400px;
+`;

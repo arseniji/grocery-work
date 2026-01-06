@@ -4,12 +4,15 @@ import {
   TitleXL,
   TitleXS,
   TextM,
+  TitleL,
 } from "@/shared/ui/captions";
 import {
   Adj,
   AdjContainer,
   AdjTextWrapper,
   ContentWrapper,
+  EcoContainer,
+  EcoImage,
   Image,
   Introduce,
   Main,
@@ -38,6 +41,21 @@ export const HomePage = () => {
           <Image src="\static\groceries.png" />
         </MainContainer>
       </Introduce>
+
+      <EcoContainer>
+        <EcoImage src="\static\eco.png" />
+        <ContentWrapper>
+          <TitleL>
+            <PrimarySpan>ECO</PrimarySpan>-Friendly
+            <TextXL>
+              Откройте для себя широкий ассортимент экологически чистых
+              продуктов местного производства в нашем интернет-магазине, где вы
+              найдете экологичные варианты, поддерживающие как местное
+              сообщество, так и планету.
+            </TextXL>
+          </TitleL>
+        </ContentWrapper>
+      </EcoContainer>
 
       <AdjContainer>
         {adjList.map((adj) => (
