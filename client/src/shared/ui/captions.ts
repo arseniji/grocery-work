@@ -11,9 +11,9 @@ export const TitleXS = styled.h6`
 export const TitleXL = styled.h1`
   color: #000;
   font-weight: 700;
-  font-size: 96px;
+  font-size: 88px;
   font-family: Nunito;
-  line-height: 100px;
+  line-height: 90px;
 `;
 
 export const BaseBodyM = css`

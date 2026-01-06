@@ -25,14 +25,14 @@ export const HomePage = () => {
         <MainContainer>
           <ContentWrapper>
             <TitleXL>
-              Your Ultimate Online <PrimarySpan>Grocery</PrimarySpan>
+              Ваш идеальный -<PrimarySpan>магазин продуктов</PrimarySpan>
             </TitleXL>
             <TextXL>
-              Experience grocery shopping and swift home delivery with our wide
-              range of fresh produce and essentials
+              Ощутите удобство покупок продуктов и быструю доставку на дом с
+              нашим широким ассортиментом свежих продуктов и необходимых товаров
             </TextXL>
             <Button as="link" href="/about" type="primary">
-              Learn More
+              Узнать больше
             </Button>
           </ContentWrapper>
           <Image src="\static\groceries.png" />
@@ -44,7 +44,7 @@ export const HomePage = () => {
           <Adj key={adj.title}>
             {adj.icon()}
             <AdjTextWrapper>
-              <TitleXS>{adj.title}</TitleXS>
+              <TitleXS style={{ textWrap: "nowrap" }}>{adj.title}</TitleXS>
               <TextM>{adj.text}</TextM>
             </AdjTextWrapper>
           </Adj>

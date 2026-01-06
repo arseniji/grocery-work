@@ -9,23 +9,23 @@ interface IAdj {
 
 export const adjList: IAdj[] = [
   {
-    title: "Support 24h",
-    text: "Dedicated support",
+    title: "Поддержка 24ч",
+    text: "Круглосуточная поддержка",
     icon: EarpodsIcon,
   },
   {
-    title: "Secure Payment",
-    text: "Ensure your money is safe",
+    title: "Безопасная оплата",
+    text: "Гарантируем безопасность ваших средств",
     icon: ShieldIcon,
   },
   {
-    title: "Refundable",
-    text: "Damage items can refund it",
+    title: "Возврат средств",
+    text: "Поврежденные товары можно вернуть",
     icon: RefreshIcon,
   },
   {
-    title: "Free Shipping",
-    text: "Order over 40$",
+    title: "Бесплатная доставка",
+    text: "Заказ от 40$",
     icon: BoxIcon,
   },
 ];

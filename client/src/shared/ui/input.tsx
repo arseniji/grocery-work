@@ -10,7 +10,7 @@ export const Input = ({ icon }: InputProps) => {
   return (
     <Container>
       {icon && icon()}
-      <NativeInput placeholder="search" />
+      <NativeInput placeholder="поиск" />
     </Container>
   );
 };

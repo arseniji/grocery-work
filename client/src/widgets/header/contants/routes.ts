@@ -5,15 +5,15 @@ interface Route {
 
 export const routes: Route[] = [
   {
-    text: "Home",
+    text: "Главная",
     to: "/",
   },
   {
-    text: "Shop",
+    text: "Магазин",
     to: "/shop",
   },
   {
-    text: "About",
+    text: "О нас",
     to: "/about",
   },
 ];
