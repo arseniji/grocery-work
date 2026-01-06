@@ -10,7 +10,7 @@ export const TitleXS = styled.p`
 
 export const BodyM = styled.p`
   color: #000;
-  font-weight: 500;
+  font-weight: 700;
   font-size: 20px;
   line-height: 28px;
   font-family: Nunito;
