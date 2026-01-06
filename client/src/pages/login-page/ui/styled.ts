@@ -1,3 +1,4 @@
+import { BaseBodyM } from "@/shared/ui/captions";
 import styled from "styled-components";
 
 export const LoginContainer = styled.div`
@@ -5,37 +6,35 @@ export const LoginContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  background: #f5f5f5;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #ffffff 0%, #fcfcf7 6%, #f5eead 100%);
+  padding: 20px;
 `;
 
 export const LogoContainer = styled.div`
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 `;
 
 export const Form = styled.form`
+  position: relative;
   display: flex;
   flex-direction: column;
-  width: 300px;
+  background: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 `;
 
-export const Input = styled.input`
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
+export const InputGroup = styled.div`
+  margin-bottom: 20px;
+  width: 100%;
 `;
 
-export const SubmitButton = styled.button`
-  padding: 10px;
-  background: #000;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  &:hover {
-    background: #333;
-  }
+export const Label = styled.label`
+  ${BaseBodyM}
+  display: block;
+  margin-bottom: 5px;
 `;
