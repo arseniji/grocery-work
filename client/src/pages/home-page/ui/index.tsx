@@ -42,6 +42,18 @@ export const HomePage = () => {
         </MainContainer>
       </Introduce>
 
+      <AdjContainer>
+        {adjList.map((adj) => (
+          <Adj key={adj.title}>
+            {adj.icon()}
+            <AdjTextWrapper>
+              <TitleXS style={{ textWrap: "nowrap" }}>{adj.title}</TitleXS>
+              <TextM>{adj.text}</TextM>
+            </AdjTextWrapper>
+          </Adj>
+        ))}
+      </AdjContainer>
+
       <EcoContainer>
         <EcoImage src="\static\eco.png" />
         <ContentWrapper>
@@ -56,18 +68,6 @@ export const HomePage = () => {
           </TitleL>
         </ContentWrapper>
       </EcoContainer>
-
-      <AdjContainer>
-        {adjList.map((adj) => (
-          <Adj key={adj.title}>
-            {adj.icon()}
-            <AdjTextWrapper>
-              <TitleXS style={{ textWrap: "nowrap" }}>{adj.title}</TitleXS>
-              <TextM>{adj.text}</TextM>
-            </AdjTextWrapper>
-          </Adj>
-        ))}
-      </AdjContainer>
     </Main>
   );
 };
