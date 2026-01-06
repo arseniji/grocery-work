@@ -1,7 +1,11 @@
+import { Container } from "@/shared/ui/container";
 import { NavLink } from "react-router";
 import styled from "styled-components";
 
 export const HeaderWrapper = styled.header`
+  ${Container}
+  position: "sticky";
+  top: 0;
   display: flex;
   gap: 10px;
   justify-content: space-between;
