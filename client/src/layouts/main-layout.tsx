@@ -1,15 +1,11 @@
 import { Footer, Header } from "@/widgets";
-import type { ReactNode } from "react";
+import { Outlet } from "react-router";
 
-interface LayoutProps {
-  children: ReactNode;
-}
-
-export const MainLayout = ({ children }: LayoutProps) => {
+export const MainLayout = () => {
   return (
     <>
       <Header />
-      {children}
+      <Outlet />
       <Footer />
     </>
   );
