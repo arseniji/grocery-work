@@ -8,6 +8,14 @@ export const TitleXS = styled.h6`
   font-family: Nunito;
 `;
 
+export const TitleXL = styled.h1`
+  color: #000;
+  font-weight: 700;
+  font-size: 96px;
+  font-family: Nunito;
+  line-height: 100px;
+`;
+
 export const BaseBodyM = css`
   color: #000;
   font-weight: 700;
@@ -30,4 +38,20 @@ export const BaseBodyL = css`
 
 export const BodyL = styled.p`
   ${BaseBodyL}
+`;
+
+export const BaseTextXL = css`
+  color: #000;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 34px;
+  font-family: Nunito;
+`;
+
+export const TextXL = styled.p`
+  ${BaseTextXL}
+`;
+
+export const PrimarySpan = styled.span`
+  color: #517907;
 `;
