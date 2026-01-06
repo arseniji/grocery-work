@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { LogoIcon } from "@/shared/icons";
 import {
-  LoginContainer,
+  RegistrationContainer,
   LogoContainer,
   Form,
   InputGroup,
@@ -10,7 +10,7 @@ import {
 import { Button, Input } from "@/shared/ui";
 import { TitleL } from "@/shared/ui/captions";
 
-export const LoginPage = () => {
+export const RegistrationPage = () => {
   const [loading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -18,10 +18,10 @@ export const LoginPage = () => {
   };
 
   return (
-    <LoginContainer>
+    <RegistrationContainer>
       <LogoContainer>
         <LogoIcon />
-        <TitleL>Вход</TitleL>
+        <TitleL>Регистрация</TitleL>
       </LogoContainer>
       <Form onSubmit={handleSubmit}>
         <InputGroup>
@@ -32,10 +32,18 @@ export const LoginPage = () => {
           <Label htmlFor="password">Пароль</Label>
           <Input id="password" type="password" placeholder="Пароль" />
         </InputGroup>
+        <InputGroup>
+          <Label htmlFor="confirmPassword">Подтверждение пароля</Label>
+          <Input
+            id="confirmPassword"
+            type="password"
+            placeholder="Подтверждение пароля"
+          />
+        </InputGroup>
         <Button variant="primary" disabled={loading}>
-          {loading ? "Вход..." : "Войти"}
+          {loading ? "Регистрация..." : "Зарегистрироваться"}
         </Button>
       </Form>
-    </LoginContainer>
+    </RegistrationContainer>
   );
 };

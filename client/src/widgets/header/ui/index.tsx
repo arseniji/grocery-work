@@ -36,7 +36,9 @@ export const Header = () => {
           <Button as="link" href="/login">
             Войти
           </Button>
-          <Button onClick={() => {}}>Регистрация</Button>
+          <Button as="link" href="/registration">
+            Регистрация
+          </Button>
         </AuthWrapper>
       </HeaderWrapper>
     </HeaderContainer>
