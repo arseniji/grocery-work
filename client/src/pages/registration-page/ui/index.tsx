@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import { LogoIcon } from "@/shared/icons";
 import {
   RegistrationContainer,
@@ -19,6 +20,7 @@ import { authApi } from "@/lib/api/auth";
 
 export const RegistrationPage = () => {
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const { register, data, isValid, errors, touched } =
     useForm(UserRegisterSchema);
 
@@ -29,6 +31,7 @@ export const RegistrationPage = () => {
     try {
       const response = await authApi.register(data as UserRegisterType);
       console.log(response);
+      navigate("/");
     } catch (err) {
       const error = err as AxiosError;
       console.log(error);

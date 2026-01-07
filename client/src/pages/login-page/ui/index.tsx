@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import { LogoIcon } from "@/shared/icons";
 import {
   LoginContainer,
@@ -19,6 +20,7 @@ import type { AxiosError } from "axios";
 
 export const LoginPage = () => {
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const { register, data, isValid, errors, touched } = useForm(UserLoginSchema);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -28,6 +30,7 @@ export const LoginPage = () => {
     try {
       const response = await authApi.login(data as UserLoginType);
       console.log(response);
+      navigate("/");
     } catch (err) {
       const error = err as AxiosError;
       console.log(error);
