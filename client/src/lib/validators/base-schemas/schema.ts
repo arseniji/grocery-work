@@ -1,7 +1,22 @@
-import type { ValidatorError } from "../types";
+import type { Rule, ValidatorError } from "../types";
 
 export abstract class Schema<T> {
-  abstract validate(value: unknown): T | ValidatorError;
+  protected rules: Rule[] = [];
+  protected schemaValue: unknown;
+
+  constructor() {
+    this.schemaValue = undefined;
+  }
+
+  validate(value: unknown): T | ValidatorError {
+    this.schemaValue = value;
+    for (const rule of this.rules) {
+      if (!rule.ruleFunction(this.schemaValue)) {
+        return { message: rule.message };
+      }
+    }
+    return value as T;
+  }
 
   parse(value: unknown): T {
     const valid = this.validate(value);

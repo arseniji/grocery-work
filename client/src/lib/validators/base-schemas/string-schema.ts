@@ -1,30 +1,16 @@
-import type { BaseValidatorOptions, Rule, ValidatorError } from "../types";
+import type { BaseValidatorOptions } from "../types";
 import { Schema } from "./schema";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface StringValidatorOptions extends BaseValidatorOptions {}
 
 export class StringSchema extends Schema<string> {
-  private rules: Rule[] = [];
-  private schemaValue: unknown;
-
   constructor(options?: StringValidatorOptions) {
     super();
-    this.schemaValue = undefined;
     this.rules.push({
       message: options?.message || "Поле должно быть строкой",
       ruleFunction: (value: unknown) => typeof value === "string",
     });
-  }
-
-  validate(value: unknown): string | ValidatorError {
-    this.schemaValue = value;
-    for (const rule of this.rules) {
-      if (!rule.ruleFunction(this.schemaValue)) {
-        return { message: rule.message };
-      }
-    }
-    return value as string;
   }
 
   min(length: number, options?: StringValidatorOptions): StringSchema {
