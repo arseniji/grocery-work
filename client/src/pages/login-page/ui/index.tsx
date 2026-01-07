@@ -29,6 +29,8 @@ export const LoginPage = () => {
 
     try {
       const response = await authApi.login(data as UserLoginType);
+
+      localStorage.setItem("token", response.session.sessionId);
       console.log(response);
       navigate("/");
     } catch (err) {

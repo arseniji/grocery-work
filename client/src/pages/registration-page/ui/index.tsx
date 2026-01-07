@@ -30,6 +30,8 @@ export const RegistrationPage = () => {
     setLoading(true);
     try {
       const response = await authApi.register(data as UserRegisterType);
+
+      localStorage.setItem("token", response.session.sessionId);
       console.log(response);
       navigate("/");
     } catch (err) {
