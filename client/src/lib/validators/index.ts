@@ -1,9 +1,17 @@
-import { StringSchema } from "./base-schemas";
-import type { BaseValidatorOptions } from "./types";
+import {
+  NumberSchema,
+  StringSchema,
+  type NumberValidatorOptions,
+  type StringValidatorOptions,
+} from "./base-schemas";
 
 class Validator {
-  string(options?: BaseValidatorOptions): StringSchema {
+  string(options?: StringValidatorOptions): StringSchema {
     return new StringSchema(options);
+  }
+
+  number(options?: NumberValidatorOptions): NumberSchema {
+    return new NumberSchema(options);
   }
 }
 

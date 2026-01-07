@@ -2,7 +2,7 @@ import type { BaseValidatorOptions } from "../types";
 import { Schema } from "./schema";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface StringValidatorOptions extends BaseValidatorOptions {}
+export interface StringValidatorOptions extends BaseValidatorOptions {}
 
 export class StringSchema extends Schema<string> {
   constructor(options?: StringValidatorOptions) {
