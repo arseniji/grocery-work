@@ -11,7 +11,9 @@ import {
 import { Button, Input } from "@/shared/ui";
 import { TitleL } from "@/shared/ui/captions";
 import { useForm } from "@/lib/hooks";
-import { UserSchema } from "@/entities/user/user.schema";
+import { UserSchema, type UserType } from "@/entities/user/user.schema";
+import type { AxiosError } from "axios";
+import { authApi } from "@/lib/api/auth";
 
 export const RegistrationPage = () => {
   const [loading] = useState(false);
@@ -19,7 +21,14 @@ export const RegistrationPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(data);
+
+    try {
+      const response = await authApi.register(data as UserType);
+      console.log(response);
+    } catch (err) {
+      const error = err as AxiosError;
+      console.log(error);
+    }
   };
 
   return (
@@ -66,7 +75,7 @@ export const RegistrationPage = () => {
         </InputGroup>
         <InputGroup>
           <Label htmlFor="password">Пароль</Label>
-          <Input {...register("password")} />
+          <Input {...register("password")} type="password" />
           {touched.has("password") && errors.password && (
             <ErrorMsg>{errors.password.message}</ErrorMsg>
           )}

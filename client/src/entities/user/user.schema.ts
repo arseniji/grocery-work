@@ -46,3 +46,4 @@ export const UserSchema = validator.object({
 });
 
 export type UserType = Infer<typeof UserSchema>;
+export type UserClient = Omit<UserType, "password"> & { id: string };

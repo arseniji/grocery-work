@@ -1,8 +1,11 @@
 import { useState, useCallback, useMemo } from "react";
 import type { ObjectSchema } from "../validators/base-schemas/object-schema";
+import type { Schema } from "../validators/base-schemas/schema";
 
-export interface UseFormOptions<Shape extends Record<string, any>> {
-  defaultValues?: Partial<Record<keyof Shape, any>>;
+export interface UseFormOptions<
+  SchemaShape extends Record<string, Schema<any>>
+> {
+  defaultValues?: Partial<Record<keyof SchemaShape, any>>;
 }
 
 export interface RegisterReturn {
@@ -13,15 +16,15 @@ export interface RegisterReturn {
   error?: string;
 }
 
-export function useForm<Shape extends Record<string, any>>(
-  schema: ObjectSchema<Shape>,
-  options?: UseFormOptions<Shape>
+export function useForm<SchemaShape extends Record<string, Schema<any>>>(
+  schema: ObjectSchema<SchemaShape>,
+  options?: UseFormOptions<SchemaShape>
 ) {
-  const [data, setData] = useState<Partial<Record<keyof Shape, any>>>(
+  const [data, setData] = useState<Partial<Record<keyof SchemaShape, any>>>(
     options?.defaultValues || {}
   );
 
-  const [touched, setTouched] = useState<Set<keyof Shape>>(new Set());
+  const [touched, setTouched] = useState<Set<keyof SchemaShape>>(new Set());
 
   const validation = useMemo(() => schema.safeParse(data), [schema, data]);
 
@@ -30,7 +33,7 @@ export function useForm<Shape extends Record<string, any>>(
   const isValid = validation.success;
 
   const register = useCallback(
-    (name: keyof Shape): RegisterReturn => {
+    (name: keyof SchemaShape): RegisterReturn => {
       return {
         name: name as string,
         value: data[name] || "",
