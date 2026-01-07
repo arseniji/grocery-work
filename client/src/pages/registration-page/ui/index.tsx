@@ -17,6 +17,7 @@ export const RegistrationPage = () => {
   useEffect(() => {
     const result = UserSchema.safeParse({
       login: 11,
+      password: 11,
     });
 
     console.log(result);

@@ -39,4 +39,48 @@ export class ObjectSchema extends Schema<Record<any, any>> {
 
     return resultObj;
   }
+
+  strict(options?: ObjectValidatorOptions): ObjectSchema {
+    const msg = options?.message || "Объект содержит лишние поля";
+    this.rules.push({
+      message: msg,
+      ruleFunction: (value) =>
+        Object.keys(value as Record<string, any>).every(
+          (key) => key in this.shape
+        ),
+    });
+    return this;
+  }
+
+  override safeParse(value: unknown): {
+    success: boolean;
+    errors: Record<string, ValidatorError>;
+    data: Record<string, any>;
+  } {
+    const result = this.validate(value);
+    if (typeof result === "object" && result !== null && "message" in result) {
+      return {
+        success: false,
+        errors: { base: result as ValidatorError },
+        data: (value as Record<string, any>) || {},
+      };
+    }
+
+    const resultObj = result as Record<string, any>;
+    const errors: Record<string, ValidatorError> = {};
+    const data = (value as Record<string, any>) || {};
+
+    for (const key in this.shape) {
+      const val = resultObj[key];
+      if (typeof val === "object" && val !== null && "message" in val) {
+        errors[key] = val as ValidatorError;
+      }
+    }
+
+    return {
+      success: Object.keys(errors).length === 0,
+      errors,
+      data,
+    };
+  }
 }
