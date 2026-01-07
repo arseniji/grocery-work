@@ -6,29 +6,35 @@ import {
   Form,
   InputGroup,
   Label,
-  ErrorMsg,
 } from "./styled";
 import { Button, Input } from "@/shared/ui";
-import { TitleL } from "@/shared/ui/captions";
+import { ErrorMsg, TitleL } from "@/shared/ui/captions";
 import { useForm } from "@/lib/hooks";
-import { UserSchema, type UserType } from "@/entities/user/user.schema";
+import {
+  UserRegisterSchema,
+  type UserRegisterType,
+} from "@/entities/user/schemas/user-register.schema";
 import type { AxiosError } from "axios";
 import { authApi } from "@/lib/api/auth";
 
 export const RegistrationPage = () => {
-  const [loading] = useState(false);
-  const { register, data, isValid, errors, touched } = useForm(UserSchema);
+  const [loading, setLoading] = useState(false);
+  const { register, data, isValid, errors, touched } =
+    useForm(UserRegisterSchema);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    setLoading(true);
     try {
-      const response = await authApi.register(data as UserType);
+      const response = await authApi.register(data as UserRegisterType);
       console.log(response);
     } catch (err) {
       const error = err as AxiosError;
       console.log(error);
     }
+
+    setLoading(false);
   };
 
   return (

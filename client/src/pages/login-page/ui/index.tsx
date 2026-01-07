@@ -8,16 +8,32 @@ import {
   Label,
 } from "./styled";
 import { Button, Input } from "@/shared/ui";
-import { TitleL } from "@/shared/ui/captions";
+import { ErrorMsg, TitleL } from "@/shared/ui/captions";
 import { authApi } from "@/lib/api/auth";
+import { useForm } from "@/lib/hooks";
+import {
+  UserLoginSchema,
+  type UserLoginType,
+} from "@/entities/user/schemas/user-login.schema";
+import type { AxiosError } from "axios";
 
 export const LoginPage = () => {
-  const [loading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { register, data, isValid, errors, touched } = useForm(UserLoginSchema);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(1);
-    authApi.register();
+    setLoading(true);
+
+    try {
+      const response = await authApi.login(data as UserLoginType);
+      console.log(response);
+    } catch (err) {
+      const error = err as AxiosError;
+      console.log(error);
+    }
+
+    setLoading(false);
   };
 
   return (
@@ -28,14 +44,30 @@ export const LoginPage = () => {
       </LogoContainer>
       <Form onSubmit={handleSubmit}>
         <InputGroup>
-          <Label htmlFor="email">Почта</Label>
-          <Input id="email" type="email" placeholder="Почта" />
+          <Label htmlFor="login">Логин</Label>
+          <Input
+            id="login"
+            type="text"
+            placeholder="Логин"
+            {...register("login")}
+          />
+          {touched.has("login") && errors.login && (
+            <ErrorMsg>{errors.login.message}</ErrorMsg>
+          )}
         </InputGroup>
         <InputGroup>
           <Label htmlFor="password">Пароль</Label>
-          <Input id="password" type="password" placeholder="Пароль" />
+          <Input
+            id="password"
+            type="password"
+            placeholder="Пароль"
+            {...register("password")}
+          />
+          {touched.has("password") && errors.password && (
+            <ErrorMsg>{errors.password.message}</ErrorMsg>
+          )}
         </InputGroup>
-        <Button variant="primary" disabled={loading} type="submit">
+        <Button variant="primary" disabled={loading || !isValid} type="submit">
           {loading ? "Вход..." : "Войти"}
         </Button>
       </Form>

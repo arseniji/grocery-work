@@ -87,3 +87,7 @@ export const TextXL = styled.p`
 export const PrimarySpan = styled.span`
   color: #517907;
 `;
+
+export const ErrorMsg = styled(BodyXS)`
+  color: red;
+`;

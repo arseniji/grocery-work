@@ -1,11 +1,7 @@
 import { validator, type Infer } from "@/lib/validators";
+import { loginReg, nameReg, passwordReg, phoneReg } from "../constants/regexp";
 
-const passwordReg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/;
-const loginReg = /^[a-zA-Z0-9_]+$/;
-const phoneReg = /^\+?[\d\s\-()]{10,}$/;
-const nameReg = /^[а-яА-ЯёЁa-zA-Z\s-]+$/;
-
-export const UserSchema = validator.object({
+export const UserRegisterSchema = validator.object({
   login: validator
     .string()
     .min(3, { message: "Минимальная длинна 3" })
@@ -45,5 +41,4 @@ export const UserSchema = validator.object({
     }),
 });
 
-export type UserType = Infer<typeof UserSchema>;
-export type UserClient = Omit<UserType, "password"> & { id: string };
+export type UserRegisterType = Infer<typeof UserRegisterSchema>;
