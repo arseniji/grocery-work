@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { LogoIcon } from "@/shared/icons";
 import {
   LoginContainer,
@@ -9,7 +9,7 @@ import {
   Label,
 } from "./styled";
 import { Button, Input } from "@/shared/ui";
-import { ErrorMsg, TitleL } from "@/shared/ui/captions";
+import { BodyM, ErrorMsg, TitleL } from "@/shared/ui/captions";
 import { authApi } from "@/lib/api/auth";
 import { useForm } from "@/lib/hooks";
 import {
@@ -73,6 +73,9 @@ export const LoginPage = () => {
         <Button variant="primary" disabled={loading || !isValid} type="submit">
           {loading ? "Вход..." : "Войти"}
         </Button>
+        <Link to={"/register"} style={{ textAlign: "center" }}>
+          <BodyM>Нет аккаунта?</BodyM>
+        </Link>
       </Form>
     </LoginContainer>
   );

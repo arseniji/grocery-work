@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { LogoIcon } from "@/shared/icons";
 import {
   RegistrationContainer,
@@ -9,7 +9,7 @@ import {
   Label,
 } from "./styled";
 import { Button, Input } from "@/shared/ui";
-import { ErrorMsg, TitleL } from "@/shared/ui/captions";
+import { BodyM, ErrorMsg, TitleL } from "@/shared/ui/captions";
 import { useForm } from "@/lib/hooks";
 import {
   UserRegisterSchema,
@@ -92,6 +92,9 @@ export const RegistrationPage = () => {
         <Button variant="primary" disabled={loading || !isValid} type="submit">
           {loading ? "Регистрация..." : "Зарегистрироваться"}
         </Button>
+        <Link to={"/login"} style={{ textAlign: "center" }}>
+          <BodyM>Уже есть аккаунт?</BodyM>
+        </Link>
       </Form>
     </RegistrationContainer>
   );
