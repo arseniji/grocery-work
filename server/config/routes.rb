@@ -15,8 +15,13 @@ Rails.application.routes.draw do
   # root "posts#index"
   
       post 'register', to: 'registration#registration'
-      post 'login', to: 'authorize#authorizate' # контроллер называется правильно
+      post 'login', to: 'authorize#authorizate'
       delete 'logout', to: 'base#logout'
+      scope :products do
+        get 'top', to: 'get_product#get_top_products'
+        get ':id', to: 'get_product#get_product_details'
+        get '/', to: 'get_product#get_product_page'
+      end
     end
   end
 end
