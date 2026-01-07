@@ -4,13 +4,16 @@ import { Schema } from "./schema";
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ObjectValidatorOptions extends BaseValidatorOptions {}
 
-export class ObjectSchema extends Schema<Record<any, any>> {
-  private shape: Record<string, Schema<any>>;
+export class ObjectSchema<
+  Shape extends Record<string, Schema<any>>
+> extends Schema<Record<string, any>> {
+  public shape: Shape;
 
-  constructor(
-    shape: Record<string, Schema<any>>,
-    options?: ObjectValidatorOptions
-  ) {
+  infer(): string {
+    return "object";
+  }
+
+  constructor(shape: Shape, options?: ObjectValidatorOptions) {
     super();
     this.rules.push({
       message: options?.message || "Значение должно быть объектом",
@@ -40,7 +43,7 @@ export class ObjectSchema extends Schema<Record<any, any>> {
     return resultObj;
   }
 
-  strict(options?: ObjectValidatorOptions): ObjectSchema {
+  strict(options?: ObjectValidatorOptions): ObjectSchema<Shape> {
     const msg = options?.message || "Объект содержит лишние поля";
     this.rules.push({
       message: msg,
@@ -54,20 +57,22 @@ export class ObjectSchema extends Schema<Record<any, any>> {
 
   override safeParse(value: unknown): {
     success: boolean;
-    errors: Record<string, ValidatorError>;
+    errors: Partial<Record<keyof Shape | "base", ValidatorError>>;
     data: Record<string, any>;
   } {
     const result = this.validate(value);
     if (typeof result === "object" && result !== null && "message" in result) {
       return {
         success: false,
-        errors: { base: result as ValidatorError },
+        errors: { base: result as ValidatorError } as Partial<
+          Record<keyof Shape | "base", ValidatorError>
+        >,
         data: (value as Record<string, any>) || {},
       };
     }
 
     const resultObj = result as Record<string, any>;
-    const errors: Record<string, ValidatorError> = {};
+    const errors: Partial<Record<keyof Shape, ValidatorError>> = {};
     const data = (value as Record<string, any>) || {};
 
     for (const key in this.shape) {
@@ -79,7 +84,7 @@ export class ObjectSchema extends Schema<Record<any, any>> {
 
     return {
       success: Object.keys(errors).length === 0,
-      errors,
+      errors: errors as Partial<Record<keyof Shape | "base", ValidatorError>>,
       data,
     };
   }

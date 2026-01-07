@@ -16,12 +16,22 @@ class Validator {
     return new NumberSchema(options);
   }
 
-  object(
-    shape: Record<any, any>,
+  object<Shape extends Record<string, any>>(
+    shape: Shape,
     options?: ObjectValidatorOptions
-  ): ObjectSchema {
+  ): ObjectSchema<Shape> {
     return new ObjectSchema(shape, options);
   }
 }
 
 export const validator = new Validator();
+
+export type Infer<T> = T extends ObjectSchema<infer Shape>
+  ? {
+      [K in keyof Shape]: Infer<Shape[K]>;
+    }
+  : T extends StringSchema
+  ? string
+  : T extends NumberSchema
+  ? number
+  : any;

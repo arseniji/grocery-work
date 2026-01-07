@@ -13,6 +13,10 @@ export class NumberSchema extends Schema<number> {
     });
   }
 
+  infer(): string {
+    return "number";
+  }
+
   min(min: number, options?: NumberValidatorOptions): NumberSchema {
     const msg = options?.message || `Минимальное значение ${min}`;
     this.rules.push({

@@ -8,6 +8,8 @@ export abstract class Schema<T> {
     this.schemaValue = undefined;
   }
 
+  abstract infer(): any;
+
   validate(value: unknown): T | ValidatorError {
     this.schemaValue = value;
     for (const rule of this.rules) {

@@ -13,6 +13,10 @@ export class StringSchema extends Schema<string> {
     });
   }
 
+  infer(): string {
+    return "string";
+  }
+
   min(length: number, options?: StringValidatorOptions): StringSchema {
     const msg = options?.message || `Минимальная длина поля ${length}`;
     this.rules.push({
