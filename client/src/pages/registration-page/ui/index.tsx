@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LogoIcon } from "@/shared/icons";
 import {
   RegistrationContainer,
@@ -9,9 +9,18 @@ import {
 } from "./styled";
 import { Button, Input } from "@/shared/ui";
 import { TitleL } from "@/shared/ui/captions";
+import { UserSchema } from "@/entities/user/user.schema";
 
 export const RegistrationPage = () => {
   const [loading] = useState(false);
+
+  useEffect(() => {
+    const result = UserSchema.safeParse({
+      login: 11,
+    });
+
+    console.log(result);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
