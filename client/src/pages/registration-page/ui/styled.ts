@@ -1,4 +1,4 @@
-import { BaseBodyM } from "@/shared/ui/captions";
+import { BaseBodyM, BodyXS } from "@/shared/ui/captions";
 import styled from "styled-components";
 
 export const RegistrationContainer = styled.div`
@@ -37,4 +37,8 @@ export const Label = styled.label`
   ${BaseBodyM}
   display: block;
   margin-bottom: 5px;
+`;
+
+export const ErrorMsg = styled(BodyXS)`
+  color: red;
 `;

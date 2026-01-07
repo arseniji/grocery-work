@@ -24,6 +24,18 @@ export const TitleXL = styled.h1`
   line-height: 90px;
 `;
 
+export const BaseBodyXS = css`
+  color: #000;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 14px;
+  font-family: Nunito;
+`;
+
+export const BodyXS = styled.p`
+  ${BaseBodyXS}
+`;
+
 export const BaseBodyM = css`
   color: #000;
   font-weight: 700;
