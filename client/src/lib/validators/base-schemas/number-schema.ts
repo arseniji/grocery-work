@@ -27,7 +27,7 @@ export class NumberSchema extends Schema<number> {
     const msg = options?.message || `Максимальное значение ${max}`;
     this.rules.push({
       message: msg,
-      ruleFunction: (value: number) => value >= max,
+      ruleFunction: (value: number) => value <= max,
     });
 
     return this;
