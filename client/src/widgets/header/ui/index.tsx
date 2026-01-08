@@ -8,7 +8,7 @@ import {
 } from "./styled";
 import { BodyM, TitleXS } from "@/shared/ui/captions";
 import { routes } from "../contants/routes";
-import { NavLink, useNavigate } from "react-router";
+import { NavLink, useNavigate, useSearchParams } from "react-router";
 import { Button, Input } from "@/shared/ui";
 import type { AxiosError } from "axios";
 import { authApi } from "@/lib/api/auth";
@@ -21,8 +21,9 @@ interface HeaderProps {
 
 export const Header = ({ isLogined }: HeaderProps) => {
   const navigate = useNavigate();
+  const [params] = useSearchParams();
 
-  const [search, setSearch] = useState<string>("");
+  const [search, setSearch] = useState<string>(params.get("search") || "");
 
   const handleLogout = async () => {
     try {

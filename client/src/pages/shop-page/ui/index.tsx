@@ -56,11 +56,19 @@ export const ShopPage = () => {
   }, [loadProducts]);
 
   const handlePrevPage = () => {
-    if (page > 1) navigate(`/shop?page=${page - 1}`);
+    if (page > 1) {
+      const newParams = new URLSearchParams(params);
+      newParams.set("page", (page - 1).toString());
+      navigate(`/shop?${newParams.toString()}`);
+    }
   };
 
   const handleNextPage = () => {
-    if (products.length === itemsPerPage) navigate(`/shop?page=${page + 1}`);
+    if (products.length === itemsPerPage) {
+      const newParams = new URLSearchParams(params);
+      newParams.set("page", (page + 1).toString());
+      navigate(`/shop?${newParams.toString()}`);
+    }
   };
 
   return (
