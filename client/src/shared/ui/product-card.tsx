@@ -21,13 +21,13 @@ export const ProductCard = ({
       <Wrapper>
         <div>
           <TitleS>{name}</TitleS>
-          <StarRating rating={parseFloat(rating)} />
           <BodyM>{price}р</BodyM>
         </div>
         <CartWrapper>
           <CartIcon />
         </CartWrapper>
       </Wrapper>
+      <StarRating rating={parseFloat(rating)} />
     </ProductContainer>
   );
 };
@@ -39,7 +39,7 @@ const ProductContainer = styled.div`
   padding: 10px 20px 30px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: end;
 
   -webkit-box-shadow: 0px 0px 15px 0px rgba(34, 60, 80, 0.2);
   -moz-box-shadow: 0px 0px 15px 0px rgba(34, 60, 80, 0.2);
