@@ -1,17 +1,13 @@
 meta {
-  name: add_one_product_to_cart
+  name: get_all_categories
   type: http
-  seq: 15
+  seq: 10
 }
 
-post {
+get {
   url: http://127.0.0.1:3000/api/v1/cart/add-one/101
   body: none
-  auth: bearer
-}
-
-auth:bearer {
-  token: 9Mf1WMpMe0VPgPyBIkQEs3VKdA9wepyEMgZHsRl6ag0
+  auth: inherit
 }
 
 settings {
