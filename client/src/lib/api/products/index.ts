@@ -1,3 +1,4 @@
+import type { Product } from "@/entities/product/types";
 import { createEndpoint } from "../core";
 import type { ProductRes } from "./types";
 
@@ -20,6 +21,10 @@ class ProductsApi {
       "v1/products",
       "GET"
     )({ page, pageSize, sort, category, search });
+  }
+
+  public async getById(id: number) {
+    return createEndpoint<Product>(`v1/products/${id}`, "GET")();
   }
 }
 
