@@ -13,6 +13,21 @@ class Api::V1::BaseController < ApplicationController
         render json: { success: true, message: "Вышли из системы" }
         return
   end
+
+  def check_expire_session
+    session_id = extract_token_from_request
+    
+    unless session_id
+      render json: { error: "Отсутствует id сессии" }, status: :unauthorized
+      return
+    end
+    
+    result = SessionManager.session_expire?(session_id)
+    render json: { 
+      expired: result,
+      timestamp: Time.current.iso8601
+    }
+  end
   
   private
   

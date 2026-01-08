@@ -27,6 +27,14 @@ class SessionManager
     session.renew if session.expired?
     session
   end
+
+  def self.session_expire?(session_id)
+    session = Session.find(session_id)
+    if not session
+      return nil
+    end
+    session.expired?
+  end
   
   def self.user_logout(session_id, user_id)
     session = Session.find(session_id)
