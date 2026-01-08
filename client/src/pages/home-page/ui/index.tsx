@@ -20,8 +20,25 @@ import {
 } from "./styled";
 import { Button } from "@/shared/ui";
 import { adjList } from "../constants/adj-list";
+import type { AxiosError } from "axios";
+import { useEffect } from "react";
+import { productsApi } from "@/lib/api/products";
 
 export const HomePage = () => {
+  const loadProducts = async () => {
+    try {
+      const response = await productsApi.top(10);
+      console.log(response);
+    } catch (err) {
+      const error = err as AxiosError;
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    loadProducts();
+  }, []);
+
   return (
     <Main>
       <Introduce>
