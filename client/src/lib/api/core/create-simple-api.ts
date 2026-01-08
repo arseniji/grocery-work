@@ -73,12 +73,13 @@ export const createSimpleApi = (baseURL: string) => {
 
     return async (
       params: P = {} as P,
-      routeParams: RP = {} as RP
+      routeParams: RP = {} as RP,
+      callHeaders?: RawAxiosRequestHeaders
     ): Promise<R> => {
       const convertedParams =
         params instanceof FormData ? params : convertKeysToSnakeCase(params);
 
-      const token = localStorage.getItem("authToken");
+      const token = localStorage.getItem("token");
 
       const axiosResponse = await axios.request<R>({
         method: httpMethod,
@@ -100,9 +101,10 @@ export const createSimpleApi = (baseURL: string) => {
               }`,
               "Content-Type": "application/json",
               ...headers,
+              ...callHeaders,
               ...customHeaders,
             }
-          : { ...headers, ...customHeaders },
+          : { ...headers, ...callHeaders, ...customHeaders },
       });
 
       return convertKeysToCamelCase<R>(axiosResponse.data);

@@ -22,7 +22,13 @@ export const Header = ({ isLogined }: HeaderProps) => {
 
   const handleLogout = async () => {
     try {
-      const response = await authApi.logout();
+      const response = await authApi.logout(
+        {},
+        {},
+        {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        }
+      );
       if (response.success) {
         localStorage.removeItem("token");
         navigate("/login");

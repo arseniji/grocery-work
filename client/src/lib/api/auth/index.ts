@@ -11,9 +11,7 @@ class AuthApi {
 
   public login = createEndpoint<LoginRes, UserLoginType>("v1/login", "POST");
 
-  public logout = createEndpoint<LogoutRes>("v1/logout", "DELETE", {
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-  });
+  public logout = createEndpoint<LogoutRes>("v1/logout", "DELETE");
 }
 
 export const authApi = new AuthApi();
