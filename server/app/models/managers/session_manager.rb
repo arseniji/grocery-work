@@ -40,4 +40,21 @@ class SessionManager
     session = Session.find(session_id)
     session&.destroy
   end
+
+  def self.get_cart_user(session_id)
+    session = Session.find(session_id)
+    session.cart_object
+  end
+
+  def self.update_cart_user(session_id, cart_instance)
+    session = Session.find(session_id)
+    session.update_cart(cart_instance)
+    session.save
+  end
+
+  def self.clear_cart_user(session_id)
+    session = Session.find(session_id)
+    session.clear_cart
+    session.save
+  end
 end
