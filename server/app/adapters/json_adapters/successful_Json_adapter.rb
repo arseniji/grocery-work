@@ -1,4 +1,4 @@
-class SuccessfulJsonAdapter
+class SuccessfulJsonAdapter < BaseJsonAdapter
   def as_json(**options)
       {
         success: true,

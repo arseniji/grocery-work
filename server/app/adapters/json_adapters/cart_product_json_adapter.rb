@@ -1,4 +1,4 @@
-class CartProductJsonAdapter
+class CartProductJsonAdapter < BaseJsonAdapter
   def as_json(quantity: 1, **options)
       {
         success: true,
