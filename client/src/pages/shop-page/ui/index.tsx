@@ -12,11 +12,15 @@ import { useEffect, useState, useCallback } from "react";
 import { productsApi } from "@/lib/api/products";
 import type { Product } from "@/entities/product/types";
 import { useNavigate, useSearchParams } from "react-router";
+import { Toast } from "@/feat";
 
 export const ShopPage = () => {
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const page = parseInt(params.get("page") || "1", 10);
+  const search = params.get("search") || undefined;
+  const sort = params.get("sort") || undefined;
+  const category = params.get("category") || undefined;
 
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -25,16 +29,27 @@ export const ShopPage = () => {
   const loadProducts = useCallback(async () => {
     setIsLoading(true);
     try {
-      const response = await productsApi.get(page, itemsPerPage);
+      const response = await productsApi.get(
+        page,
+        itemsPerPage,
+        sort,
+        category,
+        search
+      );
       if (response.success) {
         setProducts(response.products);
       }
     } catch (err) {
       const error = err as AxiosError;
+      Toast.show({
+        msg: "Ошибка при получении товаров",
+        title: "Ошибка!",
+        type: "error",
+      });
       console.log(error);
     }
     setIsLoading(false);
-  }, [page]);
+  }, [page, search, sort, category]);
 
   useEffect(() => {
     loadProducts();
