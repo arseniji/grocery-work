@@ -11,6 +11,7 @@ interface ToastOptions {
     top?: string;
     bottom?: string;
   };
+  timeout?: number;
 }
 
 interface ProviderProps {
@@ -100,11 +101,16 @@ export class Toast {
     switch (options.type) {
       case "error":
         root.render(<ErrorToast title={options.title} msg={options.msg} />);
-        return;
+        break;
       case "msg":
       default:
         root.render(<MsgToast title={options.title} msg={options.msg} />);
     }
+
+    setTimeout(() => {
+      root.unmount();
+      toastContainer.remove();
+    }, posOptions?.timeout || 3000);
   }
 }
 
