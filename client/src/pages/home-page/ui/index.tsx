@@ -20,18 +20,8 @@ import {
 } from "./styled";
 import { Button } from "@/shared/ui";
 import { adjList } from "../constants/adj-list";
-import { useEffect } from "react";
-import { Toast } from "@/feat/toast/ui";
 
 export const HomePage = () => {
-  useEffect(() => {
-    Toast.show({
-      type: "error",
-      title: "Тест",
-      msg: "тест тест",
-    });
-  }, []);
-
   return (
     <Main>
       <Introduce>

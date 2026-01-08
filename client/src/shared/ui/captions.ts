@@ -8,6 +8,14 @@ export const TitleXS = styled.h6`
   font-family: Nunito;
 `;
 
+export const TitleS = styled.h6`
+  color: #000;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+  font-family: Nunito;
+`;
+
 export const TitleL = styled.h2`
   color: #000;
   font-weight: 700;

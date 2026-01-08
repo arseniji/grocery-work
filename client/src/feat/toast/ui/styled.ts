@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { BaseBodyM, BodyXS } from "@/shared/ui/captions";
+import { TitleS, TitleXS } from "@/shared/ui/captions";
 
 export const ToastContainer = styled.div`
   display: flex;
@@ -7,7 +7,7 @@ export const ToastContainer = styled.div`
   gap: 5px;
   background: #fff;
   border-radius: 10px;
-  padding: 0 5px;
+  padding: 0 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   min-width: 300px;
   max-width: 500px;
@@ -15,14 +15,12 @@ export const ToastContainer = styled.div`
   overflow: hidden;
 `;
 
-export const ToastTitle = styled.div`
-  ${BaseBodyM}
+export const ToastTitle = styled(TitleS)`
   font-weight: 700;
 `;
 
-export const ToastMessage = styled.div`
-  padding: 5px 10px 10px;
-  ${BodyXS};
+export const ToastMessage = styled(TitleXS)`
+  padding: 8px 25px 10px;
 `;
 
 export const ProgressBar = styled.div<{ duration: number }>`
@@ -49,7 +47,7 @@ export const ErrorProgressBar = styled(ProgressBar)`
 `;
 
 export const TitleWrapper = styled.div`
-  padding: 5px 10px 3px;
+  padding: 10px 15px 5px;
 `;
 
 export const ErrorTitleWrapper = styled(TitleWrapper)`

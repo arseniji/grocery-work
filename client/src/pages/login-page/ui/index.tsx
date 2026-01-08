@@ -17,6 +17,7 @@ import {
   type UserLoginType,
 } from "@/entities/user/schemas/user-login.schema";
 import type { AxiosError } from "axios";
+import { Toast } from "@/feat";
 
 export const LoginPage = () => {
   const [loading, setLoading] = useState(false);
@@ -35,6 +36,11 @@ export const LoginPage = () => {
       navigate("/");
     } catch (err) {
       const error = err as AxiosError;
+      Toast.show({
+        title: "Ошибка входа",
+        msg: error.response?.data?.error || `Неизвестная ошибка ${error.code}`,
+        type: "error",
+      });
       console.log(error);
     }
 

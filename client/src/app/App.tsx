@@ -3,7 +3,7 @@ import { LoginPage } from "@/pages/login-page";
 import { MainLayout } from "@/layouts/main-layout";
 import { BrowserRouter, Route, Routes } from "react-router";
 import { RegistrationPage } from "@/pages/registration-page";
-import { ToastProvider } from "@/feat/toast/ui";
+import { ToastProvider } from "@/feat/toast";
 
 function App() {
   return (
