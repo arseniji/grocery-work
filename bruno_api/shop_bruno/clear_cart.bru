@@ -1,11 +1,11 @@
 meta {
-  name: logout
+  name: clear_cart
   type: http
-  seq: 2
+  seq: 12
 }
 
 delete {
-  url: http://localhost:3000/api/v1/logout
+  url: http://127.0.0.1:3000/api/v1/cart/clear
   body: none
   auth: bearer
 }
