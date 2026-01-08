@@ -27,8 +27,11 @@ import type { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 import { productsApi } from "@/lib/api/products";
 import type { Product } from "@/entities/product/types";
+import { useNavigate } from "react-router";
 
 export const HomePage = () => {
+  const navigate = useNavigate();
+
   const [products, setProducts] = useState<Product[]>([]);
 
   const loadProducts = async () => {
@@ -99,18 +102,25 @@ export const HomePage = () => {
         {products.length === 0 ? (
           <Loader />
         ) : (
-          <ProductsList>
-            {products.map((product) => (
-              <ProductCard
-                key={product.id}
-                id={product.id}
-                name={product.name}
-                price={product.price}
-                rating={product.rating}
-                image={product.details.image_url}
-              />
-            ))}
-          </ProductsList>
+          <>
+            <ProductsList>
+              {products.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  id={product.id}
+                  name={product.name}
+                  price={product.price}
+                  rating={product.rating}
+                  image={product.details.image_url}
+                />
+              ))}
+            </ProductsList>
+            <div style={{ alignSelf: "center" }}>
+              <Button variant="border" onClick={() => navigate("/shop")}>
+                Показать больше
+              </Button>
+            </div>
+          </>
         )}
       </TopSellerrsContainer>
     </Main>

@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import styled, { css } from "styled-components";
 import { BaseBodyL } from "./captions";
 
-type BtnVariant = "ghost" | "primary";
+type BtnVariant = "ghost" | "primary" | "border";
 
 type ButtonProps =
   | {
@@ -45,6 +45,16 @@ const colors = (variant: BtnVariant) => {
         :hover {
           color: #000;
           background: #fff;
+        }
+      `;
+    case "border":
+      return css`
+        background: #fff;
+        color: #000;
+        border: 1px solid #000;
+        :hover {
+          color: #fff;
+          background: #000;
         }
       `;
   }
