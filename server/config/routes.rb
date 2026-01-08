@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       post 'register', to: 'registration#registration'
       post 'login', to: 'authorize#authorizate'
       delete 'logout', to: 'base#logout'
+      get 'session_expire', to: 'base#check_expire_session'
       scope :products do
         get 'top', to: 'get_product#get_top_products'
         get ':id', to: 'get_product#get_product_details'

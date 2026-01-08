@@ -1,5 +1,3 @@
-require 'grocery-shop/server/app/models/session.rb'
-
 class SessionManager
   def self.user_registered(user, request_context = {})
     session = Session.create_for_user(
@@ -28,6 +26,14 @@ class SessionManager
     return nil unless session
     session.renew if session.expired?
     session
+  end
+
+  def self.session_expire?(session_id)
+    session = Session.find(session_id)
+    if not session
+      return nil
+    end
+    session.expired?
   end
   
   def self.user_logout(session_id, user_id)
