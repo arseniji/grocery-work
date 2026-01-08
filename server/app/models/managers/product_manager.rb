@@ -85,4 +85,13 @@ class ProductManager
         }
       )
   end
+
+  def self.get_all_category()
+    category_names = Product.distinct.pluck(:category).compact.sort
+    categories = category_names.map do |category_name|
+      Category.new(category_name)
+    end
+    total_count = categories.count
+    JsonAdapterFacade.adapt_collection(categories, type: :categories, total_count: total_count)
+  end
 end
