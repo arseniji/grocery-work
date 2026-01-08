@@ -66,3 +66,18 @@ export const EcoImage = styled.img`
   width: 420px;
   height: 400px;
 `;
+
+export const TopSellerrsContainer = styled.section`
+  ${Container}
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+`;
+
+export const ProductsList = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-content: space-between;
+  gap: 20px;
+`;
