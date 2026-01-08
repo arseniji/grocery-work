@@ -9,27 +9,28 @@ class Cart
 
   def add_product(product, quantity: 1)
     validate_stock(product, quantity)
-    @product_collection[product.id] = quantity
+    @product_collection[product.id.to_s.to_sym] = quantity
   end
 
+
   def delete_product(product)
-    @product_collection.delete(product.id)
+    @product_collection.delete(product.id.to_s.to_sym )
   end
 
   def delete_quantity_product(product)
-    return unless @product_collection[product.id]
+    return unless @product_collection[product.id.to_s.to_sym ]
     
-    @product_collection[product.id] -= 1
+    @product_collection[product.id.to_s.to_sym ] -= 1
     
-    if @product_collection[product.id] == 0
+    if @product_collection[product.id.to_s.to_sym ] == 0
       delete_product(product)
     end
   end
 
   def add_quantity_product(product)
-    current_quantity = @product_collection[product.id] || 0
+    current_quantity = @product_collection[product.id.to_s.to_sym] || 0
     validate_stock(product, current_quantity + 1)
-    @product_collection[product.id] = current_quantity + 1
+    @product_collection[product.id.to_s.to_sym] = current_quantity + 1
   end
 
   def empty?

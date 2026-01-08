@@ -25,6 +25,7 @@ Rails.application.routes.draw do
       end
       scope :cart do
         post 'add', to: 'cart#add_product_to_cart'
+        post 'add-one/:product_id', to: 'cart#add_quantity_product_on_cart'
         delete 'remove/:product_id', to: 'cart#delete_product_on_cart'
         delete 'remove-one/:product_id', to: 'cart#delete_quantity_product_on_cart'
         delete 'clear', to: 'cart#clear_products_to_cart'
