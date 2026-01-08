@@ -26,7 +26,7 @@ import { Toast } from "@/feat/toast/ui";
 export const HomePage = () => {
   useEffect(() => {
     Toast.show({
-      type: "msg",
+      type: "error",
       title: "Тест",
       msg: "тест тест",
     });

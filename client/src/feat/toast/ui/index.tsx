@@ -1,5 +1,14 @@
 import { createRoot } from "react-dom/client";
 import { useEffect } from "react";
+import {
+  ErrorProgressBar,
+  ErrorTitleWrapper,
+  MsgTitleWrapper,
+  ProgressBar,
+  ToastContainer,
+  ToastMessage,
+  ToastTitle,
+} from "./styled";
 
 interface ToastOptions {
   zIndex?: number;
@@ -89,22 +98,32 @@ export class Toast {
     Object.assign(toastContainer.style, {
       position: "fixed",
       zIndex: (posOptions?.zIndex || 1000).toString(),
-      backgroundColor: "white",
-      padding: "10px",
-      borderRadius: "4px",
-      boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
       ...positionStyle,
     });
     provider.appendChild(toastContainer);
     const root = createRoot(toastContainer);
 
+    const duration = posOptions?.timeout || 3000;
+
     switch (options.type) {
       case "error":
-        root.render(<ErrorToast title={options.title} msg={options.msg} />);
+        root.render(
+          <ErrorToast
+            title={options.title}
+            msg={options.msg}
+            duration={duration}
+          />
+        );
         break;
       case "msg":
       default:
-        root.render(<MsgToast title={options.title} msg={options.msg} />);
+        root.render(
+          <MsgToast
+            title={options.title}
+            msg={options.msg}
+            duration={duration}
+          />
+        );
     }
 
     setTimeout(() => {
@@ -114,18 +133,46 @@ export class Toast {
   }
 }
 
-const MsgToast = ({ title, msg }: { title?: string; msg?: string }) => {
+const MsgToast = ({
+  title,
+  msg,
+  duration,
+}: {
+  title?: string;
+  msg?: string;
+  duration: number;
+}) => {
   return (
-    <div>
-      {title && <strong>{title}</strong>} {msg}
-    </div>
+    <ToastContainer>
+      {title && (
+        <MsgTitleWrapper>
+          <ToastTitle>{title}</ToastTitle>
+        </MsgTitleWrapper>
+      )}
+      {msg && <ToastMessage>{msg}</ToastMessage>}
+      <ProgressBar duration={duration} />
+    </ToastContainer>
   );
 };
 
-const ErrorToast = ({ title, msg }: { title?: string; msg?: string }) => {
+const ErrorToast = ({
+  title,
+  msg,
+  duration,
+}: {
+  title?: string;
+  msg?: string;
+  duration: number;
+}) => {
   return (
-    <div style={{ color: "red" }}>
-      {title && <strong>{title}</strong>} {msg}
-    </div>
+    <ToastContainer>
+      {title && (
+        <ErrorTitleWrapper>
+          <ToastTitle>{title}</ToastTitle>
+        </ErrorTitleWrapper>
+      )}
+      {msg && <ToastMessage>{msg}</ToastMessage>}
+      <ErrorProgressBar duration={duration} />
+    </ToastContainer>
   );
 };
