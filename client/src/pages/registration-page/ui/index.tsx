@@ -17,6 +17,7 @@ import {
 } from "@/entities/user/schemas/user-register.schema";
 import type { AxiosError } from "axios";
 import { authApi } from "@/lib/api/auth";
+import { Toast } from "@/feat";
 
 export const RegistrationPage = () => {
   const [loading, setLoading] = useState(false);
@@ -36,6 +37,14 @@ export const RegistrationPage = () => {
       navigate("/");
     } catch (err) {
       const error = err as AxiosError;
+
+      Toast.show({
+        title: "Ошибка регистрации",
+        msg:
+          (error.response?.data as { error?: string })?.error ||
+          `Неизвестная ошибка ${error.code}`,
+        type: "error",
+      });
       console.log(error);
     }
 

@@ -12,6 +12,7 @@ import { NavLink, useNavigate } from "react-router";
 import { Button, Input } from "@/shared/ui";
 import type { AxiosError } from "axios";
 import { authApi } from "@/lib/api/auth";
+import { Toast } from "@/feat";
 
 interface HeaderProps {
   isLogined: boolean;
@@ -34,12 +35,21 @@ export const Header = ({ isLogined }: HeaderProps) => {
         navigate("/login");
         return;
       }
-
-      // TODO: Кастомные ошибки
-      throw Error("Ошибка выхода");
+      Toast.show({
+        title: "Ошибка выхода",
+        msg: `Неизвестная ошибка`,
+        type: "error",
+      });
     } catch (err) {
-      // TODO: Обработка ошибок
       const error = err as AxiosError;
+
+      Toast.show({
+        title: "Ошибка выхода",
+        msg:
+          (error.response?.data as { error?: string })?.error ||
+          `Неизвестная ошибка ${error.code}`,
+        type: "error",
+      });
       console.log(error);
     }
   };

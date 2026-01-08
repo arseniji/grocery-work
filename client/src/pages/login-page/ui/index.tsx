@@ -38,7 +38,9 @@ export const LoginPage = () => {
       const error = err as AxiosError;
       Toast.show({
         title: "Ошибка входа",
-        msg: error.response?.data?.error || `Неизвестная ошибка ${error.code}`,
+        msg:
+          (error.response?.data as { error?: string })?.error ||
+          `Неизвестная ошибка ${error.code}`,
         type: "error",
       });
       console.log(error);
