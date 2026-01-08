@@ -8,6 +8,19 @@ class ProductsApi {
       "GET"
     )({ sizeTop: count });
   }
+
+  public async get(
+    page: number,
+    pageSize: number,
+    sort?: string,
+    category?: string,
+    search?: string
+  ) {
+    return createEndpoint<ProductRes>(
+      "v1/products",
+      "GET"
+    )({ page, pageSize, sort, category, search });
+  }
 }
 
 export const productsApi = new ProductsApi();
