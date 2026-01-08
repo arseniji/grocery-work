@@ -5,7 +5,9 @@ class JsonAdapterFacade
     error: ErrorJsonAdapter,
     cart_product: CartProductJsonAdapter,
     cart: CartCollectionJsonAdapter,
-    successful: SuccessfulJsonAdapter
+    successful: SuccessfulJsonAdapter,
+    category: CategoryJsonAdapter,
+    categories: CategoryCollectionJsonAdapter
   }.freeze
   
   def self.adapt(object, type:, **options)
@@ -45,6 +47,7 @@ class JsonAdapterFacade
     when Cart then CartCollectionJsonAdapter
     when ErrorObject then ErrorJsonAdapter
     when Array then ProductCollectionJsonAdapter
+    when Category then CategoryJsonAdapter
     else
       raise ArgumentError, "Не найден подходящий адаптер для объекта: #{object.class}"
     end
