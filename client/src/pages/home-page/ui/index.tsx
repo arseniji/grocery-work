@@ -24,6 +24,8 @@ import type { AxiosError } from "axios";
 import { useEffect } from "react";
 import { productsApi } from "@/lib/api/products";
 
+let hasLoadedProducts = false;
+
 export const HomePage = () => {
   const loadProducts = async () => {
     try {
@@ -36,7 +38,10 @@ export const HomePage = () => {
   };
 
   useEffect(() => {
-    loadProducts();
+    if (!hasLoadedProducts) {
+      loadProducts();
+      hasLoadedProducts = true;
+    }
   }, []);
 
   return (
