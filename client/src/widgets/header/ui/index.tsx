@@ -24,6 +24,7 @@ export const Header = ({ isLogined }: HeaderProps) => {
     try {
       const response = await authApi.logout();
       if (response.success) {
+        localStorage.removeItem("token");
         navigate("/login");
         return;
       }
