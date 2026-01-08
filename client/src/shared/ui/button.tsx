@@ -3,27 +3,30 @@ import { Link } from "react-router";
 import styled, { css } from "styled-components";
 import { BaseBodyL } from "./captions";
 
-type BtnType = "ghost" | "primary";
+type BtnVariant = "ghost" | "primary";
 
 type ButtonProps =
   | {
       children: string | ReactNode;
-      type?: BtnType;
+      variant?: BtnVariant;
       as?: "button";
       onClick?: () => void;
+      type?: "submit" | "button";
+      disabled?: boolean;
     }
   | {
       children: string | ReactNode;
-      type?: BtnType;
+      variant?: BtnVariant;
       as: "link";
       href: string;
+      disabled?: boolean;
     };
 
 interface ButtonNativeProps {
-  variant: BtnType;
+  variant: BtnVariant;
 }
 
-const colors = (variant: BtnType) => {
+const colors = (variant: BtnVariant) => {
   switch (variant) {
     case "ghost":
       return css`
@@ -56,20 +59,31 @@ const ButtonNative = styled.button<ButtonNativeProps>`
 `;
 
 export const Button = (props: ButtonProps) => {
-  const { children, type = "ghost", as } = props;
+  const { children, variant = "ghost", as, disabled = false } = props;
 
   if (as === "link") {
     const { href } = props as { href: string };
     return (
-      <ButtonNative variant={type} as={Link} to={href}>
+      <ButtonNative variant={variant} as={Link} to={href}>
         {children}
       </ButtonNative>
     );
   }
 
   const { onClick } = props as { onClick?: () => void };
+
+  const handleClick = () => {
+    if (disabled) return;
+    if (onClick) onClick();
+  };
+
   return (
-    <ButtonNative variant={type} onClick={onClick}>
+    <ButtonNative
+      disabled={disabled}
+      variant={variant}
+      onClick={handleClick}
+      type={props.type || "button"}
+    >
       {children}
     </ButtonNative>
   );

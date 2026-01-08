@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  namespace :api do
+    namespace :v1 do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -11,4 +13,16 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+  
+      post 'register', to: 'registration#registration'
+      post 'login', to: 'authorize#authorizate'
+      delete 'logout', to: 'base#logout'
+      get 'session_expire', to: 'base#check_expire_session'
+      scope :products do
+        get 'top', to: 'get_product#get_top_products'
+        get ':id', to: 'get_product#get_product_details'
+        get '/', to: 'get_product#get_product_page'
+      end
+    end
+  end
 end

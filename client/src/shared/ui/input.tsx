@@ -1,16 +1,18 @@
-import type { JSX } from "react";
+import React, { type JSX } from "react";
 import styled from "styled-components";
 import { BaseBodyM } from "./captions";
 
-interface InputProps {
+interface InputProps
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> {
   icon?: () => JSX.Element;
+  onChange?: (value: string) => void;
 }
 
-export const Input = ({ icon }: InputProps) => {
+export const Input = ({ icon, onChange, ...props }: InputProps) => {
   return (
     <Container>
       {icon && icon()}
-      <NativeInput placeholder="поиск" />
+      <NativeInput {...props} onChange={(e) => onChange?.(e.target.value)} />
     </Container>
   );
 };

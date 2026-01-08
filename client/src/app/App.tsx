@@ -1,16 +1,24 @@
 import { HomePage } from "@/pages/home-page";
-import { Header, Footer } from "@/widgets";
+import { LoginPage } from "@/pages/login-page";
+import { MainLayout } from "@/layouts/main-layout";
 import { BrowserRouter, Route, Routes } from "react-router";
+import { RegistrationPage } from "@/pages/registration-page";
+import { ToastProvider } from "@/feat/toast";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-      </Routes>
-      <Footer />
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<MainLayout />}>
+            <Route index element={<HomePage />} />
+          </Route>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/registration" element={<RegistrationPage />} />
+        </Routes>
+      </BrowserRouter>
+      <ToastProvider />
+    </>
   );
 }
 
