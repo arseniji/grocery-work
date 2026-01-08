@@ -13,6 +13,7 @@ import { Button, Input } from "@/shared/ui";
 import type { AxiosError } from "axios";
 import { authApi } from "@/lib/api/auth";
 import { Toast } from "@/feat";
+import { useState, type FormEventHandler } from "react";
 
 interface HeaderProps {
   isLogined: boolean;
@@ -20,6 +21,8 @@ interface HeaderProps {
 
 export const Header = ({ isLogined }: HeaderProps) => {
   const navigate = useNavigate();
+
+  const [search, setSearch] = useState<string>("");
 
   const handleLogout = async () => {
     try {
@@ -54,6 +57,11 @@ export const Header = ({ isLogined }: HeaderProps) => {
     }
   };
 
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    navigate(`/shop?search=${search}`);
+  };
+
   return (
     <HeaderContainer>
       <HeaderWrapper>
@@ -69,7 +77,14 @@ export const Header = ({ isLogined }: HeaderProps) => {
           ))}
         </NavContainer>
 
-        <Input icon={SearchIcon} placeholder="Поиск..." />
+        <form onSubmit={handleSubmit}>
+          <Input
+            icon={SearchIcon}
+            placeholder="Поиск..."
+            value={search}
+            onChange={setSearch}
+          />
+        </form>
 
         {/* TODO: Сделать либо переход на новую страницу либо модалку */}
         {isLogined && <CartIcon />}
