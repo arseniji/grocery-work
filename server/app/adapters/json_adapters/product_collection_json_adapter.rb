@@ -5,7 +5,7 @@ class ProductCollectionJsonAdapter < BaseJsonAdapter
     super(collection)
   end
 
-  def as_json(options: {})
+  def as_json(**options)
     {
       success: true,
       products: @collection.map{ |product| ProductJsonAdapter.new(product).as_json(options) },
