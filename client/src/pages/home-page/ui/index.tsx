@@ -34,7 +34,7 @@ export const HomePage = () => {
               Ощутите удобство покупок продуктов и быструю доставку на дом с
               нашим широким ассортиментом свежих продуктов и необходимых товаров
             </TextXL>
-            <Button as="link" href="/about" type="primary">
+            <Button as="link" href="/about" variant="primary">
               Узнать больше
             </Button>
           </ContentWrapper>

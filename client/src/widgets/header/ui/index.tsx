@@ -59,7 +59,7 @@ export const Header = ({ isLogined }: HeaderProps) => {
           ))}
         </NavContainer>
 
-        <Input icon={SearchIcon} />
+        <Input icon={SearchIcon} placeholder="Поиск..." />
 
         {/* TODO: Сделать либо переход на новую страницу либо модалку */}
         {isLogined && <CartIcon />}
