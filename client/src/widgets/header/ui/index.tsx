@@ -8,10 +8,35 @@ import {
 } from "./styled";
 import { BodyM, TitleXS } from "@/shared/ui/captions";
 import { routes } from "../contants/routes";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { Button, Input } from "@/shared/ui";
+import type { AxiosError } from "axios";
+import { authApi } from "@/lib/api/auth";
 
-export const Header = () => {
+interface HeaderProps {
+  isLogined: boolean;
+}
+
+export const Header = ({ isLogined }: HeaderProps) => {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      const response = await authApi.logout();
+      if (response.success) {
+        navigate("/login");
+        return;
+      }
+
+      // TODO: Кастомные ошибки
+      throw Error("Ошибка выхода");
+    } catch (err) {
+      // TODO: Обработка ошибок
+      const error = err as AxiosError;
+      console.log(error);
+    }
+  };
+
   return (
     <HeaderContainer>
       <HeaderWrapper>
@@ -30,15 +55,23 @@ export const Header = () => {
         <Input icon={SearchIcon} />
 
         {/* TODO: Сделать либо переход на новую страницу либо модалку */}
-        <CartIcon />
+        {isLogined && <CartIcon />}
 
         <AuthWrapper>
-          <Button as="link" href="/login">
-            Войти
-          </Button>
-          <Button as="link" href="/registration">
-            Регистрация
-          </Button>
+          {!isLogined ? (
+            <>
+              <Button as="link" href="/login">
+                Войти
+              </Button>
+              <Button as="link" href="/registration">
+                Регистрация
+              </Button>
+            </>
+          ) : (
+            <Button as={"button"} onClick={handleLogout}>
+              Выйти
+            </Button>
+          )}
         </AuthWrapper>
       </HeaderWrapper>
     </HeaderContainer>

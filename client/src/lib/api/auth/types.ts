@@ -12,3 +12,8 @@ export interface LoginRes {
   session: SessionType;
   user: ShortUser;
 }
+
+export interface LogoutRes {
+  success: boolean;
+  message: string;
+}
