@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       delete 'logout', to: 'base#logout'
       get 'session_expire', to: 'base#check_expire_session'
       scope :products do
+        get 'categories', to: 'get_product#get_all_category'
         get 'top', to: 'get_product#get_top_products'
         get ':id', to: 'get_product#get_product_details'
         get '/', to: 'get_product#get_product_page'
