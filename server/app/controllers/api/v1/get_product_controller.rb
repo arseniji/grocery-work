@@ -35,4 +35,9 @@ class Api::V1::GetProductController < ApplicationController
     render json: result
   end
 
+  def get_all_category
+    result = ProductManager.get_all_category
+    render json: result
+  end
+
 end
