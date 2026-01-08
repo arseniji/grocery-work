@@ -3,7 +3,9 @@ import { Footer, Header } from "@/widgets";
 import { Outlet } from "react-router";
 
 export const MainLayout = () => {
-  const { isAuth } = useAuth();
+  const { isAuth, isLoading } = useAuth();
+
+  if (isLoading) return;
 
   return (
     <>
