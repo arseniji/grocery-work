@@ -42,19 +42,20 @@ users.each do |user_data|
 end
 
 puts "✅ Пользователей создано: #{User.count}"
-# 2. Категории товаров (добавим в модель Product позже)
+
+# 2. Категории товаров на английском
 categories = {
-  vegetables: 'Овощи',
-  fruits: 'Фрукты',
-  dairy: 'Молочные продукты',
-  meat: 'Мясо и птица',
-  fish: 'Рыба и морепродукты',
-  grocery: 'Бакалея',
-  drinks: 'Напитки',
-  bakery: 'Хлеб и выпечка'
+  vegetables: 'vegetables',
+  fruits: 'fruits',
+  dairy: 'dairy',
+  meat: 'meat',
+  fish: 'fish',
+  grocery: 'grocery',
+  drinks: 'drinks',
+  bakery: 'bakery'
 }
 
-# 3. Товары (продуктовый магазин)
+# 3. Товары (продуктовый магазин) с новыми полями category и quantity
 products = [
   # ОВОЩИ
   {
@@ -63,7 +64,9 @@ products = [
     rating: 4.5,
     description: 'Молодой, мытый, 1кг',
     measurement_unit: 'кг',
-    img_path: '/images/products/potato.jpg'
+    img_path: '/images/products/potato.jpg',
+    category: 'vegetables',
+    quantity: 150
   },
   {
     product_name: 'Помидоры',
@@ -71,7 +74,9 @@ products = [
     rating: 4.7,
     description: 'Помидоры черри, 500г',
     measurement_unit: 'кг',
-    img_path: '/images/products/tomatoes.jpg'
+    img_path: '/images/products/tomatoes.jpg',
+    category: 'vegetables',
+    quantity: 75
   },
   {
     product_name: 'Огурцы',
@@ -79,7 +84,9 @@ products = [
     rating: 4.4,
     description: 'Свежие грунтовые, 1кг',
     measurement_unit: 'кг',
-    img_path: '/images/products/cucumbers.jpg'
+    img_path: '/images/products/cucumbers.jpg',
+    category: 'vegetables',
+    quantity: 90
   },
   {
     product_name: 'Лук репчатый',
@@ -87,7 +94,9 @@ products = [
     rating: 4.3,
     description: 'Желтый, 1кг',
     measurement_unit: 'кг',
-    img_path: '/images/products/onion.jpg'
+    img_path: '/images/products/onion.jpg',
+    category: 'vegetables',
+    quantity: 200
   },
   {
     product_name: 'Морковь',
@@ -95,14 +104,18 @@ products = [
     rating: 4.6,
     description: 'Свежая, мытая, 1кг',
     measurement_unit: 'кг',
-    img_path: '/images/products/carrots.jpg'
+    img_path: '/images/products/carrots.jpg',
+    category: 'vegetables',
+    quantity: 120
   },
   {
     product_name: 'Капуста белокочанная',
     price: 45.99,
     description: 'Свежая, 1кг',
     measurement_unit: 'кг',
-    img_path: '/images/products/cabbage.jpg'
+    img_path: '/images/products/cabbage.jpg',
+    category: 'vegetables',
+    quantity: 80
   },
   
   # ФРУКТЫ
@@ -112,7 +125,9 @@ products = [
     rating: 4.8,
     description: 'Зеленые, кисло-сладкие, 1кг',
     measurement_unit: 'кг',
-    img_path: '/images/products/apples.jpg'
+    img_path: '/images/products/apples.jpg',
+    category: 'fruits',
+    quantity: 180
   },
   {
     product_name: 'Бананы',
@@ -120,7 +135,9 @@ products = [
     rating: 4.9,
     description: 'Спелые, 1кг',
     measurement_unit: 'кг',
-    img_path: '/images/products/bananas.jpg'
+    img_path: '/images/products/bananas.jpg',
+    category: 'fruits',
+    quantity: 250
   },
   {
     product_name: 'Апельсины',
@@ -128,7 +145,9 @@ products = [
     rating: 4.7,
     description: 'Марокко, 1кг',
     measurement_unit: 'кг',
-    img_path: '/images/products/oranges.jpg'
+    img_path: '/images/products/oranges.jpg',
+    category: 'fruits',
+    quantity: 150
   },
   {
     product_name: 'Клубника',
@@ -136,7 +155,9 @@ products = [
     rating: 4.9,
     description: 'Свежая, 500г',
     measurement_unit: 'кг',
-    img_path: '/images/products/strawberries.jpg'
+    img_path: '/images/products/strawberries.jpg',
+    category: 'fruits',
+    quantity: 40
   },
   {
     product_name: 'Виноград Кишмиш',
@@ -144,7 +165,9 @@ products = [
     rating: 4.6,
     description: 'Без косточек, 1кг',
     measurement_unit: 'кг',
-    img_path: '/images/products/grapes.jpg'
+    img_path: '/images/products/grapes.jpg',
+    category: 'fruits',
+    quantity: 60
   },
   
   # МОЛОЧНЫЕ ПРОДУКТЫ
@@ -154,7 +177,9 @@ products = [
     rating: 4.5,
     description: 'Простоквашино, ультрапастеризованное, 1л',
     measurement_unit: 'л',
-    img_path: '/images/products/milk.jpg'
+    img_path: '/images/products/milk.jpg',
+    category: 'dairy',
+    quantity: 200
   },
   {
     product_name: 'Сметана 20%',
@@ -162,7 +187,9 @@ products = [
     rating: 4.4,
     description: 'Домик в деревне, 400г',
     measurement_unit: 'г',
-    img_path: '/images/products/sour_cream.jpg'
+    img_path: '/images/products/sour_cream.jpg',
+    category: 'dairy',
+    quantity: 120
   },
   {
     product_name: 'Творог 9%',
@@ -170,7 +197,9 @@ products = [
     rating: 4.7,
     description: 'Простоквашино, 500г',
     measurement_unit: 'г',
-    img_path: '/images/products/cottage_cheese.jpg'
+    img_path: '/images/products/cottage_cheese.jpg',
+    category: 'dairy',
+    quantity: 100
   },
   {
     product_name: 'Сыр Российский',
@@ -178,7 +207,9 @@ products = [
     rating: 4.8,
     description: 'Полутвердый, 1кг',
     measurement_unit: 'кг',
-    img_path: '/images/products/cheese.jpg'
+    img_path: '/images/products/cheese.jpg',
+    category: 'dairy',
+    quantity: 70
   },
   {
     product_name: 'Йогурт питьевой',
@@ -186,7 +217,9 @@ products = [
     rating: 4.3,
     description: 'Активиа, натуральный, 290мл',
     measurement_unit: 'шт',
-    img_path: '/images/products/yogurt.jpg'
+    img_path: '/images/products/yogurt.jpg',
+    category: 'dairy',
+    quantity: 300
   },
   {
     product_name: 'Масло сливочное 82.5%',
@@ -194,7 +227,9 @@ products = [
     rating: 4.6,
     description: 'Крестьянское, 180г',
     measurement_unit: 'г',
-    img_path: '/images/products/butter.jpg'
+    img_path: '/images/products/butter.jpg',
+    category: 'dairy',
+    quantity: 150
   },
   
   # МЯСО И ПТИЦА
@@ -204,7 +239,9 @@ products = [
     rating: 4.5,
     description: 'Тушка, 1.5-2кг',
     measurement_unit: 'кг',
-    img_path: '/images/products/chicken.jpg'
+    img_path: '/images/products/chicken.jpg',
+    category: 'meat',
+    quantity: 50
   },
   {
     product_name: 'Говядина вырезка',
@@ -212,7 +249,9 @@ products = [
     rating: 4.9,
     description: 'Охлажденная, 1кг',
     measurement_unit: 'кг',
-    img_path: '/images/products/beef.jpg'
+    img_path: '/images/products/beef.jpg',
+    category: 'meat',
+    quantity: 30
   },
   {
     product_name: 'Свинина шея',
@@ -220,7 +259,9 @@ products = [
     rating: 4.7,
     description: 'Охлажденная, 1кг',
     measurement_unit: 'кг',
-    img_path: '/images/products/pork.jpg'
+    img_path: '/images/products/pork.jpg',
+    category: 'meat',
+    quantity: 40
   },
   {
     product_name: 'Фарш куриный',
@@ -228,7 +269,9 @@ products = [
     rating: 4.4,
     description: 'Охлажденный, 500г',
     measurement_unit: 'г',
-    img_path: '/images/products/minced_meat.jpg'
+    img_path: '/images/products/minced_meat.jpg',
+    category: 'meat',
+    quantity: 80
   },
   
   # РЫБА
@@ -238,7 +281,9 @@ products = [
     rating: 4.8,
     description: 'Филе, 1кг',
     measurement_unit: 'кг',
-    img_path: '/images/products/salmon.jpg'
+    img_path: '/images/products/salmon.jpg',
+    category: 'fish',
+    quantity: 25
   },
   {
     product_name: 'Форель радужная',
@@ -246,7 +291,9 @@ products = [
     rating: 4.7,
     description: 'Охлажденная, 1кг',
     measurement_unit: 'кг',
-    img_path: '/images/products/trout.jpg'
+    img_path: '/images/products/trout.jpg',
+    category: 'fish',
+    quantity: 35
   },
   {
     product_name: 'Креветки тигровые',
@@ -254,7 +301,9 @@ products = [
     rating: 4.9,
     description: 'Замороженные, 1кг',
     measurement_unit: 'кг',
-    img_path: '/images/products/shrimp.jpg'
+    img_path: '/images/products/shrimp.jpg',
+    category: 'fish',
+    quantity: 40
   },
   
   # БАКАЛЕЯ
@@ -264,7 +313,9 @@ products = [
     rating: 4.6,
     description: 'Тайский, 1кг',
     measurement_unit: 'кг',
-    img_path: '/images/products/rice.jpg'
+    img_path: '/images/products/rice.jpg',
+    category: 'grocery',
+    quantity: 200
   },
   {
     product_name: 'Гречневая крупа',
@@ -272,7 +323,9 @@ products = [
     rating: 4.7,
     description: 'Ядрица, 1кг',
     measurement_unit: 'кг',
-    img_path: '/images/products/buckwheat.jpg'
+    img_path: '/images/products/buckwheat.jpg',
+    category: 'grocery',
+    quantity: 150
   },
   {
     product_name: 'Макароны спагетти',
@@ -280,7 +333,9 @@ products = [
     rating: 4.5,
     description: 'Barilla №5, 450г',
     measurement_unit: 'г',
-    img_path: '/images/products/pasta.jpg'
+    img_path: '/images/products/pasta.jpg',
+    category: 'grocery',
+    quantity: 250
   },
   {
     product_name: 'Мука пшеничная',
@@ -288,14 +343,18 @@ products = [
     rating: 4.4,
     description: 'Высший сорт, 1кг',
     measurement_unit: 'кг',
-    img_path: '/images/products/flour.jpg'
+    img_path: '/images/products/flour.jpg',
+    category: 'grocery',
+    quantity: 180
   },
   {
     product_name: 'Сахар песок',
     price: 69.99,
     description: 'Кристаллический, 1кг',
     measurement_unit: 'кг',
-    img_path: '/images/products/sugar.jpg'
+    img_path: '/images/products/sugar.jpg',
+    category: 'grocery',
+    quantity: 220
   },
   {
     product_name: 'Соль йодированная',
@@ -303,7 +362,9 @@ products = [
     rating: 4.3,
     description: 'Помол №1, 1кг',
     measurement_unit: 'кг',
-    img_path: '/images/products/salt.jpg'
+    img_path: '/images/products/salt.jpg',
+    category: 'grocery',
+    quantity: 190
   },
   {
     product_name: 'Масло подсолнечное',
@@ -311,7 +372,9 @@ products = [
     rating: 4.5,
     description: 'Олейна, рафинированное, 1л',
     measurement_unit: 'л',
-    img_path: '/images/products/oil.jpg'
+    img_path: '/images/products/oil.jpg',
+    category: 'grocery',
+    quantity: 160
   },
   
   # НАПИТКИ
@@ -321,7 +384,9 @@ products = [
     rating: 4.4,
     description: 'Боржоми, 0.5л',
     measurement_unit: 'шт',
-    img_path: '/images/products/water.jpg'
+    img_path: '/images/products/water.jpg',
+    category: 'drinks',
+    quantity: 300
   },
   {
     product_name: 'Сок яблочный',
@@ -329,7 +394,9 @@ products = [
     rating: 4.6,
     description: 'Добрый, 1л',
     measurement_unit: 'л',
-    img_path: '/images/products/juice.jpg'
+    img_path: '/images/products/juice.jpg',
+    category: 'drinks',
+    quantity: 180
   },
   {
     product_name: 'Кофе молотый',
@@ -337,7 +404,9 @@ products = [
     rating: 4.8,
     description: 'Jacobs Monarch, 250г',
     measurement_unit: 'г',
-    img_path: '/images/products/coffee.jpg'
+    img_path: '/images/products/coffee.jpg',
+    category: 'drinks',
+    quantity: 120
   },
   {
     product_name: 'Чай черный',
@@ -345,7 +414,9 @@ products = [
     rating: 4.7,
     description: 'Greenfield English, 25 пакетиков',
     measurement_unit: 'упак',
-    img_path: '/images/products/tea.jpg'
+    img_path: '/images/products/tea.jpg',
+    category: 'drinks',
+    quantity: 140
   },
   
   # ХЛЕБ И ВЫПЕЧКА
@@ -355,7 +426,9 @@ products = [
     rating: 4.8,
     description: 'На закваске, 400г',
     measurement_unit: 'шт',
-    img_path: '/images/products/bread.jpg'
+    img_path: '/images/products/bread.jpg',
+    category: 'bakery',
+    quantity: 100
   },
   {
     product_name: 'Батон нарезной',
@@ -363,7 +436,9 @@ products = [
     rating: 4.3,
     description: 'Пшеничный, 350г',
     measurement_unit: 'шт',
-    img_path: '/images/products/loaf.jpg'
+    img_path: '/images/products/loaf.jpg',
+    category: 'bakery',
+    quantity: 120
   },
   {
     product_name: 'Булочки сдобные',
@@ -371,13 +446,15 @@ products = [
     rating: 4.6,
     description: 'С изюмом, 4 шт',
     measurement_unit: 'упак',
-    img_path: '/images/products/buns.jpg'
+    img_path: '/images/products/buns.jpg',
+    category: 'bakery',
+    quantity: 80
   }
 ]
 
 products.each do |product_data|
   Product.create!(product_data)
-  puts "🛒 Товар: #{product_data[:product_name]} - #{product_data[:price]} руб."
+  puts "🛒 Товар: #{product_data[:product_name]} - Категория: #{product_data[:category]} - Кол-во: #{product_data[:quantity]}"
 end
 
 puts "✅ Товаров создано: #{Product.count}"
@@ -408,6 +485,8 @@ if alex
         quantity: item[:quantity],
         price_at_order: product.price
       )
+      # Обновляем количество товара на складе (уменьшаем)
+      product.update(quantity: product.quantity - item[:quantity])
     end
   end
   
@@ -436,6 +515,8 @@ if maria
         quantity: item[:quantity],
         price_at_order: product.price
       )
+      # Обновляем количество товара на складе
+      product.update(quantity: product.quantity - item[:quantity])
     end
   end
   
@@ -467,16 +548,29 @@ if admin
         quantity: item[:quantity],
         price_at_order: product.price
       )
+      # Обновляем количество товара на складе
+      product.update(quantity: product.quantity - item[:quantity])
     end
   end
   
-  puts "Заказ #3 для #{admin.login}: #{order3.order_items.count} позиций"
+  puts "📦 Заказ #3 для #{admin.login}: #{order3.order_items.count} позиций"
 end
 
-puts "\nИТОГО:"
-puts "Пользователей: #{User.count}"
-puts "Товаров: #{Product.count}"
-puts "Заказов: #{Order.count}"
-puts "Позиций в заказах: #{OrderItem.count}"
+# Вывод статистики по категориям
+puts "\n📊 Статистика по категориям:"
+categories.values.uniq.each do |category|
+  category_products = Product.where(category: category)
+  total_quantity = category_products.sum(:quantity)
+  avg_price = category_products.average(:price).to_f.round(2)
+  puts "  #{category.capitalize}: #{category_products.count} товаров, всего: #{total_quantity} шт., средняя цена: #{avg_price} руб."
+end
 
-puts "\nБаза данных успешно заполнена!"
+puts "\n📊 ИТОГО:"
+puts "👤 Пользователей: #{User.count}"
+puts "🛒 Товаров: #{Product.count}"
+puts "📦 Заказов: #{Order.count}"
+puts "📋 Позиций в заказах: #{OrderItem.count}"
+puts "💰 Общая стоимость товаров на складе: #{Product.sum('price * quantity').round(2)} руб."
+puts "📈 Среднее количество товара: #{(Product.sum(:quantity).to_f / Product.count).round(2)} шт."
+
+puts "\n✅ База данных успешно заполнена!"

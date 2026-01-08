@@ -17,6 +17,7 @@ module Server
     config.api_only = true
 
     config.autoload_paths << Rails.root.join('app/models/managers')
+    config.autoload_paths << Rails.root.join('app/adapters/json_adapters')
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
