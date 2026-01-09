@@ -1,0 +1,27 @@
+meta {
+  name: add_product_on_cart
+  type: http
+  seq: 11
+}
+
+post {
+  url: http://127.0.0.1:3000/api/v1/cart/add
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: 87LZ5JmJ058YHQrfHiLMYd6tuZz9BWASExNcBCDiR7k
+}
+
+body:json {
+  {
+    "product_id": 106,
+    "quantity": 2
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

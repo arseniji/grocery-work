@@ -19,9 +19,18 @@ Rails.application.routes.draw do
       delete 'logout', to: 'base#logout'
       get 'session_expire', to: 'base#check_expire_session'
       scope :products do
+        get 'categories', to: 'get_product#get_all_category'
         get 'top', to: 'get_product#get_top_products'
         get ':id', to: 'get_product#get_product_details'
         get '/', to: 'get_product#get_product_page'
+      end
+      scope :cart do
+        post 'add', to: 'cart#add_product_to_cart'
+        post 'add-one/:product_id', to: 'cart#add_quantity_product_on_cart'
+        delete 'remove/:product_id', to: 'cart#delete_product_on_cart'
+        delete 'remove-one/:product_id', to: 'cart#delete_quantity_product_on_cart'
+        delete 'clear', to: 'cart#clear_products_to_cart'
+        get '/', to: 'cart#get_cart'  # Добавить метод в контроллер
       end
     end
   end

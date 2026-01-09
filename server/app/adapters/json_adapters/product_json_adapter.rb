@@ -1,5 +1,5 @@
 class ProductJsonAdapter < BaseJsonAdapter
-    def as_json(options = {})
+    def as_json(**options)
       {
         success: true,
         id: @object.id,

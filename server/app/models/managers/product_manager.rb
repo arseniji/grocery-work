@@ -4,11 +4,14 @@ class ProductManager
   def self.get_product_details(product_id: )
     product = Product.find_by(id: product_id)
     if product
-      JsonAdapterFacade.adapt(product, type: :product, options: {
-          metadata: {
-          includes: [:category]
-          }
-        })
+      JsonAdapterFacade.adapt(
+                                product, 
+                                type: :product,
+                                metadata: {
+                                  includes: [:category]
+                                },
+                                some_other_option: 'value'
+                              )
     else
       error = ErrorObject.new(message: "Такого продукта не существует", 
                                      code: :not_found,
@@ -49,23 +52,22 @@ class ProductManager
         .limit(page_size)
     
     JsonAdapterFacade.adapt_collection(
-      paginated_products,
-       pagination_meta: {
-          current_page: number_page,
-          page_size: page_size,
-          total_pages: (total_count.to_f / page_size.to_i).ceil,
-          total_count: total_count,
-        },
-        options: {
-          metadata: {
-            filters: {
-              category: category.presence,
-              search: search.presence,
-              sorted_fields: sorted_fields.presence
-            }.compact
-          }
-        }
-      )
+                                      paginated_products,
+                                      type: :product_collection,
+                                      pagination_meta: {
+                                        current_page: number_page,
+                                        page_size: page_size,
+                                        total_pages: (total_count.to_f / page_size.to_i).ceil,
+                                        total_count: total_count,
+                                      },
+                                      metadata: {
+                                        filters: {
+                                          category: category.presence,
+                                          search: search.presence,
+                                          sorted_fields: sorted_fields.presence
+                                        }.compact
+                                      }
+                                    )
   end
 
   def self.get_top_products(size_top: 10)
@@ -82,5 +84,14 @@ class ProductManager
           size: size_top
         }
       )
+  end
+
+  def self.get_all_category()
+    category_names = Product.distinct.pluck(:category).compact.sort
+    categories = category_names.map do |category_name|
+      Category.new(category_name)
+    end
+    total_count = categories.count
+    JsonAdapterFacade.adapt_collection(categories, type: :categories, total_count: total_count)
   end
 end

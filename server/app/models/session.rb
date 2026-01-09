@@ -5,7 +5,28 @@ class Session
     @id = id
     @user_id = user_id
     @data = data
+    @data[:cart] ||= {}
     @expires_at = expires_at || 2.weeks.from_now
+  end
+
+  def cart
+    @data[:cart] ||= {}
+  end
+  
+  def cart=(new_cart)
+    @data[:cart] = new_cart
+  end
+  
+  def clear_cart
+    @data[:cart] = {}
+  end
+
+  def cart_object
+    Cart.new(product_collection: cart)
+  end
+  
+  def update_cart(cart_instance)
+    @data[:cart] = cart_instance.instance_variable_get(:@product_collection)
   end
 
   def save
@@ -47,7 +68,7 @@ class Session
     {
       session_id: @id,
       expires_at: @expires_at,
-      user_data: @data.slice(:login, :firstname, :lastname) # только нужные данные
+      user_data: @data.slice(:login, :firstname, :lastname)
     }
   end
 
