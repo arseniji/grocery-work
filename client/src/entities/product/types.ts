@@ -17,3 +17,8 @@ export interface Product {
   };
   metadata: object;
 }
+
+export interface Category {
+  success: boolean;
+  category_name: string;
+}

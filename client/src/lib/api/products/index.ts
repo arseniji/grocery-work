@@ -1,6 +1,6 @@
 import type { Product } from "@/entities/product/types";
 import { createEndpoint } from "../core";
-import type { ProductRes } from "./types";
+import type { CategoryRes, ProductRes } from "./types";
 
 class ProductsApi {
   public async top(count: number) {
@@ -27,7 +27,10 @@ class ProductsApi {
     return createEndpoint<Product>(`v1/products/${id}`, "GET")();
   }
 
-  public categories = createEndpoint("v1/products/categories", "GET");
+  public categories = createEndpoint<CategoryRes>(
+    "v1/products/categories",
+    "GET"
+  );
 }
 
 export const productsApi = new ProductsApi();

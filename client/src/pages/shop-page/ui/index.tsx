@@ -11,7 +11,7 @@ import { Loader, ProductCard, Button } from "@/shared/ui";
 import type { AxiosError } from "axios";
 import { useEffect, useState, useCallback } from "react";
 import { productsApi } from "@/lib/api/products";
-import type { Product } from "@/entities/product/types";
+import type { Category, Product } from "@/entities/product/types";
 import { useNavigate, useSearchParams } from "react-router";
 import { Toast } from "@/feat";
 
@@ -25,6 +25,7 @@ export const ShopPage = () => {
 
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [categories, setCategories] = useState<Category[]>([]);
   const itemsPerPage = 12;
 
   const loadProducts = useCallback(async () => {
@@ -52,9 +53,28 @@ export const ShopPage = () => {
     setIsLoading(false);
   }, [page, search, sort, category]);
 
+  const loadCategories = useCallback(async () => {
+    try {
+      const response = await productsApi.categories();
+
+      if (response.success) {
+        setCategories(response.items);
+      }
+    } catch (err) {
+      const error = err as AxiosError;
+      console.log(error);
+      Toast.show({
+        title: "Ошибка",
+        type: "error",
+        msg: "Ошибка при получении категорий",
+      });
+    }
+  }, []);
+
   useEffect(() => {
     loadProducts();
-  }, [loadProducts]);
+    loadCategories();
+  }, [loadProducts, loadCategories]);
 
   const handlePrevPage = () => {
     if (page > 1) {
@@ -77,7 +97,13 @@ export const ShopPage = () => {
       <ShopContainer>
         <TitleM>Магазин</TitleM>
 
-        <CategoryContainer></CategoryContainer>
+        <CategoryContainer>
+          {categories.map((category) => (
+            <Button key={category.category_name} variant="border">
+              {category.category_name}
+            </Button>
+          ))}
+        </CategoryContainer>
 
         {isLoading ? (
           <LoaderWrapper>

@@ -1,4 +1,4 @@
-import type { Product } from "@/entities/product/types";
+import type { Category, Product } from "@/entities/product/types";
 
 export interface ProductRes {
   success: boolean;
@@ -7,4 +7,10 @@ export interface ProductRes {
     isTopList: boolean;
     size: string;
   };
+}
+
+export interface CategoryRes {
+  success: boolean;
+  items: Category[];
+  total_items: number;
 }
