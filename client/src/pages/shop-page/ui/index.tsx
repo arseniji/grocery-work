@@ -5,6 +5,7 @@ import {
   ProductsList,
   PaginationContainer,
   LoaderWrapper,
+  CategoryContainer,
 } from "./styled";
 import { Loader, ProductCard, Button } from "@/shared/ui";
 import type { AxiosError } from "axios";
@@ -75,6 +76,9 @@ export const ShopPage = () => {
     <Main>
       <ShopContainer>
         <TitleM>Магазин</TitleM>
+
+        <CategoryContainer></CategoryContainer>
+
         {isLoading ? (
           <LoaderWrapper>
             <Loader />

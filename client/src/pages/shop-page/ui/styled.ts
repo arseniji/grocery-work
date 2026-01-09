@@ -36,3 +36,10 @@ export const LoaderWrapper = styled.div`
   width: 100%;
   height: 800px;
 `;
+
+export const CategoryContainer = styled.div`
+  max-width: 100%;
+  overflow-x: auto;
+  display: flex;
+  gap: 20px;
+`;

@@ -26,6 +26,8 @@ class ProductsApi {
   public async getById(id: number) {
     return createEndpoint<Product>(`v1/products/${id}`, "GET")();
   }
+
+  public categories = createEndpoint("v1/products/categories", "GET");
 }
 
 export const productsApi = new ProductsApi();
