@@ -1,5 +1,3 @@
-require 'grocery-shop/server/app/models/session.rb'
-
 class SessionManager
   def self.user_registered(user, request_context = {})
     session = Session.create_for_user(
@@ -29,9 +27,34 @@ class SessionManager
     session.renew if session.expired?
     session
   end
+
+  def self.session_expire?(session_id)
+    session = Session.find(session_id)
+    if not session
+      return nil
+    end
+    session.expired?
+  end
   
   def self.user_logout(session_id, user_id)
     session = Session.find(session_id)
     session&.destroy
+  end
+
+  def self.get_cart_user(session_id)
+    session = Session.find(session_id)
+    session.cart_object
+  end
+
+  def self.update_cart_user(session_id, cart_instance)
+    session = Session.find(session_id)
+    session.update_cart(cart_instance)
+    session.save
+  end
+
+  def self.clear_cart_user(session_id)
+    session = Session.find(session_id)
+    session.clear_cart
+    session.save
   end
 end

@@ -1,4 +1,3 @@
-require 'observer'
 require_relative 'session_manager' 
 
 class AuthManager

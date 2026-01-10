@@ -1,0 +1,15 @@
+meta {
+  name: get_order_user
+  type: http
+  seq: 15
+}
+
+get {
+  url: http://127.0.0.1:3000/api/v1/cart/add-one/101
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}
