@@ -43,3 +43,9 @@ export const CategoryContainer = styled.div`
   display: flex;
   gap: 20px;
 `;
+
+export const SortContainer = styled.div`
+  max-width: 100%;
+  display: flex;
+  gap: 20px;
+`;

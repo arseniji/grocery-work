@@ -6,14 +6,16 @@ import {
   PaginationContainer,
   LoaderWrapper,
   CategoryContainer,
+  SortContainer,
 } from "./styled";
-import { Loader, ProductCard, Button } from "@/shared/ui";
+import { Loader, ProductCard, Button, ComboBox } from "@/shared/ui";
 import type { AxiosError } from "axios";
 import { useEffect, useState, useCallback } from "react";
 import { productsApi } from "@/lib/api/products";
 import type { Category, Product } from "@/entities/product/types";
 import { useNavigate, useSearchParams } from "react-router";
 import { Toast } from "@/feat";
+import { sortOptions } from "../constants/sort-options";
 
 export const ShopPage = () => {
   const navigate = useNavigate();
@@ -57,7 +59,6 @@ export const ShopPage = () => {
     try {
       const response = await productsApi.categories();
 
-      console.log(response);
       if (response.success) {
         setCategories(response.items);
       }
@@ -107,6 +108,14 @@ export const ShopPage = () => {
     }
   };
 
+  const handleSort = (sort?: string) => {
+    if (sort) {
+      const newParams = new URLSearchParams(params);
+      newParams.set("sort", sort);
+      navigate(`/shop?${newParams.toString()}`);
+    }
+  };
+
   return (
     <Main>
       <ShopContainer>
@@ -124,6 +133,14 @@ export const ShopPage = () => {
             </Button>
           ))}
         </CategoryContainer>
+
+        <SortContainer>
+          <ComboBox
+            options={sortOptions}
+            placeholder="Сортировать по: "
+            onChange={handleSort}
+          />
+        </SortContainer>
 
         {isLoading ? (
           <LoaderWrapper>
