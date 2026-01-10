@@ -94,6 +94,12 @@ export const ShopPage = () => {
   };
 
   const handleCategory = (name: string) => {
+    if (category === name) {
+      const newParams = new URLSearchParams(params);
+      newParams.delete("category");
+      navigate(`/shop?${newParams.toString()}`);
+      return;
+    }
     if (categories.length > 0) {
       const newParams = new URLSearchParams(params);
       newParams.set("category", name);
@@ -107,13 +113,14 @@ export const ShopPage = () => {
         <TitleM>Магазин</TitleM>
 
         <CategoryContainer>
-          {categories.map((category) => (
+          {categories.map((c) => (
             <Button
               variant="border"
-              key={category.categoryName}
-              onClick={() => handleCategory(category.categoryName)}
+              key={c.categoryName}
+              onClick={() => handleCategory(c.categoryName)}
+              active={category === c.categoryName}
             >
-              {category.categoryName}
+              {c.categoryName}
             </Button>
           ))}
         </CategoryContainer>
