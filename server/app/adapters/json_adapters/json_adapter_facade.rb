@@ -7,7 +7,8 @@ class JsonAdapterFacade
     cart: CartCollectionJsonAdapter,
     successful: SuccessfulJsonAdapter,
     category: CategoryJsonAdapter,
-    categories: CategoryCollectionJsonAdapter
+    categories: CategoryCollectionJsonAdapter,
+    orders: OrderCollectionJsonAdapter,
   }.freeze
   
   def self.adapt(object, type:, **options)
