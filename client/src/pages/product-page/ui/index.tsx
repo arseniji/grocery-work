@@ -17,7 +17,7 @@ import {
   SimilarProducts,
   ProductsList,
 } from "./styled";
-import { TitleL, TitleM, TitleXS } from "@/shared/ui/captions";
+import { TitleL, TitleM } from "@/shared/ui/captions";
 import { StarRating } from "@/shared/ui/star-rating";
 import { Button, Loader, ProductCard } from "@/shared/ui";
 
@@ -62,7 +62,6 @@ export const ProductPage = () => {
           undefined
         );
         if (response.success) {
-          // Exclude the current product
           const filtered = response.products.filter(
             (p) => p.id !== product?.id
           );
