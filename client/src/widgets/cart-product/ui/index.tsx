@@ -49,9 +49,7 @@ export const CartProduct = ({
         </QuantityWrapper>
         <TotalPrice>Итого: {total_price}р</TotalPrice>
       </InfoWrapper>
-      <Button variant="primary" onClick={onDelete}>
-        Удалить
-      </Button>
+      <Button onClick={onDelete}>Удалить</Button>
     </CartProductContainer>
   );
 };

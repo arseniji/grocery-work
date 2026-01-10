@@ -148,6 +148,7 @@ export const CartPage = () => {
               <BodyL>Общая сумма: {total}р</BodyL>
             </MetaContainer>
           )}
+          <Button variant="primary">Сделать заказ</Button>
         </CartWrapper>
       )}
     </Main>

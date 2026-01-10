@@ -45,4 +45,5 @@ export const MetaContainer = styled.div`
   display: flex;
   align-items: center;
   margin-top: 20px;
+  margin-bottom: 40px;
 `;
