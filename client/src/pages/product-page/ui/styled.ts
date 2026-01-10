@@ -8,6 +8,7 @@ export const Main = styled.main`
   flex-direction: column;
   gap: 50px;
   padding: 50px 0;
+  width: 100%;
 `;
 
 export const ProductContainer = styled.div`
