@@ -11,6 +11,17 @@ class CartApi {
     "POST"
   );
 
+  public removeOne(id: number) {
+    return createEndpoint<AddProductRes>(
+      `v1/cart/remove-one/${id}`,
+      "DELETE"
+    )();
+  }
+
+  public remove(id: number) {
+    return createEndpoint<AddProductRes>(`v1/cart/remove/${id}`, "DELETE")();
+  }
+
   public get = createEndpoint<GetCardRes>("v1/cart", "GET");
 }
 
