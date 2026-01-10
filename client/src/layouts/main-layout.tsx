@@ -2,6 +2,7 @@ import { useAuth } from "@/lib/hooks";
 import { Footer, Header } from "@/widgets";
 import { Loader } from "@/shared/ui";
 import { Outlet } from "react-router";
+import styled from "styled-components";
 
 export const MainLayout = () => {
   const { isAuth, isLoading } = useAuth();
@@ -21,10 +22,16 @@ export const MainLayout = () => {
     );
 
   return (
-    <>
+    <Container>
       <Header isLogined={isAuth} />
       <Outlet />
       <Footer />
-    </>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  height: 100%;
+`;

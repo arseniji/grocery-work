@@ -6,6 +6,7 @@ export const FooterWrapper = styled.footer`
   background-color: #f8f9fa;
   border-top: 1px solid #e9ecef;
   margin-top: 100px;
+  align-self: end;
 `;
 
 export const FooterContainer = styled.div`
