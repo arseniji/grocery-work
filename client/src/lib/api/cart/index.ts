@@ -1,5 +1,5 @@
 import { createEndpoint } from "../core";
-import type { AddManyReq, AddProductRes } from "./types";
+import type { GetCardRes, AddManyReq, AddProductRes } from "./types";
 
 class CartApi {
   public addOne(id: number) {
@@ -10,6 +10,8 @@ class CartApi {
     "v1/cart/add",
     "POST"
   );
+
+  public get = createEndpoint<GetCardRes>("v1/cart", "GET");
 }
 
 export const cartApi = new CartApi();
