@@ -1,4 +1,4 @@
-class ProductCollectionJsonAdapter < BaseJsonAdapter
+class OrderCollectionJsonAdapter < BaseJsonAdapter
   def initialize(collection: , pagination_meta: {}, metadata: {})
     @collection = collection
     @pagination_meta = pagination_meta
@@ -9,7 +9,7 @@ class ProductCollectionJsonAdapter < BaseJsonAdapter
   def as_json(**options)
     {
       success: true,
-      products: @collection.map{ |product| ProductJsonAdapter.new(product).as_json(**options) },
+      orders: @collection.map{ |order| ShortOrderJsonAdapter.new(order).as_json(**options) },
       meta: @pagination_meta
     }
   end
