@@ -60,3 +60,15 @@ export const Quantity = styled.span`
   font-size: 16px;
   color: #666;
 `;
+
+export const SimilarProducts = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+`;
+
+export const ProductsList = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+`;
