@@ -20,7 +20,7 @@ import {
   QuantitySelector,
   ButtonContainer,
 } from "./styled";
-import { TitleL, TitleM, TextM, BodyM, BodyL } from "@/shared/ui/captions";
+import { TitleL, TitleM, BodyL } from "@/shared/ui/captions";
 import { StarRating } from "@/shared/ui/star-rating";
 import { Button, Loader, ProductCard } from "@/shared/ui";
 import { cartApi } from "@/lib/api/cart";
