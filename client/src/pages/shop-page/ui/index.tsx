@@ -57,6 +57,7 @@ export const ShopPage = () => {
     try {
       const response = await productsApi.categories();
 
+      console.log(response);
       if (response.success) {
         setCategories(response.items);
       }
@@ -92,6 +93,14 @@ export const ShopPage = () => {
     }
   };
 
+  const handleCategory = (name: string) => {
+    if (categories.length > 0) {
+      const newParams = new URLSearchParams(params);
+      newParams.set("category", name);
+      navigate(`/shop?${newParams.toString()}`);
+    }
+  };
+
   return (
     <Main>
       <ShopContainer>
@@ -99,8 +108,12 @@ export const ShopPage = () => {
 
         <CategoryContainer>
           {categories.map((category) => (
-            <Button key={category.category_name} variant="border">
-              {category.category_name}
+            <Button
+              variant="border"
+              key={category.categoryName}
+              onClick={() => handleCategory(category.categoryName)}
+            >
+              {category.categoryName}
             </Button>
           ))}
         </CategoryContainer>

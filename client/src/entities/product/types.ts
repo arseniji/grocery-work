@@ -20,5 +20,5 @@ export interface Product {
 
 export interface Category {
   success: boolean;
-  category_name: string;
+  categoryName: string;
 }
