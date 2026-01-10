@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import { RegistrationPage } from "@/pages/registration-page";
 import { ToastProvider } from "@/feat/toast";
 import { ShopPage } from "@/pages/shop-page";
-import { ProductPage } from "@/pages/product-page/ui";
+import { ProductPage } from "@/pages/product-page";
 
 function App() {
   return (
