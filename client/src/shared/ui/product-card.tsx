@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { BodyM, TitleS } from "./captions";
 import { CartIcon } from "../icons";
 import { StarRating } from "./star-rating";
+import { useNavigate } from "react-router";
 
 type ProductCardProps = Omit<
   Product,
@@ -14,9 +15,12 @@ export const ProductCard = ({
   name,
   price,
   rating,
+  id,
 }: ProductCardProps) => {
+  const navigate = useNavigate();
+
   return (
-    <ProductContainer>
+    <ProductContainer onClick={() => navigate(`/product/${id}`)}>
       <Image src={image} />
       <Wrapper>
         <div>
