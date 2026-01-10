@@ -113,6 +113,11 @@ export const ShopPage = () => {
       const newParams = new URLSearchParams(params);
       newParams.set("sort", sort);
       navigate(`/shop?${newParams.toString()}`);
+    } else {
+      const newParams = new URLSearchParams(params);
+      newParams.delete("sort");
+      navigate(`/shop?${newParams.toString()}`);
+      return;
     }
   };
 
