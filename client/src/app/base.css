@@ -98,6 +98,11 @@ input {
   background: none;
 }
 
+button {
+  background: none;
+  border: none;
+}
+
 html,
 body,
 #root {

@@ -87,8 +87,11 @@ export const Header = ({ isLogined }: HeaderProps) => {
           />
         </form>
 
-        {/* TODO: Сделать либо переход на новую страницу либо модалку */}
-        {isLogined && <CartIcon />}
+        {isLogined && (
+          <button onClick={() => navigate("cart")}>
+            <CartIcon />
+          </button>
+        )}
 
         <AuthWrapper>
           {!isLogined ? (
