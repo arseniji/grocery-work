@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled, { css } from "styled-components";
+import { BaseBodyM } from "./captions";
 
-// Типы для пропсов
 export interface ComboBoxOption {
   value: string;
   label: string;
@@ -17,30 +17,11 @@ export interface ComboBoxProps {
   width?: string;
   error?: boolean;
   errorMessage?: string;
-  label?: string;
-  required?: boolean;
-  name?: string;
 }
 
-// Стилизованные компоненты
 const Container = styled.div<{ width?: string }>`
   width: ${({ width }) => width || "300px"};
   position: relative;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    sans-serif;
-`;
-
-const Label = styled.label`
-  display: block;
-  margin-bottom: 6px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #333;
-`;
-
-const RequiredStar = styled.span`
-  color: #ff4d4f;
-  margin-left: 4px;
 `;
 
 const ComboBoxWrapper = styled.div<{
@@ -49,7 +30,7 @@ const ComboBoxWrapper = styled.div<{
   error?: boolean;
 }>`
   position: relative;
-  border: 1px solid ${({ error }) => (error ? "#ff4d4f" : "#d9d9d9")};
+  border: 1px solid ${({ error }) => (error ? "#ff4d4f" : "#000")};
   border-radius: 6px;
   background-color: ${({ disabled }) => (disabled ? "#f5f5f5" : "white")};
   cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
@@ -58,13 +39,13 @@ const ComboBoxWrapper = styled.div<{
   ${({ isOpen }) =>
     isOpen &&
     css`
-      border-color: #1890ff;
+      border-color: #517907;
       box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
     `}
 
   &:hover {
     border-color: ${({ disabled, error }) =>
-      disabled ? "#d9d9d9" : error ? "#ff4d4f" : "#40a9ff"};
+      disabled ? "#d9d9d9" : error ? "#ff4d4f" : "#517907"};
   }
 `;
 
@@ -78,7 +59,7 @@ const InputContainer = styled.div`
 const SelectedValue = styled.div<{ placeholder?: boolean }>`
   flex: 1;
   color: ${({ placeholder }) => (placeholder ? "#999" : "#333")};
-  font-size: 14px;
+  ${BaseBodyM}
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -117,10 +98,10 @@ const Dropdown = styled.div<{ isOpen: boolean }>`
 
 const Option = styled.div<{ isSelected: boolean; disabled?: boolean }>`
   padding: 8px 12px;
-  font-size: 14px;
+  ${BaseBodyM}
   cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
   color: ${({ disabled, isSelected }) =>
-    disabled ? "#999" : isSelected ? "#1890ff" : "#333"};
+    disabled ? "#999" : isSelected ? "#517907" : "#333"};
   background-color: ${({ isSelected }) =>
     isSelected ? "#e6f7ff" : "transparent"};
   display: flex;
@@ -140,7 +121,7 @@ const Option = styled.div<{ isSelected: boolean; disabled?: boolean }>`
 
 const CheckIcon = styled.span`
   margin-right: 8px;
-  color: #1890ff;
+  color: #517907;
   font-size: 12px;
 `;
 
@@ -174,19 +155,6 @@ const ClearButton = styled.button`
   }
 `;
 
-const SearchInput = styled.input`
-  width: 100%;
-  padding: 8px 12px;
-  border: none;
-  border-bottom: 1px solid #d9d9d9;
-  font-size: 14px;
-  outline: none;
-
-  &:focus {
-    border-bottom-color: #1890ff;
-  }
-`;
-
 const NoOptions = styled.div`
   padding: 16px;
   text-align: center;
@@ -194,7 +162,6 @@ const NoOptions = styled.div`
   font-size: 14px;
 `;
 
-// Основной компонент ComboBox
 export const ComboBox: React.FC<ComboBoxProps> = ({
   options,
   value,
@@ -204,9 +171,6 @@ export const ComboBox: React.FC<ComboBoxProps> = ({
   width,
   error = false,
   errorMessage,
-  label,
-  required = false,
-  name,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -215,12 +179,10 @@ export const ComboBox: React.FC<ComboBoxProps> = ({
   );
   const comboBoxRef = useRef<HTMLDivElement>(null);
 
-  // Фильтрация опций по поисковому запросу
   const filteredOptions = options.filter((option) =>
     option.label.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Инициализация выбранного значения
   useEffect(() => {
     if (value) {
       const foundOption = options.find((option) => option.value === value);
@@ -230,7 +192,6 @@ export const ComboBox: React.FC<ComboBoxProps> = ({
     }
   }, [value, options]);
 
-  // Обработчик клика вне компонента
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -251,7 +212,6 @@ export const ComboBox: React.FC<ComboBoxProps> = ({
     };
   }, [isOpen]);
 
-  // Обработчик выбора опции
   const handleSelect = (option: ComboBoxOption) => {
     if (option.disabled) return;
 
@@ -261,14 +221,12 @@ export const ComboBox: React.FC<ComboBoxProps> = ({
     setSearchTerm("");
   };
 
-  // Обработчик очистки выбора
   const handleClear = (e: React.MouseEvent) => {
     e.stopPropagation();
     setSelectedOption(null);
     onChange?.("");
   };
 
-  // Обработчик открытия/закрытия выпадающего списка
   const handleToggle = () => {
     if (disabled) return;
     setIsOpen(!isOpen);
@@ -277,12 +235,6 @@ export const ComboBox: React.FC<ComboBoxProps> = ({
     }
   };
 
-  // Обработчик ввода в поле поиска
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
-  };
-
-  // Обработчик нажатия клавиш
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (disabled) return;
 
@@ -307,13 +259,6 @@ export const ComboBox: React.FC<ComboBoxProps> = ({
 
   return (
     <Container width={width} ref={comboBoxRef}>
-      {label && (
-        <Label htmlFor={name}>
-          {label}
-          {required && <RequiredStar>*</RequiredStar>}
-        </Label>
-      )}
-
       <ComboBoxWrapper
         isOpen={isOpen}
         disabled={disabled}
@@ -347,15 +292,6 @@ export const ComboBox: React.FC<ComboBoxProps> = ({
       </ComboBoxWrapper>
 
       <Dropdown isOpen={isOpen}>
-        <SearchInput
-          type="text"
-          placeholder="Search..."
-          value={searchTerm}
-          onChange={handleSearchChange}
-          onClick={(e) => e.stopPropagation()}
-          aria-label="Search options"
-        />
-
         {filteredOptions.length === 0 ? (
           <NoOptions>No options found</NoOptions>
         ) : (
