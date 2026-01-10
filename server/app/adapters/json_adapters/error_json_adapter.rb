@@ -1,5 +1,5 @@
 class ErrorJsonAdapter < BaseJsonAdapter
-  def as_json(options = {})
+  def as_json(**options)
     {
       success: false,
       error: {

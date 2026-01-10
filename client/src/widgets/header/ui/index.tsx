@@ -8,11 +8,12 @@ import {
 } from "./styled";
 import { BodyM, TitleXS } from "@/shared/ui/captions";
 import { routes } from "../contants/routes";
-import { NavLink, useNavigate } from "react-router";
+import { NavLink, useNavigate, useSearchParams } from "react-router";
 import { Button, Input } from "@/shared/ui";
 import type { AxiosError } from "axios";
 import { authApi } from "@/lib/api/auth";
 import { Toast } from "@/feat";
+import { useState, type FormEventHandler } from "react";
 
 interface HeaderProps {
   isLogined: boolean;
@@ -20,6 +21,9 @@ interface HeaderProps {
 
 export const Header = ({ isLogined }: HeaderProps) => {
   const navigate = useNavigate();
+  const [params] = useSearchParams();
+
+  const [search, setSearch] = useState<string>(params.get("search") || "");
 
   const handleLogout = async () => {
     try {
@@ -54,6 +58,11 @@ export const Header = ({ isLogined }: HeaderProps) => {
     }
   };
 
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    navigate(`/shop?search=${search}`);
+  };
+
   return (
     <HeaderContainer>
       <HeaderWrapper>
@@ -69,7 +78,14 @@ export const Header = ({ isLogined }: HeaderProps) => {
           ))}
         </NavContainer>
 
-        <Input icon={SearchIcon} placeholder="Поиск..." />
+        <form onSubmit={handleSubmit}>
+          <Input
+            icon={SearchIcon}
+            placeholder="Поиск..."
+            value={search}
+            onChange={setSearch}
+          />
+        </form>
 
         {/* TODO: Сделать либо переход на новую страницу либо модалку */}
         {isLogined && <CartIcon />}
