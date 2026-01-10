@@ -32,6 +32,9 @@ Rails.application.routes.draw do
         delete 'clear', to: 'cart#clear_products_to_cart'
         get '/', to: 'cart#get_cart'  # Добавить метод в контроллер
       end
+      scope :order do
+        get '/', to: 'order#get_user_orders'
+      end
     end
   end
 end
