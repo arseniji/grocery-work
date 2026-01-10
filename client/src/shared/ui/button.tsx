@@ -13,6 +13,7 @@ type ButtonProps =
       onClick?: () => void;
       type?: "submit" | "button";
       disabled?: boolean;
+      active?: boolean;
     }
   | {
       children: string | ReactNode;
@@ -20,10 +21,12 @@ type ButtonProps =
       as: "link";
       href: string;
       disabled?: boolean;
+      active?: boolean;
     };
 
 interface ButtonNativeProps {
   variant: BtnVariant;
+  active: boolean;
 }
 
 const colors = (variant: BtnVariant) => {
@@ -60,12 +63,25 @@ const colors = (variant: BtnVariant) => {
   }
 };
 
+const activeStyle = (variant: BtnVariant) => {
+  switch (variant) {
+    case "ghost":
+    case "primary":
+    case "border":
+      return css`
+        background: #000;
+        color: #fff;
+      `;
+  }
+};
+
 const ButtonNative = styled.button<ButtonNativeProps>`
   ${BaseBodyL};
   text-align: center;
   padding: 10px 16px;
   transition: all 0.2s ease-in;
   ${({ variant }) => colors(variant)};
+  ${({ variant, active }) => active && activeStyle(variant)}
 `;
 
 export const Button = (props: ButtonProps) => {
@@ -74,7 +90,12 @@ export const Button = (props: ButtonProps) => {
   if (as === "link") {
     const { href } = props as { href: string };
     return (
-      <ButtonNative variant={variant} as={Link} to={href}>
+      <ButtonNative
+        variant={variant}
+        as={Link}
+        to={href}
+        active={props.active || false}
+      >
         {children}
       </ButtonNative>
     );
@@ -93,6 +114,7 @@ export const Button = (props: ButtonProps) => {
       variant={variant}
       onClick={handleClick}
       type={props.type || "button"}
+      active={props.active || false}
     >
       {children}
     </ButtonNative>
