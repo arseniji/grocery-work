@@ -4,8 +4,8 @@ export interface ProductRes {
   success: boolean;
   products: Product[];
   meta: {
-    isTopList: boolean;
-    size: string;
+    totalPages: number;
+    totalCount: number;
   };
 }
 

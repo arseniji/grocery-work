@@ -1,4 +1,4 @@
-import { TitleM } from "@/shared/ui/captions";
+import { TitleM, TitleXS } from "@/shared/ui/captions";
 import {
   Main,
   ShopContainer,
@@ -28,6 +28,7 @@ export const ShopPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [totalPages, setTotalPages] = useState<number>();
   const itemsPerPage = 12;
 
   const loadProducts = useCallback(async () => {
@@ -42,6 +43,7 @@ export const ShopPage = () => {
       );
       if (response.success) {
         setProducts(response.products);
+        setTotalPages(response.meta.totalPages);
       }
     } catch (err) {
       const error = err as AxiosError;
@@ -170,6 +172,12 @@ export const ShopPage = () => {
                 <Button variant="border" onClick={handlePrevPage}>
                   Предыдущая
                 </Button>
+              )}
+
+              {totalPages && (
+                <TitleXS>
+                  {page} / {totalPages}
+                </TitleXS>
               )}
 
               {products.length === itemsPerPage && (
