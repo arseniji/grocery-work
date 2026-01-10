@@ -44,13 +44,6 @@ export const Price = styled.span`
   color: #000;
 `;
 
-export const Description = styled.p`
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 26px;
-  color: #000;
-`;
-
 export const Unit = styled.span`
   ${BaseBodyM}
   color: #666;
@@ -88,23 +81,6 @@ export const QuantitySelector = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-`;
-
-export const QuantityButton = styled.button`
-  width: 30px;
-  height: 30px;
-  border: 1px solid #ccc;
-  background: #fff;
-  border-radius: 4px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  font-weight: bold;
-  &:hover {
-    background: #f0f0f0;
-  }
 `;
 
 export const ButtonContainer = styled.div`

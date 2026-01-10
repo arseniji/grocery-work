@@ -11,7 +11,6 @@ import {
   Details,
   Category,
   Price,
-  Description,
   Unit,
   Quantity,
   SimilarProducts,
@@ -19,10 +18,9 @@ import {
   PriceRating,
   UnitQuantity,
   QuantitySelector,
-  QuantityButton,
   ButtonContainer,
 } from "./styled";
-import { TitleL, TitleM, TextM } from "@/shared/ui/captions";
+import { TitleL, TitleM, TextM, BodyM, BodyL } from "@/shared/ui/captions";
 import { StarRating } from "@/shared/ui/star-rating";
 import { Button, Loader, ProductCard } from "@/shared/ui";
 import { cartApi } from "@/lib/api/cart";
@@ -143,26 +141,28 @@ export const ProductPage = () => {
             <Price>{product.price}р</Price>
             <StarRating rating={parseFloat(product.rating)} />
           </PriceRating>
-          <Description>{product.details.description}</Description>
+          <BodyL>{product.details.description}</BodyL>
           <UnitQuantity>
             <Unit>Единица: {product.details.unit}</Unit>
             <Quantity>Количество: {product.details.quantity}</Quantity>
           </UnitQuantity>
           <QuantitySelector>
-            <TextM>Выбрать количество:</TextM>
-            <QuantityButton
+            <BodyL>Выбрать количество:</BodyL>
+            <Button
+              variant="border"
               onClick={() => setQuantity(Math.max(1, quantity - 1))}
             >
               -
-            </QuantityButton>
-            <TextM>{quantity}</TextM>
-            <QuantityButton
+            </Button>
+            <BodyL>{quantity}</BodyL>
+            <Button
+              variant="border"
               onClick={() =>
                 setQuantity(Math.min(product.details.quantity, quantity + 1))
               }
             >
               +
-            </QuantityButton>
+            </Button>
           </QuantitySelector>
           <Button variant="primary" onClick={addToCart}>
             Добавить в корзину
