@@ -1,11 +1,22 @@
 import { useAuth } from "@/lib/hooks";
 import { Footer, Header } from "@/widgets";
 import { Loader } from "@/shared/ui";
-import { Outlet } from "react-router";
+import { Outlet, useNavigate, useLocation } from "react-router";
 import styled from "styled-components";
+import { useEffect } from "react";
+
+const securePaths = ["/cart"];
 
 export const MainLayout = () => {
   const { isAuth, isLoading } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!isLoading && !isAuth && securePaths.includes(location.pathname)) {
+      navigate("/login");
+    }
+  }, [isAuth, isLoading, navigate, location]);
 
   if (isLoading)
     return (
