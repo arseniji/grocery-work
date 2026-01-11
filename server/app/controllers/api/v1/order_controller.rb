@@ -23,4 +23,27 @@ class Api::V1::OrderController < Api::V1::BaseController
     render json: result
   end
 
+  def get_order_detail_user
+    order_id = params[:order_id]
+    result = OrderManager.get_order_detail_user(@current_user.id, order_id)
+    render json: result
+  end
+
+  def get_all_status_orders
+    result = OrderManager.get_all_status_orders()
+    render json: result
+  end
+
+  def create_order
+    description = params[:description]
+    result = OrderManager.create_order(@current_session_id, @current_user.id, description: description)
+    render json: result
+  end
+
+  def cancellation_orders
+    order_id = params[:order_id]
+    result = OrderManager.cancellation_orders(order_id, @current_user.id)
+    render json: result
+  end
+
 end
