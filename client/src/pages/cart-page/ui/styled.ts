@@ -1,3 +1,4 @@
+import { BaseBodyM } from "@/shared/ui/captions";
 import { Container } from "@/shared/ui/container";
 import styled from "styled-components";
 
@@ -46,4 +47,18 @@ export const MetaContainer = styled.div`
   align-items: center;
   margin-top: 20px;
   margin-bottom: 40px;
+`;
+
+export const CreateWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: start;
+`;
+
+export const Textarea = styled.textarea`
+  ${BaseBodyM}
+  width: 600px;
+  height: 200px;
+  padding: 10px 30px;
 `;

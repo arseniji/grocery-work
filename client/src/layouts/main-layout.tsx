@@ -13,10 +13,14 @@ export const MainLayout = () => {
   const location = useLocation();
 
   useEffect(() => {
-    if (!isLoading && !isAuth && securePaths.includes(location.pathname)) {
-      navigate("/login");
+    if (!isLoading) {
+      if (!isAuth && securePaths.includes(location.pathname)) {
+        navigate("/login", { state: { from: location.pathname } });
+      } else if (isAuth && location.pathname === "/login") {
+        navigate("/", { replace: true });
+      }
     }
-  }, [isAuth, isLoading, navigate, location]);
+  }, [isAuth, isLoading, navigate, location.pathname]);
 
   if (isLoading)
     return (
@@ -44,7 +48,7 @@ export const MainLayout = () => {
 const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  height: 100%;
+  min-height: 100vh;
   align-items: start;
   grid-template-rows: min-content 1fr min-content;
 `;
