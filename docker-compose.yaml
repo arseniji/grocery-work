@@ -1,5 +1,5 @@
 # docker-compose.yml
-version: '3.8'
+version: "3.8"
 
 services:
   postgres:
@@ -29,6 +29,16 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  # client:
+  #   build: ./client
+  #   ports:
+  #     - "5173:5173"
+  #   volumes:
+  #     - ./client:/app
+  #     - /app/node_modules
+  #   env_file:
+  #     - ./client/.env.prod
 
   # api:
   #   build: .
