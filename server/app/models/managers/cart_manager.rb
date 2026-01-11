@@ -18,13 +18,10 @@ class CartManager
     end
 
     def self.get_cart(session_id)
-      cart_result = self.get_user_cart(session_id)
-      cart = self.extract_cart(cart_result)
-      puts cart
-      products = self.fetch_cart_products(cart)
-      
+      cart, products = self.get_cart_products(session_id)
       self.adapt_cart_collection(cart, products)
     end
+
 
     def self.delete_product_on_cart(product_id, session_id)
       self.with_product_and_cart(product_id, session_id) do |product, cart|
@@ -43,6 +40,13 @@ class CartManager
     def self.clear_products_to_cart(session_id)
       notify_observers(:clear_cart_user, session_id)
       self.success_response
+    end
+
+    def self.get_cart_info(session_id)
+      cart, products = self.get_cart_products(session_id)
+      total_price = self.calculate_total_price(cart, products),
+      total_items = cart.total_items
+      return [cart, products, total_price, total_items]
     end
 
     private_class_method
@@ -117,7 +121,6 @@ class CartManager
       product_map = products.index_by(&:id)
       cart.product_collection.sum do |product_id_key, quantity|
         product_id = product_id_key.to_s.to_i
-        
         product = product_map[product_id]
         product ? product.price * quantity : 0
       end
@@ -149,5 +152,12 @@ class CartManager
         total_price: 0,
         total_items: 0
       )
+    end
+
+    def self.get_cart_products(session_id)
+      cart_result = self.get_user_cart(session_id)
+      cart = self.extract_cart(cart_result)
+      products = self.fetch_cart_products(cart)
+      return [cart, products]
     end
 end

@@ -33,7 +33,11 @@ Rails.application.routes.draw do
         get '/', to: 'cart#get_cart'  # Добавить метод в контроллер
       end
       scope :order do
+        post 'create', to: 'order#create_order'
+        get 'status_collection', to: 'order#get_all_status_orders'
         get '/', to: 'order#get_user_orders'
+        get ':order_id', to: 'order#get_order_detail_user'
+        delete 'cancellation/:order_id', to: 'order#cancellation_orders'
       end
     end
   end
