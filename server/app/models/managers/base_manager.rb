@@ -108,7 +108,7 @@ class BaseManager
   def self.find_obj(obj_id, obj_type, obj_str_name: '')
       obj = obj_type.find_by(id: obj_id)
       return obj if obj
-      self.error_response("Такого #{objobj_str_name} не существует", code: :not_found)
+      self.error_response("Такого #{obj_str_name} не существует", code: :not_found)
   end
 
   def self.extract_object(obj_result, observer_type)
