@@ -4,6 +4,7 @@ import type {
   CreateOrderReq,
   GetOrdersQueryParams,
   GetOrdersRes,
+  GetOrderStatusesRes,
 } from "./types";
 
 class OrderApi {
@@ -18,6 +19,11 @@ class OrderApi {
     );
     return createEndpoint<GetOrdersRes>(`v1/order?${query}`, "GET")();
   }
+
+  public getStatuses = createEndpoint<GetOrderStatusesRes>(
+    "v1/order/status_collection",
+    "GET"
+  );
 }
 
 export const orderApi = new OrderApi();

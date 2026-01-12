@@ -1,4 +1,4 @@
-import type { IOrder } from "@/entities/order/types";
+import type { IOrder, IOrderStatus } from "@/entities/order/types";
 
 export interface CreateOrderReq {
   description: string;
@@ -26,4 +26,10 @@ export interface GetOrdersRes {
     totalCount: number;
     totalPages: number;
   };
+}
+
+export interface GetOrderStatusesRes {
+  success: boolean;
+  items: IOrderStatus[];
+  totalItems: number;
 }

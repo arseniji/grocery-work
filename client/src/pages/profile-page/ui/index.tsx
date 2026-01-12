@@ -74,9 +74,12 @@ export const ProfilePage = () => {
     }
   }, []);
 
+  const loadStatuses = useCallback(async () => {}, []);
+
   useEffect(() => {
     loadProfile();
-  }, [loadProfile]);
+    loadStatuses();
+  }, [loadProfile, loadStatuses]);
 
   useEffect(() => {
     loadOrders(currentPage);

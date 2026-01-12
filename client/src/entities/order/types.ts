@@ -13,3 +13,8 @@ export interface IOrder {
 export interface OrderMeta {
   filters: object;
 }
+
+export interface IOrderStatus {
+  success: boolean;
+  statusName: string;
+}
