@@ -1,52 +1,37 @@
-class OrderManager
+class OrderManager < BaseManager
   extend CustomObservable
 
   add_observer(CartManager)
   
-  def self.get_user_orders(user_id, number_page: , page_size: , search: '', status: '', sorted_fields: {})
+  def self.get_user_orders(user_id, number_page:, page_size:, search: '', status: '', sorted_fields: {})
     orders = Order.where(user_id: user_id)
-    if status.presence
-      orders = orders.where(status: status)
-    end
-
-    if search.present?
-      search_term = "%#{search.strip}%"
-      orders = orders.where(
-        "CAST(id AS TEXT) ILIKE ? OR description ILIKE ?", 
-        search_term, search_term
-      )
-    end
-    
-    if sorted_fields.present? && sorted_fields.is_a?(Hash)
-      sorted_fields.each do |field, direction|
-        if Order.column_names.include?(field.to_s) && ['asc', 'desc'].include?(direction.to_s.downcase)
-          orders = orders.order("#{field} #{direction}")
-        end
-      end
-    else
-        orders = orders.order(created_at: :desc)
-    end
-
-    total_count = orders.count
-    paginated_order = orders
-        .offset((number_page.to_i - 1) * page_size.to_i)
-        .limit(page_size)
-    JsonAdapterFacade.adapt_collection(paginated_order, 
-                                                type: :orders,
-                                                pagination_meta: {
-                                                  current_page: number_page,
-                                                  page_size: page_size,
-                                                  total_pages: (total_count.to_f / page_size.to_i).ceil,
-                                                  total_count: total_count,
-                                                },
-                                                metadata: {
-                                                  filters: {
-                                                    status: status.presence,
-                                                    search: search.presence,
-                                                    sorted_fields: sorted_fields.presence
-                                                  }.compact
-                                                }
-                                              )
+    result = paginate_with_filters(
+      orders,
+      page_size: page_size,
+      number_page: number_page,
+      filters: { status: status }.compact,
+      search_fields: [{ condition: 'CAST(id AS TEXT) ILIKE ?' }, 'description'],
+      sorted_fields: sorted_fields,
+      default_order: { created_at: :desc }
+    )
+    pagination_meta = generate_pagination_meta(
+      result[:total_count],
+      page_size,
+      number_page,
+      {
+        status: status.presence,
+        search: search.presence,
+        sorted_fields: sorted_fields.presence
+      }.compact
+    )
+    JsonAdapterFacade.adapt_collection(
+      result[:results],
+      type: :orders,
+      pagination_meta: pagination_meta,
+      metadata: {
+        filters: pagination_meta[:filters]
+      }
+    )
   end
 
   def self.get_order_detail_user(user_id, order_id)
@@ -54,7 +39,7 @@ class OrderManager
                  .find_by(user_id: user_id, id: order_id)
 
     if order.nil?
-      return error_response("Заказ не найден", order_id, user_id)
+      return self.error_response("Заказ не найден", details: {order_id: order_id, user_id: user_id}, code: :order_not_found)
     end
 
     order_items_info = order.order_items.map do |item|
@@ -97,10 +82,9 @@ class OrderManager
 
   def self.create_order(session_id, user_id, description: '')
     cart_session = notify_observers(:get_cart_info, session_id)
-    cart, _, _, _ = self.extract_cart(cart_session)
-    
+    cart, _, _, _ = self.extract_object(cart_session, CartManager)
     if cart.empty? || cart.product_collection.empty?
-      return error_response("Корзина пуста", nil, user_id, code: :empty_cart_error)
+      return self.error_response("Корзина пуста", code: :empty_cart_error)
     end
     
     order_data = {
@@ -124,14 +108,14 @@ class OrderManager
         
         if product.nil?
           order.destroy
-          return error_response("Продукт с ID #{product_id} не найден", nil, user_id)
+          return self.error_response("Продукт с ID #{product_id} не найден", details: {user_id: user_id, product_id: product_id}, code: :product_not_found)
         end
         
         if product.quantity < quantity
           order.destroy
-          return error_response(
+          return self.error_response(
             "Недостаточно товара '#{product.product_name}' на складе. Доступно: #{product.quantity}, запрошено: #{quantity}",
-            nil, user_id
+            details: {product_id: product_id, user_id: user_id}, code: :not_enough_quantity
           )
         end
         
@@ -153,12 +137,12 @@ class OrderManager
       
       notify_observers(:clear_products_to_cart, session_id)
       
-      JsonAdapterFacade.adapt(nil, type: :successful)
+      self.success_response
       
     rescue ActiveRecord::RecordInvalid => e
-      error_response("Не удалось создать заказ: #{e.message}", nil, user_id)
+      self.error_response("Не удалось создать заказ: #{e.message}", details: {user_id: user_id}, code: :error_create_order)
     rescue => e
-      error_response("Ошибка при создании заказа: #{e.message}", nil, user_id)
+      self.error_response("Ошибка при создании заказа: #{e.message}", details: {user_id: user_id}, code: :error_create_order)
     end
   end
 
@@ -176,38 +160,23 @@ class OrderManager
                  .find_by(user_id: user_id, id: order_id)
 
     if order.nil?
-      return error_response("Заказ не найден", order_id, user_id)
+      return self.error_response("Заказ не найден", details: {order_id: order_id, user_id: user_id}, code: :order_not_found)
     end
     case order.status
       when "avalible"
-        return error_response("Полученый заказ невозможно отменить", order_id, user_id, code: :status_order_error)
+        return self.error_response("Полученый заказ невозможно отменить", details: {order_id: order_id, user_id: user_id}, code: :status_order_error)
       when "cancelled"
-        return error_response("Заказ уже отменен", order_id, user_id, code: :status_order_error)
+        return self.error_response("Заказ уже отменен", details: {order_id: order_id, user_id: user_id}, code: :status_order_error)
     end
     order.update(status: "cancelled")      
-    JsonAdapterFacade.adapt(nil, type: :successful)
+    self.success_response
   end
 
   
   private_class_method
-  def self.error_response(message, order_id, user_id, code: :not_found_order)
-      error = ErrorObject.new(
-        message: message, 
-        code: code,
-        details: { order_id: order_id,
-                   user_id: user_id }
-      )
-      JsonAdapterFacade.adapt(error, type: :error)
-  end
-
-  def self.extract_cart(cart_result)
-    cart_result.each do |observer, result|
-      if observer.is_a?(CartManager) || observer == CartManager
-        cart = result
-        return cart
-      end
-    end
-    return {}
+ 
+  def self.default_extract_obj
+    Cart.new()
   end
 
 end
