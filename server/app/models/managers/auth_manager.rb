@@ -1,10 +1,4 @@
-require_relative 'session_manager' 
-
-class AuthManager
-  class AuthenticationError < StandardError; end
-  class RegistrationError < StandardError; end
-  class SessionNotFoundError < StandardError; end
-
+class AuthManager < BaseManager
   extend CustomObservable
 
   add_observer(SessionManager)
@@ -14,74 +8,64 @@ class AuthManager
     user = self.find_user_by_login(login)
     
     unless user && user.authenticate(password)
-      raise AuthenticationError, "Неверный логин или пароль"
+      return self.error_response("Не верный логин или пароль", code: :not_authorize)
     end
     results = notify_observers(:user_authenticated, user, request_context)
-    self.extract_session(results, user)
+    session = self.extract_object(results, SessionManager)
+    JsonAdapterFacade.adapt(
+      user, 
+      type: :authorizate,
+      session: session,
+    )
   end
   
 
-  def self.registration(login:, phone:, password:, firstname:, lastname:, patronymic: nil, request_context: {})
-    if self.find_user_by_login(login)
-      raise RegistrationError, "Пользователь с логином '#{login}' уже существует"
-    end
-    
-
-    user = User.new(
+  def self.registration(login:, phone:, password:, firstname:, lastname:, patronymic: nil, role: 'customer',request_context: {})
+      user = User.new(
       login: login,
       phone: phone,
       password: password,
       password_confirmation: password,
       firstname: firstname,
       lastname: lastname,
-      patronymic: patronymic
+      patronymic: patronymic,
+      role: role
     )
     
     if user.save
       results = notify_observers(:user_registered, user, request_context)
-      self.extract_session(results, user)
+      session = self.extract_object(results, SessionManager)
+      JsonAdapterFacade.adapt(
+        user, 
+        type: :registration,
+        session: session,
+      )
     else
-      raise RegistrationError, user.errors.full_messages.join(", ")
+      self.error_response_validation(user.errors)
     end
   end
 
   def self.authenticate_by_session(session_id:, request_context: {})
     results = notify_observers(:session_authenticate_request, session_id, request_context)
     
-    session = results[SessionManager]
+    session = self.extract_object(results, SessionManager)
     
     unless session
-      raise SessionNotFoundError, "Сессия не найдена"
+      return self.error_response("Сессия не найдена", details: {session_id: session_id}, code: :session_not_found)
     end
-    user = User.find_by(id: session.user_id)
-    unless user
-      raise AuthenticationError, "Пользователь не найден"
-    end
-    self.extract_session(results, user)
+      user = self.find_obj(session.user_id, User, obj_str_name: "пользователя")
+      [user, session]
   end
 
   def self.logout(session_id, user_id)
     notify_observers(:user_logout, session_id, user_id)
+    self.success_response
   end
 
 
   private_class_method
-
-  def self.extract_session(results, user)
-     session = nil
-    results.each do |observer, result|
-        if observer.is_a?(SessionManager) || observer == SessionManager
-          session = result
-          break
-        end
-      end
-      
-      {
-        user: user,
-        session: session,
-        listeners_results: results
-      }
-
+  def self.default_extract_obj
+      nil
   end
 
   def self.find_user_by_login(login)
