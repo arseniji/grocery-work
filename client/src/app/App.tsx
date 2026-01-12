@@ -7,6 +7,7 @@ import { ToastProvider } from "@/feat/toast";
 import { ShopPage } from "@/pages/shop-page";
 import { ProductPage } from "@/pages/product-page";
 import { CartPage } from "@/pages/cart-page";
+import { ProfilePage } from "@/pages/profile-page";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="shop" element={<ShopPage />} />
             <Route path="product/:id" element={<ProductPage />} />
             <Route path="cart" element={<CartPage />} />
+            <Route path="profile" element={<ProfilePage />} />
           </Route>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/registration" element={<RegistrationPage />} />
