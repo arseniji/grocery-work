@@ -52,3 +52,17 @@ export const ButtonGroup = styled.div`
   gap: 10px;
   margin-top: 20px;
 `;
+
+export const OrdersList = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-content: space-between;
+  gap: 20px;
+`;
+
+export const PaginationContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+`;

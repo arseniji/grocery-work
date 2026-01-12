@@ -13,9 +13,11 @@ import {
   Label,
   ButtonGroup,
   LoaderWrapper,
+  OrdersList,
+  PaginationContainer,
 } from "./styled";
-import { Button, Input, Loader } from "@/shared/ui";
-import { ErrorMsg, TitleM } from "@/shared/ui/captions";
+import { Button, Input, Loader, OrderCard } from "@/shared/ui";
+import { ErrorMsg, TitleM, TitleXS } from "@/shared/ui/captions";
 import { orderApi } from "@/lib/api/order";
 import type { IOrder } from "@/entities/order/types";
 
@@ -28,6 +30,8 @@ export const ProfilePage = () => {
   const [updating, setUpdating] = useState<boolean>(false);
   const [deleting, setDeleting] = useState<boolean>(false);
   const [orders, setOrders] = useState<IOrder[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>();
 
   const loadProfile = useCallback(async () => {
     try {
@@ -49,11 +53,15 @@ export const ProfilePage = () => {
     setIsLoading(false);
   }, [navigate, setData]);
 
-  const loadOrders = useCallback(async () => {
+  const loadOrders = useCallback(async (page: number) => {
     try {
-      const response = await orderApi.get({ page: "1", page_size: "10" });
+      const response = await orderApi.get({
+        page: page.toString(),
+        page_size: "10",
+      });
       if (response.success) {
         setOrders(response.orders);
+        setTotalPages(response.meta.totalPages);
       }
     } catch (err) {
       const error = err as AxiosError;
@@ -68,8 +76,11 @@ export const ProfilePage = () => {
 
   useEffect(() => {
     loadProfile();
-    loadOrders();
-  }, [loadProfile, loadOrders]);
+  }, [loadProfile]);
+
+  useEffect(() => {
+    loadOrders(currentPage);
+  }, [loadOrders, currentPage]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -121,6 +132,18 @@ export const ProfilePage = () => {
     }
 
     setDeleting(false);
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (orders.length === 10) {
+      setCurrentPage(currentPage + 1);
+    }
   };
 
   if (isLoading) {
@@ -211,6 +234,39 @@ export const ProfilePage = () => {
             </Button>
           </ButtonGroup>
         </Form>
+      </ProfileContainer>
+      <ProfileContainer>
+        <TitleM style={{ alignSelf: "self-start" }}>Мои заказы</TitleM>
+        <OrdersList>
+          {orders.map((order) => (
+            <OrderCard
+              key={order.id}
+              id={order.id}
+              description={order.description}
+              status={order.status}
+              timestamps={order.timestamps}
+            />
+          ))}
+        </OrdersList>
+        <PaginationContainer>
+          {currentPage > 1 && (
+            <Button variant="border" onClick={handlePrevPage}>
+              Предыдущая
+            </Button>
+          )}
+
+          {totalPages && (
+            <TitleXS>
+              {currentPage} / {totalPages}
+            </TitleXS>
+          )}
+
+          {orders.length === 10 && (
+            <Button variant="border" onClick={handleNextPage}>
+              Следующая
+            </Button>
+          )}
+        </PaginationContainer>
       </ProfileContainer>
     </Main>
   );
