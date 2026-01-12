@@ -1,0 +1,24 @@
+# config/database.yml
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: <%= ENV.fetch('POSTGRES_HOST', 'localhost') %>
+  port: <%= ENV.fetch('POSTGRES_PORT', 5432) %>
+  username: <%= ENV.fetch('POSTGRES_USER', 'postgres') %>
+  password: <%= ENV.fetch('POSTGRES_PASSWORD', 'password') %>
+
+development:
+  <<: *default
+  database: shop_development  # измени server_development на shop_development
+
+test:
+  <<: *default
+  database: shop_test  # измени server_test на shop_test
+
+# Для продакшна можно оставить как есть или упростить
+production:
+  <<: *default
+  database: shop_production
+  username: <%= ENV['POSTGRES_USER'] %>
+  password: <%= ENV['POSTGRES_PASSWORD'] %>

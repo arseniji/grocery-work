@@ -1,0 +1,26 @@
+meta {
+  name: create_order
+  type: http
+  seq: 18
+}
+
+post {
+  url: http://127.0.0.1:3000/api/v1/order/create
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: f0pyn8Wf61Zx0gYWZWiqozEhUXYUMEpsJDgMQDgjE0Q
+}
+
+body:json {
+  {
+    "description": "Оставить у двери"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

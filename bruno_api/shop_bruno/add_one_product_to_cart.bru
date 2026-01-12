@@ -1,0 +1,20 @@
+meta {
+  name: add_one_product_to_cart
+  type: http
+  seq: 15
+}
+
+post {
+  url: http://127.0.0.1:3000/api/v1/cart/add-one/101
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: xew_jvNtZqskKZMKGPZSezI0P-_Mql7H_nr-GKGCcIo
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
