@@ -13,3 +13,4 @@ LOG_FILE="$LOG_DIR/backup.log"
 cd "$RAILS_ROOT" || exit
 
 /bin/bash -c "bin/rails db:json_backup >> \"$LOG_FILE\" 2>&1"
+/bin/bash -c "bin/rails db:sql_backup >> \"$LOG_FILE\" 2>&1"
