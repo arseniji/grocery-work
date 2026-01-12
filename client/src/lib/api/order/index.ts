@@ -5,6 +5,7 @@ import type {
   GetOrdersQueryParams,
   GetOrdersRes,
   GetOrderStatusesRes,
+  GetOrderDetailsRes,
 } from "./types";
 
 class OrderApi {
@@ -26,7 +27,7 @@ class OrderApi {
   );
 
   public getDetails(id: number) {
-    return createEndpoint(`v1/order/${id}`, "GET")();
+    return createEndpoint<GetOrderDetailsRes>(`v1/order/${id}`, "GET")();
   }
 }
 

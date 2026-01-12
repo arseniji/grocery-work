@@ -5,7 +5,7 @@ import { Outlet, useNavigate, useLocation } from "react-router";
 import styled from "styled-components";
 import { useEffect } from "react";
 
-const securePaths = ["/cart", "/profile"];
+const securePaths = ["/cart", "/profile", "/order"];
 
 export const MainLayout = () => {
   const { isAuth, isLoading } = useAuth();
