@@ -15,7 +15,7 @@ namespace :db do
 
     cmd = "PGPASSWORD='#{db_password}' pg_dump -U #{db_user} -h #{db_host} -p #{db_port} #{db_name} > #{backup_dir_path}/sql/db_#{timestamp}.sql"
     system(cmd) || raise("Backup failed!")
-    puts "Backup created: #{backup_dir_path}/sql/db_#{timestamp}.sql"
+    puts "SQL Backup created: #{backup_dir_path}/sql/db_#{timestamp}.sql"
     puts db_name
   end
 end
