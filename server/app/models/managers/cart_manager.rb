@@ -1,7 +1,6 @@
-class CartManager
+class CartManager < BaseManager
   extend CustomObservable
   add_observer(SessionManager)
-
 
     def self.add_product_to_cart(product_id, quantity, session_id)
       self.with_product_and_cart(product_id, session_id) do |product, cart|
@@ -51,40 +50,25 @@ class CartManager
 
     private_class_method
 
-    def self.extract_cart(cart_result)
-      cart_result.each do |observer, result|
-        if observer.is_a?(SessionManager) || observer == SessionManager
-          cart = result
-          return cart
-        end
-      end
-      return Cart.new()
-    end
-
     def self.with_product_and_cart(product_id, session_id)
       product = self.find_product(product_id)
       return product if product.is_a?(Hash)
 
       cart_result = self.get_user_cart(session_id)
-      cart = self.extract_cart(cart_result)
+      cart = self.extract_object(cart_result, SessionManager)
 
       begin
         yield(product, cart)
       rescue Cart::SizeCartError => e
-        self.stock_error_response(e, product_id)
+        self.error_response(e.message, 
+                            details: { product_id: product_id },
+                            code: :insufficient_stock
+                           )
       end
     end
 
     def self.find_product(product_id)
-      product = Product.find_by(id: product_id)
-      return product if product
-
-      error = ErrorObject.new(
-        message: "Такого продукта не существует", 
-        code: :not_found,
-        details: { product_id: product_id }
-      )
-      self.adapt_error(error)
+      self.find_obj(product_id, Product, obj_str_name: "продукт")
     end
 
     def self.get_user_cart(session_id)
@@ -126,24 +110,6 @@ class CartManager
       end
     end
 
-
-    def self.success_response
-      JsonAdapterFacade.adapt(nil, type: :successful)
-    end
-
-    def self.stock_error_response(exception, product_id)
-      error = ErrorObject.new(
-        message: exception.message, 
-        code: :insufficient_stock,
-        details: { product_id: product_id }
-      )
-      self.adapt_error(error)
-    end
-
-    def self.adapt_error(error_object)
-      JsonAdapterFacade.adapt(error_object, type: :error)
-    end
-
     def self.empty_cart_response
       JsonAdapterFacade.adapt_collection(
         [],
@@ -156,8 +122,12 @@ class CartManager
 
     def self.get_cart_products(session_id)
       cart_result = self.get_user_cart(session_id)
-      cart = self.extract_cart(cart_result)
+      cart = self.extract_object(cart_result, SessionManager)
       products = self.fetch_cart_products(cart)
       return [cart, products]
+    end
+
+    def self.default_extract_obj
+      Cart.new()
     end
 end
