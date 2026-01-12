@@ -1,4 +1,5 @@
 import type { IOrder, IOrderStatus } from "@/entities/order/types";
+import type { Product } from "@/entities/product/types";
 
 export interface CreateOrderReq {
   description: string;
@@ -39,24 +40,24 @@ export interface GetOrderDetailsRes {
   order: IOrder;
   products: OrderProduct[];
   summary: {
-    total_items: number;
-    total_price: string;
-    items_count: number;
+    totalItems: number;
+    totalPrice: string;
+    itemsCount: number;
   };
   meta: {
     metadata: {
-      order_source: string;
+      orderSource: string;
     };
   };
 }
 
-export interface OrderProduct extends Omit<IOrder, "metadata"> {
+export interface OrderProduct extends Omit<Product, "metadata"> {
   metadata: {
-    order_source: string;
-    order_details: {
-      quantity_in_order: number;
-      total_price_for_item: string;
-      ordered_at: string;
+    orderSource: string;
+    orderDetails: {
+      quantityInOrder: number;
+      totalPriceForItem: string;
+      orderedAt: string;
     };
   };
 }

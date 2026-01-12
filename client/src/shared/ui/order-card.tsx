@@ -1,6 +1,7 @@
 import type { IOrder } from "@/entities/order/types";
 import styled from "styled-components";
 import { BodyM, TitleS } from "./captions";
+import { useNavigate } from "react-router";
 
 type OrderCardProps = Pick<
   IOrder,
@@ -13,8 +14,13 @@ export const OrderCard = ({
   status,
   timestamps,
 }: OrderCardProps) => {
+  const navigate = useNavigate();
   return (
-    <OrderContainer>
+    <OrderContainer
+      onClick={() => {
+        navigate(`/order/${id}`);
+      }}
+    >
       <TitleS>Заказ #{id}</TitleS>
       <BodyM>{description}</BodyM>
       <BodyM>Статус: {status || "Неизвестен"}</BodyM>
