@@ -157,19 +157,44 @@ class OrderManager < BaseManager
 
   def self.cancellation_orders(order_id, user_id)
     order = Order.includes(order_items: :product)
-                 .find_by(user_id: user_id, id: order_id)
+                .find_by(user_id: user_id, id: order_id)
 
     if order.nil?
-      return self.error_response("Заказ не найден", details: {order_id: order_id, user_id: user_id}, code: :order_not_found)
+      return self.error_response("Заказ не найден", 
+                                details: {order_id: order_id, user_id: user_id}, 
+                                code: :order_not_found)
     end
+
     case order.status
-      when "avalible"
-        return self.error_response("Полученый заказ невозможно отменить", details: {order_id: order_id, user_id: user_id}, code: :status_order_error)
-      when "cancelled"
-        return self.error_response("Заказ уже отменен", details: {order_id: order_id, user_id: user_id}, code: :status_order_error)
+    when "processing"
+      return self.error_response("Полученный заказ невозможно отменить", 
+                                details: {order_id: order_id, user_id: user_id}, 
+                                code: :status_order_error)
+    when "cancelled"
+      return self.error_response("Заказ уже отменен", 
+                                details: {order_id: order_id, user_id: user_id}, 
+                                code: :status_order_error)
     end
-    order.update(status: "cancelled")      
-    self.success_response
+    begin
+      Order.transaction do
+        order.order_items.each do |order_item|
+          product = order_item.product
+          if product
+            product.update!(quantity: product.quantity + order_item.quantity)
+          end
+        end
+        order.update!(status: "cancelled")
+      end
+      self.success_response(message: "Заказ успешно отменен. Товары возвращены на склад.")
+    rescue ActiveRecord::RecordInvalid => e
+      self.error_response("Не удалось отменить заказ: #{e.message}", 
+                        details: {order_id: order_id, user_id: user_id}, 
+                        code: :cancellation_error)
+    rescue => e
+      self.error_response("Ошибка при отмене заказа: #{e.message}", 
+                        details: {order_id: order_id, user_id: user_id}, 
+                        code: :cancellation_error)
+    end
   end
 
   
