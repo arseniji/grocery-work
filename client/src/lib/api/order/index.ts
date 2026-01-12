@@ -24,6 +24,10 @@ class OrderApi {
     "v1/order/status_collection",
     "GET"
   );
+
+  public getDetails(id: number) {
+    return createEndpoint(`v1/order/${id}`, "GET")();
+  }
 }
 
 export const orderApi = new OrderApi();
