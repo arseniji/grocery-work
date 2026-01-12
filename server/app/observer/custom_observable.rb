@@ -23,7 +23,7 @@ module CustomObservable
       
       if observer.respond_to?(event)
         puts "DEBUG: Calling #{event} on #{observer}"
-        result = observer.public_send(event, *args)
+        result = observer.send(event, *args)
         puts "DEBUG: Result: #{result.inspect}"
         results[observer] = result if result
       end

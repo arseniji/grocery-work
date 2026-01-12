@@ -103,7 +103,8 @@ export const Button = (props: ButtonProps) => {
 
   const { onClick } = props as { onClick?: () => void };
 
-  const handleClick = () => {
+  const handleClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.stopPropagation();
     if (disabled) return;
     if (onClick) onClick();
   };

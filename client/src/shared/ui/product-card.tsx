@@ -4,6 +4,9 @@ import { BodyM, TitleS } from "./captions";
 import { CartIcon } from "../icons";
 import { StarRating } from "./star-rating";
 import { useNavigate } from "react-router";
+import { cartApi } from "@/lib/api/cart";
+import { Toast } from "@/feat";
+import type { AxiosError } from "axios";
 
 type ProductCardProps = Omit<
   Product,
@@ -19,6 +22,31 @@ export const ProductCard = ({
 }: ProductCardProps) => {
   const navigate = useNavigate();
 
+  const addToCart: React.MouseEventHandler<HTMLButtonElement> = async (
+    event
+  ) => {
+    event.stopPropagation();
+    if (!id) return;
+    try {
+      const respone = await cartApi.addOne(id);
+      if (respone.success) {
+        Toast.show({
+          type: "msg",
+          title: "Успех!",
+          msg: "Товар успешно добавлен",
+        });
+      }
+    } catch (err) {
+      const error = err as AxiosError;
+      console.log(error);
+      Toast.show({
+        type: "error",
+        title: "Ошибка добавления",
+        msg: "Неизвестная ошибка",
+      });
+    }
+  };
+
   return (
     <ProductContainer onClick={() => navigate(`/product/${id}`)}>
       <Image src={image} />
@@ -27,7 +55,7 @@ export const ProductCard = ({
           <TitleS>{name}</TitleS>
           <BodyM>{price}р</BodyM>
         </div>
-        <CartWrapper>
+        <CartWrapper onClick={addToCart}>
           <CartIcon />
         </CartWrapper>
       </Wrapper>

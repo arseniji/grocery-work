@@ -11,15 +11,19 @@ import {
   Details,
   Category,
   Price,
-  Description,
   Unit,
   Quantity,
   SimilarProducts,
   ProductsList,
+  PriceRating,
+  UnitQuantity,
+  QuantitySelector,
+  ButtonContainer,
 } from "./styled";
-import { TitleL, TitleM } from "@/shared/ui/captions";
+import { TitleL, TitleM, BodyL } from "@/shared/ui/captions";
 import { StarRating } from "@/shared/ui/star-rating";
 import { Button, Loader, ProductCard } from "@/shared/ui";
+import { cartApi } from "@/lib/api/cart";
 
 export const ProductPage = () => {
   const { id } = useParams();
@@ -28,6 +32,7 @@ export const ProductPage = () => {
   const [product, setProduct] = useState<Product>();
   const [similarProducts, setSimilarProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [quantity, setQuantity] = useState<number>(1);
 
   const loadProduct = useCallback(async () => {
     setIsLoading(true);
@@ -74,6 +79,31 @@ export const ProductPage = () => {
     [product?.id]
   );
 
+  const addToCart = async () => {
+    if (!id) return;
+    try {
+      const respone = await cartApi.addMany({
+        productId: parseInt(id),
+        quantity: quantity,
+      });
+      if (respone.success) {
+        Toast.show({
+          type: "msg",
+          title: "Успех!",
+          msg: "Товар успешно добавлен",
+        });
+      }
+    } catch (err) {
+      const error = err as AxiosError;
+      console.log(error);
+      Toast.show({
+        type: "error",
+        title: "Ошибка добавления",
+        msg: "Неизвестная ошибка",
+      });
+    }
+  };
+
   useEffect(() => {
     loadProduct();
   }, [loadProduct]);
@@ -107,16 +137,36 @@ export const ProductPage = () => {
         <Details>
           <Category>{product.category}</Category>
           <TitleL>{product.name}</TitleL>
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <PriceRating>
             <Price>{product.price}р</Price>
             <StarRating rating={parseFloat(product.rating)} />
-          </div>
-          <Description>{product.details.description}</Description>
-          <div style={{ display: "flex", gap: "20px" }}>
+          </PriceRating>
+          <BodyL>{product.details.description}</BodyL>
+          <UnitQuantity>
             <Unit>Единица: {product.details.unit}</Unit>
             <Quantity>Количество: {product.details.quantity}</Quantity>
-          </div>
-          <Button variant="primary">Добавить в корзину</Button>
+          </UnitQuantity>
+          <QuantitySelector>
+            <BodyL>Выбрать количество:</BodyL>
+            <Button
+              variant="border"
+              onClick={() => setQuantity(Math.max(1, quantity - 1))}
+            >
+              -
+            </Button>
+            <BodyL>{quantity}</BodyL>
+            <Button
+              variant="border"
+              onClick={() =>
+                setQuantity(Math.min(product.details.quantity, quantity + 1))
+              }
+            >
+              +
+            </Button>
+          </QuantitySelector>
+          <Button variant="primary" onClick={addToCart}>
+            Добавить в корзину
+          </Button>
         </Details>
       </ProductContainer>
 
@@ -135,7 +185,7 @@ export const ProductPage = () => {
               />
             ))}
           </ProductsList>
-          <div style={{ alignSelf: "center" }}>
+          <ButtonContainer>
             <Button
               variant="border"
               onClick={() =>
@@ -146,7 +196,7 @@ export const ProductPage = () => {
             >
               Смотреть больше
             </Button>
-          </div>
+          </ButtonContainer>
         </SimilarProducts>
       )}
     </Main>

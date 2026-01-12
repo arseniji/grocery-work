@@ -1,11 +1,26 @@
 import { useAuth } from "@/lib/hooks";
 import { Footer, Header } from "@/widgets";
 import { Loader } from "@/shared/ui";
-import { Outlet } from "react-router";
+import { Outlet, useNavigate, useLocation } from "react-router";
 import styled from "styled-components";
+import { useEffect } from "react";
+
+const securePaths = ["/cart"];
 
 export const MainLayout = () => {
   const { isAuth, isLoading } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!isLoading) {
+      if (!isAuth && securePaths.includes(location.pathname)) {
+        navigate("/login", { state: { from: location.pathname } });
+      } else if (isAuth && location.pathname === "/login") {
+        navigate("/", { replace: true });
+      }
+    }
+  }, [isAuth, isLoading, navigate, location.pathname]);
 
   if (isLoading)
     return (
@@ -33,5 +48,7 @@ export const MainLayout = () => {
 const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  height: 100%;
+  min-height: 100vh;
+  align-items: start;
+  grid-template-rows: min-content 1fr min-content;
 `;

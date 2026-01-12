@@ -4,7 +4,7 @@ import { authApi } from "../api/auth";
 
 export const useAuth = () => {
   const [isAuth, setIsAuth] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const validateToken = async () => {
     setIsLoading(true);

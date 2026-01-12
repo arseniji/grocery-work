@@ -1,3 +1,4 @@
+import { BaseBodyM } from "@/shared/ui/captions";
 import { Container } from "@/shared/ui/container";
 import styled from "styled-components";
 
@@ -7,6 +8,7 @@ export const Main = styled.main`
   flex-direction: column;
   gap: 50px;
   padding: 50px 0;
+  width: 100%;
 `;
 
 export const ProductContainer = styled.div`
@@ -42,22 +44,13 @@ export const Price = styled.span`
   color: #000;
 `;
 
-export const Description = styled.p`
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 26px;
-  color: #000;
-`;
-
 export const Unit = styled.span`
-  font-weight: 500;
-  font-size: 16px;
+  ${BaseBodyM}
   color: #666;
 `;
 
 export const Quantity = styled.span`
-  font-weight: 500;
-  font-size: 16px;
+  ${BaseBodyM}
   color: #666;
 `;
 
@@ -71,4 +64,25 @@ export const ProductsList = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
+`;
+
+export const PriceRating = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
+export const UnitQuantity = styled.div`
+  display: flex;
+  gap: 20px;
+`;
+
+export const QuantitySelector = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
+export const ButtonContainer = styled.div`
+  align-self: center;
 `;
