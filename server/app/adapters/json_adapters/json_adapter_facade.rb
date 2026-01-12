@@ -9,6 +9,9 @@ class JsonAdapterFacade
     category: CategoryJsonAdapter,
     categories: CategoryCollectionJsonAdapter,
     orders: OrderCollectionJsonAdapter,
+    order_details: OrderDetailsCollectionJsonAdapter,
+    status: StatusJsonAdapter,
+    status_collection: StatusCollectionJsonAdapter,
   }.freeze
   
   def self.adapt(object, type:, **options)
