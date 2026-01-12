@@ -38,4 +38,21 @@ class Product < ApplicationRecord
       less_than_or_equal_to: 5,
       message: "должен быть от 0 до 5" 
     }
+
+  #категория
+  validates :category, 
+      presence: { message: "не может быть пустым" },
+      inclusion: { 
+        in: ['vegetables', 'fruits', 'dairy', 'meat', 'fish', 'grocery', 'drinks', 'bakery'],
+        message: "должна быть одной из допустимых категорий"
+      }
+
+  #количество товара
+  validates :quantity, 
+    presence: { message: "не может быть пустым" },
+    numericality: { 
+      greater_than_or_equal_to: 0, 
+      message: "не может быть отрицательным" 
+    }
+
 end
