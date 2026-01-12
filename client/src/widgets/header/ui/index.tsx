@@ -1,10 +1,11 @@
-import { CartIcon, LogoIcon, SearchIcon } from "@/shared/icons";
+import { CartIcon, LogoIcon, SearchIcon, UserIcon } from "@/shared/icons";
 import {
   AuthWrapper,
   HeaderContainer,
   HeaderWrapper,
   LogoWrapper,
   NavContainer,
+  UserWrapper,
 } from "./styled";
 import { BodyM, TitleXS } from "@/shared/ui/captions";
 import { routes } from "../contants/routes";
@@ -88,9 +89,14 @@ export const Header = ({ isLogined }: HeaderProps) => {
         </form>
 
         {isLogined && (
-          <button onClick={() => navigate("cart")}>
-            <CartIcon />
-          </button>
+          <UserWrapper>
+            <button onClick={() => navigate("profile")}>
+              <UserIcon />
+            </button>
+            <button onClick={() => navigate("cart")}>
+              <CartIcon />
+            </button>
+          </UserWrapper>
         )}
 
         <AuthWrapper>
