@@ -16,6 +16,8 @@ import {
 } from "./styled";
 import { Button, Input, Loader } from "@/shared/ui";
 import { ErrorMsg, TitleM } from "@/shared/ui/captions";
+import { orderApi } from "@/lib/api/order";
+import type { IOrder } from "@/entities/order/types";
 
 export const ProfilePage = () => {
   const navigate = useNavigate();
@@ -25,6 +27,7 @@ export const ProfilePage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [updating, setUpdating] = useState<boolean>(false);
   const [deleting, setDeleting] = useState<boolean>(false);
+  const [orders, setOrders] = useState<IOrder[]>([]);
 
   const loadProfile = useCallback(async () => {
     try {
@@ -46,9 +49,27 @@ export const ProfilePage = () => {
     setIsLoading(false);
   }, [navigate, setData]);
 
+  const loadOrders = useCallback(async () => {
+    try {
+      const response = await orderApi.get({ page: "1", page_size: "10" });
+      if (response.success) {
+        setOrders(response.orders);
+      }
+    } catch (err) {
+      const error = err as AxiosError;
+      console.log(error);
+      Toast.show({
+        type: "error",
+        title: "Ошибка",
+        msg: "Ошибка получения заказов",
+      });
+    }
+  }, []);
+
   useEffect(() => {
     loadProfile();
-  }, [loadProfile]);
+    loadOrders();
+  }, [loadProfile, loadOrders]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
