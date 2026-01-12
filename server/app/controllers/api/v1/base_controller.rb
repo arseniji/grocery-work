@@ -42,6 +42,7 @@ class Api::V1::BaseController < ApplicationController
     end
       authenticate_user = AuthManager.authenticate_by_session(session_id: session_id, 
                                                               request_context: build_request_context)
+    
       if authenticate_user.is_a?(Array)
         @current_user, @current_session = authenticate_user
         @current_session_id = session_id
