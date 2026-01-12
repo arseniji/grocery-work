@@ -1,0 +1,30 @@
+meta {
+  name: update_profile_me
+  type: http
+  seq: 21
+}
+
+patch {
+  url: http://127.0.0.1:3000/api/v1/profile/me
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: f0pyn8Wf61Zx0gYWZWiqozEhUXYUMEpsJDgMQDgjE0Q
+}
+
+body:json {
+  {
+  "login":"alex",
+  "phone":"79994445566",
+  "firstname":"Алексей",
+  "lastname":"Смирнов",
+  "patronymic":"Игоревич"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

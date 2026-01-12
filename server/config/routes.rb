@@ -39,6 +39,11 @@ Rails.application.routes.draw do
         get ':order_id', to: 'order#get_order_detail_user'
         delete 'cancellation/:order_id', to: 'order#cancellation_orders'
       end
+      scope :profile do
+        get 'me', to: 'profile#get_me'
+        patch 'me', to: 'profile#update_me'
+        delete 'me', to: 'profile#delete_me_profile'
+      end
     end
   end
 end
