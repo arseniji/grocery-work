@@ -5,7 +5,7 @@ namespace :db do
   desc "Create a JSON backup of all tables in public schema (stream to file)"
   task json_backup: :environment do
     timestamp = Time.now.strftime("%Y%m%d%H%M%S")
-    backup_dir = "db/backups/json"
+    backup_dir = "#{ENV['DB_BACKUP_PATH']}/json"
     FileUtils.mkdir_p(backup_dir)
     backup_file = "#{backup_dir}/backup_#{timestamp}.json"
 

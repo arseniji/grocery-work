@@ -2,7 +2,7 @@ namespace :db do
   desc "Backup the database with .sql extension"
   task sql_backup: :environment do
     config = Rails.configuration.database_configuration[Rails.env]
-    backup_dir_path = "db/backups"
+    backup_dir_path = "#{ENV['DB_BACKUP_PATH']}/sql"
     db_name = config["database"]
     db_user = config["username"]
     db_port = config["port"] || 5432
@@ -11,11 +11,11 @@ namespace :db do
     timestamp = Time.now.strftime("%Y%m%d%H%M%S")
 
     Dir.mkdir(backup_dir_path) unless Dir.exist?(backup_dir_path)
-    Dir.mkdir("#{backup_dir_path}/sql") unless Dir.exist?("#{backup_dir_path}/sql")
+    Dir.mkdir("#{backup_dir_path}") unless Dir.exist?("#{backup_dir_path}")
 
-    cmd = "PGPASSWORD='#{db_password}' pg_dump -U #{db_user} -h #{db_host} -p #{db_port} #{db_name} > #{backup_dir_path}/sql/db_#{timestamp}.sql"
+    cmd = "PGPASSWORD='#{db_password}' pg_dump -U #{db_user} -h #{db_host} -p #{db_port} #{db_name} > #{backup_dir_path}/db_#{timestamp}.sql"
     system(cmd) || raise("Backup failed!")
-    puts "SQL Backup created: #{backup_dir_path}/sql/db_#{timestamp}.sql"
+    puts "SQL Backup created: #{backup_dir_path}/db_#{timestamp}.sql"
     puts db_name
   end
 end
