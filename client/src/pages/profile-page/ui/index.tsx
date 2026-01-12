@@ -15,11 +15,12 @@ import {
   LoaderWrapper,
   OrdersList,
   PaginationContainer,
+  StatusContainer,
 } from "./styled";
 import { Button, Input, Loader, OrderCard } from "@/shared/ui";
 import { ErrorMsg, TitleM, TitleXS } from "@/shared/ui/captions";
 import { orderApi } from "@/lib/api/order";
-import type { IOrder } from "@/entities/order/types";
+import type { IOrder, IOrderStatus } from "@/entities/order/types";
 
 export const ProfilePage = () => {
   const navigate = useNavigate();
@@ -32,6 +33,8 @@ export const ProfilePage = () => {
   const [orders, setOrders] = useState<IOrder[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>();
+  const [statuses, setStatuses] = useState<IOrderStatus[]>([]);
+  const [selectedStatus, setSelectedStatus] = useState<string>();
 
   const loadProfile = useCallback(async () => {
     try {
@@ -53,12 +56,14 @@ export const ProfilePage = () => {
     setIsLoading(false);
   }, [navigate, setData]);
 
-  const loadOrders = useCallback(async (page: number) => {
+  const loadOrders = useCallback(async (page: number, status?: string) => {
     try {
-      const response = await orderApi.get({
+      const params: any = {
         page: page.toString(),
         page_size: "10",
-      });
+      };
+      if (status) params.status = status;
+      const response = await orderApi.get(params);
       if (response.success) {
         setOrders(response.orders);
         setTotalPages(response.meta.totalPages);
@@ -74,7 +79,22 @@ export const ProfilePage = () => {
     }
   }, []);
 
-  const loadStatuses = useCallback(async () => {}, []);
+  const loadStatuses = useCallback(async () => {
+    try {
+      const response = await orderApi.getStatuses();
+      if (response.success) {
+        setStatuses(response.items);
+      }
+    } catch (err) {
+      const error = err as AxiosError;
+      console.log(error);
+      Toast.show({
+        title: "Ошибка",
+        type: "error",
+        msg: "Ошибка при получении статусов",
+      });
+    }
+  }, []);
 
   useEffect(() => {
     loadProfile();
@@ -82,8 +102,8 @@ export const ProfilePage = () => {
   }, [loadProfile, loadStatuses]);
 
   useEffect(() => {
-    loadOrders(currentPage);
-  }, [loadOrders, currentPage]);
+    loadOrders(currentPage, selectedStatus);
+  }, [loadOrders, currentPage, selectedStatus]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -147,6 +167,16 @@ export const ProfilePage = () => {
     if (orders.length === 10) {
       setCurrentPage(currentPage + 1);
     }
+  };
+
+  const handleStatus = (statusName: string) => {
+    if (selectedStatus === statusName) {
+      setSelectedStatus(undefined);
+      setCurrentPage(1);
+      return;
+    }
+    setSelectedStatus(statusName);
+    setCurrentPage(1);
   };
 
   if (isLoading) {
@@ -240,17 +270,33 @@ export const ProfilePage = () => {
       </ProfileContainer>
       <ProfileContainer>
         <TitleM style={{ alignSelf: "self-start" }}>Мои заказы</TitleM>
-        <OrdersList>
-          {orders.map((order) => (
-            <OrderCard
-              key={order.id}
-              id={order.id}
-              description={order.description}
-              status={order.status}
-              timestamps={order.timestamps}
-            />
+        <StatusContainer>
+          {statuses.map((s) => (
+            <Button
+              variant="border"
+              key={s.statusName}
+              onClick={() => handleStatus(s.statusName)}
+              active={selectedStatus === s.statusName}
+            >
+              {s.statusName}
+            </Button>
           ))}
-        </OrdersList>
+        </StatusContainer>
+        {orders.length === 0 ? (
+          <TitleM>Таких заказов нет</TitleM>
+        ) : (
+          <OrdersList>
+            {orders.map((order) => (
+              <OrderCard
+                key={order.id}
+                id={order.id}
+                description={order.description}
+                status={order.status}
+                timestamps={order.timestamps}
+              />
+            ))}
+          </OrdersList>
+        )}
         <PaginationContainer>
           {currentPage > 1 && (
             <Button variant="border" onClick={handlePrevPage}>

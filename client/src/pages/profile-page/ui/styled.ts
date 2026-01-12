@@ -66,3 +66,10 @@ export const PaginationContainer = styled.div`
   align-items: center;
   gap: 20px;
 `;
+
+export const StatusContainer = styled.div`
+  max-width: 100%;
+  overflow-x: auto;
+  display: flex;
+  gap: 20px;
+`;
