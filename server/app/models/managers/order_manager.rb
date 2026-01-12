@@ -166,7 +166,7 @@ class OrderManager < BaseManager
     end
 
     case order.status
-    when "processing"
+    when "delivered"
       return self.error_response("Полученный заказ невозможно отменить", 
                                 details: {order_id: order_id, user_id: user_id}, 
                                 code: :status_order_error)
@@ -175,7 +175,6 @@ class OrderManager < BaseManager
                                 details: {order_id: order_id, user_id: user_id}, 
                                 code: :status_order_error)
     end
-    begin
       Order.transaction do
         order.order_items.each do |order_item|
           product = order_item.product
@@ -185,16 +184,7 @@ class OrderManager < BaseManager
         end
         order.update!(status: "cancelled")
       end
-      self.success_response(message: "Заказ успешно отменен. Товары возвращены на склад.")
-    rescue ActiveRecord::RecordInvalid => e
-      self.error_response("Не удалось отменить заказ: #{e.message}", 
-                        details: {order_id: order_id, user_id: user_id}, 
-                        code: :cancellation_error)
-    rescue => e
-      self.error_response("Ошибка при отмене заказа: #{e.message}", 
-                        details: {order_id: order_id, user_id: user_id}, 
-                        code: :cancellation_error)
-    end
+      self.success_response()
   end
 
   

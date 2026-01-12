@@ -54,7 +54,11 @@ class AuthManager < BaseManager
       return self.error_response("Сессия не найдена", details: {session_id: session_id}, code: :session_not_found)
     end
       user = self.find_obj(session.user_id, User, obj_str_name: "пользователя")
-      [user, session]
+      if user.is_a?(User)
+        [user, session]
+      else
+        return user
+      end
   end
 
   def self.logout(session_id, user_id)
