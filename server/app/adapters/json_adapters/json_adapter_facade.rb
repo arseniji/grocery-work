@@ -12,6 +12,7 @@ class JsonAdapterFacade
     order_details: OrderDetailsCollectionJsonAdapter,
     status: StatusJsonAdapter,
     status_collection: StatusCollectionJsonAdapter,
+    profile: ProfileJsonAdapter,
   }.freeze
   
   def self.adapt(object, type:, **options)
