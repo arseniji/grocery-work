@@ -6,6 +6,8 @@ class OrderApi {
     "v1/order/create",
     "POST"
   );
+
+  public get = createEndpoint("v1/order?page=1&page_size=20", "GET");
 }
 
 export const orderApi = new OrderApi();
