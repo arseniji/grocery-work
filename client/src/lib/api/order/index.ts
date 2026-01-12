@@ -6,6 +6,7 @@ import type {
   GetOrdersRes,
   GetOrderStatusesRes,
   GetOrderDetailsRes,
+  DeleteOrderRes,
 } from "./types";
 
 class OrderApi {
@@ -28,6 +29,13 @@ class OrderApi {
 
   public getDetails(id: number) {
     return createEndpoint<GetOrderDetailsRes>(`v1/order/${id}`, "GET")();
+  }
+
+  public cancel(id: number) {
+    return createEndpoint<DeleteOrderRes>(
+      `v1/order/cancellation/${id}`,
+      "DELETE"
+    )();
   }
 }
 

@@ -4,7 +4,7 @@ import type { AxiosError } from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import type { GetOrderDetailsRes } from "@/lib/api/order/types";
-import { Loader } from "@/shared/ui";
+import { Loader, Button } from "@/shared/ui";
 import { TitleM, BodyM } from "@/shared/ui/captions";
 import {
   Main,
@@ -22,6 +22,7 @@ export const OrderPage = () => {
   const navigate = useNavigate();
   const [orderData, setOrderData] = useState<GetOrderDetailsRes | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isCancelling, setIsCancelling] = useState(false);
 
   const loadOrder = useCallback(async () => {
     try {
@@ -46,6 +47,33 @@ export const OrderPage = () => {
       setLoading(false);
     }
   }, [navigate, id]);
+
+  const handleCancel = useCallback(async () => {
+    if (!orderData) return;
+    setIsCancelling(true);
+    try {
+      const response = await orderApi.cancel(orderData.order.id);
+      if (response.success) {
+        Toast.show({
+          type: "msg",
+          title: "Успешно!",
+          msg: "Заказ отменен",
+        });
+        loadOrder();
+      } else {
+        throw new Error();
+      }
+    } catch (err) {
+      console.log(err);
+      Toast.show({
+        type: "error",
+        title: "Ошибка!",
+        msg: "Не удалось отменить заказ",
+      });
+    } finally {
+      setIsCancelling(false);
+    }
+  }, [orderData, loadOrder]);
 
   useEffect(() => {
     loadOrder();
@@ -79,6 +107,9 @@ export const OrderPage = () => {
           <BodyM>
             Создан: {new Date(order.timestamps.createdAt).toLocaleDateString()}
           </BodyM>
+          <Button onClick={handleCancel} disabled={isCancelling}>
+            {isCancelling ? "Отмена..." : "Отменить заказ"}
+          </Button>
         </OrderHeader>
         <ProductsList>
           {products.map((product) => (

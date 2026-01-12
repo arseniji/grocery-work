@@ -61,3 +61,7 @@ export interface OrderProduct extends Omit<Product, "metadata"> {
     };
   };
 }
+
+export interface DeleteOrderRes {
+  success: boolean;
+}
