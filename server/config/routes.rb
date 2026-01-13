@@ -47,6 +47,15 @@ Rails.application.routes.draw do
         patch 'me', to: 'profile#update_me'
         delete 'me', to: 'profile#delete_me_profile'
       end
+      scope :admin do
+        scope :product do
+              get '/', to: "admin_product#get_products" 
+              get ':id', to: "admin_product#get_product_details" 
+              post '/', to: "admin_product#add_product" 
+              put ':id', to: "admin_product#update_product"
+              delete ':id', to: "admin_product#delete_product" 
+        end
+      end
     end
   end
 end

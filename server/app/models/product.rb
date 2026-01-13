@@ -5,6 +5,7 @@ class Product < ApplicationRecord
   #Название продукта
   validates :product_name, 
     presence: { message: "не может быть пустым" },
+    uniqueness: { message: "Товар уже создан" },
     length: { 
       minimum: 2, 
       maximum: 100,
@@ -16,6 +17,7 @@ class Product < ApplicationRecord
   validates :price, 
     presence: { message: "не может быть пустым" },
     numericality: { 
+      only_float: true,
       greater_than: 0, 
       message: "должен быть больше 0" 
     }
@@ -34,6 +36,7 @@ class Product < ApplicationRecord
   validates :rating, 
     allow_nil: true,
     numericality: { 
+      only_float: true,
       greater_than_or_equal_to: 0, 
       less_than_or_equal_to: 5,
       message: "должен быть от 0 до 5" 
@@ -51,6 +54,7 @@ class Product < ApplicationRecord
   validates :quantity, 
     presence: { message: "не может быть пустым" },
     numericality: { 
+      only_integer: true,
       greater_than_or_equal_to: 0, 
       message: "не может быть отрицательным" 
     }
