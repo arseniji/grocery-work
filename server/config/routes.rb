@@ -55,6 +55,13 @@ Rails.application.routes.draw do
               put ':id', to: "admin_product#update_product"
               delete ':id', to: "admin_product#delete_product" 
         end
+        scope :profile do
+          get '/', to: "admin_profile#get_profiles"
+          get ':user_id', to: "admin_profile#get_profile_info"
+          post '/', to: "admin_profile#add_profile"
+          put ':user_id', to: "admin_profile#update_profile"
+          delete ':user_id', to: "admin_profile#delete_profile"
+        end
       end
     end
   end
