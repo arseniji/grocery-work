@@ -35,7 +35,7 @@ class Api::V1::AdminProductController < Api::V1::AdminBaseController
 
   def add_product
     product_data = build_product_data(params) 
-    result = AdminProductManager.add_product(product_data, image_file)
+    result = AdminProductManager.add_product(product_data)
     render json: result
   end
     
@@ -50,7 +50,7 @@ class Api::V1::AdminProductController < Api::V1::AdminBaseController
       description: params[:description],
       measurement_unit: params[:measurement_unit] || params[:unit] || 'шт',
       quantity: params[:quantity],
-      img_path: params[:img_path]
+      img_path: params[:img_path].to_s
     }.compact
   end
 end

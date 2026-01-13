@@ -6,11 +6,8 @@ class AdminProductManager < BaseManager
     begin
       if product.update(product_data)
         JsonAdapterFacade.adapt(product, 
-                                type: :product,
-                                metadata: {
-                                  created_at: product.created_at,
-                                  updated_at: product.updated_at
-                                })
+                                type: :product
+                                )
       else
         self.error_response_validation(product.errors)
       end
@@ -28,8 +25,8 @@ class AdminProductManager < BaseManager
     self.success_response
   end
 
-  def self.add_product(product_data, image_file = nil)
-    product = Product.new(product_data) 
+  def self.add_product(product_data)
+    product = Product.new(**product_data) 
     if product.save
       JsonAdapterFacade.adapt(product, 
                         type: :product,
