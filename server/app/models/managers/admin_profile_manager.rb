@@ -62,6 +62,8 @@ class AdminProfileManager < BaseManager
     user = self.find_obj(user_id, User, obj_str_name: "пользователя")
     if !user.is_a?(User)
       return user
+    elsif user.role == "admin"
+      return self.error_response("Невозможно изменить админа", details: {user_id: user_id}, code: :update_error)
     end
     result = notify_observers(:update_me, user, user_data)
     return self.extract_object(result, ProfileManager)
@@ -74,12 +76,18 @@ class AdminProfileManager < BaseManager
     elsif current_user_id == user.id
       result = notify_observers(:delete_me, current_session_id, user)
       return self.extract_object(result, ProfileManager)
+    elsif user.role == "admin"
+      return self.error_response("Невозможно удалиить админа", details: {user_id: current_user_id}, code: :delete_error)
     end
 
     result = notify_observers(:get_session_for_session_id, user.id)
     session = self.extract_object(result, SessionManager)
-    result = notify_observers(:delete_me_profile, session[0].id, user)
-    return self.extract_object(result, ProfileManager)
+    if session[0]
+      result = notify_observers(:delete_me_profile, session[0].id, user)
+      return self.extract_object(result, ProfileManager)
+    end
+    user.destroy
+    self.success_response
   end
 
   private_class_method
