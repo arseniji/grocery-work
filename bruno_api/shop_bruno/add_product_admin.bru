@@ -1,0 +1,32 @@
+meta {
+  name: add_product_admin
+  type: http
+  seq: 25
+}
+
+post {
+  url: http://127.0.0.1:3000/api/v1/admin/product/
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: x3ajB7QC7FQq-K5ukWN8W6JWhDVMi0mmhw8eF5O6FpE
+}
+
+body:json {
+  {
+    "product_name": "Киви",
+    "price": 299.99,
+    "rating": 4.8,
+    "category": "fruits",
+    "description": "Свежие киви из Новой Зеландии, 1кг",
+    "measurement_unit": "кг",
+    "quantity": 75
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

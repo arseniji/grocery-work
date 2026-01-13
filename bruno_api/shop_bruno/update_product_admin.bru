@@ -1,0 +1,15 @@
+meta {
+  name: update_product_admin
+  type: http
+  seq: 26
+}
+
+put {
+  url: http://127.0.0.1:3000/api/v1/admin/product/
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}
