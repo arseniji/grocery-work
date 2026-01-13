@@ -51,12 +51,12 @@ class Api::V1::AdminProductController < Api::V1::AdminBaseController
   def build_product_data(params)
     {
       product_name: params[:product_name] || params[:name],
-      price: params[:price].to_f,
-      rating: params[:rating].to_f,
+      price: params[:price],
+      rating: params[:rating],
       category: params[:category],
       description: params[:description],
       measurement_unit: params[:measurement_unit] || params[:unit] || 'шт',
-      quantity: params[:quantity].to_i,
+      quantity: params[:quantity],
       # img_path устанавливается при сохранении изображения
     }.compact
   end
