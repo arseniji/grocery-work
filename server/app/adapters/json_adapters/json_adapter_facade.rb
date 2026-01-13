@@ -14,7 +14,8 @@ class JsonAdapterFacade
     status_collection: StatusCollectionJsonAdapter,
     profile: ProfileJsonAdapter,
     authorizate: AuthorizateJsonAdapter,
-    registration: RegistrationJsonAdapter
+    registration: RegistrationJsonAdapter,
+    profiles: ProfileCollectionJsonAdapter,
   }.freeze
   
   def self.adapt(object, type:, **options)
