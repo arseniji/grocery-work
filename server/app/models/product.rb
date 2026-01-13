@@ -40,7 +40,7 @@ class Product < ApplicationRecord
     }
 
   #категория
-  validates :category, 
+  validatefruitss :category, 
       presence: { message: "не может быть пустым" },
       inclusion: { 
         in: ['vegetables', 'fruits', 'dairy', 'meat', 'fish', 'grocery', 'drinks', 'bakery'],
