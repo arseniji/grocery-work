@@ -12,13 +12,15 @@ export const useAuth = () => {
 
     if (!token) {
       setIsAuth(false);
+      setIsLoading(false);
       return;
     }
 
     try {
       const response = await authApi.validToken();
+      console.log(response);
 
-      if (response.expired || !response.success) {
+      if (response.expired || response.success === false) {
         setIsAuth(false);
         localStorage.removeItem("token");
         setIsLoading(false);

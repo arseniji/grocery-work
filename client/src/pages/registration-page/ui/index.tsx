@@ -33,8 +33,7 @@ export const RegistrationPage = () => {
       const response = await authApi.register(data as UserRegisterType);
 
       localStorage.setItem("token", response.session.sessionId);
-      console.log(response);
-      navigate("/");
+      navigate("/login");
     } catch (err) {
       const error = err as AxiosError;
 
