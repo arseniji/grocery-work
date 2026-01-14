@@ -18,7 +18,7 @@ export const useAuth = () => {
     try {
       const response = await authApi.validToken();
 
-      if (response.expired) {
+      if (response.expired || !response.success) {
         setIsAuth(false);
         localStorage.removeItem("token");
         setIsLoading(false);

@@ -83,7 +83,7 @@ export const LoginPage = () => {
         <Button variant="primary" disabled={loading || !isValid} type="submit">
           {loading ? "Вход..." : "Войти"}
         </Button>
-        <Link to={"/register"} style={{ textAlign: "center" }}>
+        <Link to={"/registration"} style={{ textAlign: "center" }}>
           <BodyM>Нет аккаунта?</BodyM>
         </Link>
       </Form>
