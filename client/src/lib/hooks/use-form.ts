@@ -20,9 +20,9 @@ export function useForm<SchemaShape extends Record<string, Schema<any>>>(
   schema: ObjectSchema<SchemaShape>,
   options?: UseFormOptions<SchemaShape>
 ) {
-  const [data, setData] = useState<Partial<Record<keyof SchemaShape, any>>>(
-    options?.defaultValues || {}
-  );
+  const [data, setDataState] = useState<
+    Partial<Record<keyof SchemaShape, any>>
+  >(options?.defaultValues || {});
 
   const [touched, setTouched] = useState<Set<keyof SchemaShape>>(new Set());
 
@@ -32,13 +32,20 @@ export function useForm<SchemaShape extends Record<string, Schema<any>>>(
 
   const isValid = validation.success;
 
+  const setData = useCallback(
+    (newData: Partial<Record<keyof SchemaShape, any>>) => {
+      setDataState((prev) => ({ ...prev, ...newData }));
+    },
+    []
+  );
+
   const register = useCallback(
     (name: keyof SchemaShape): RegisterReturn => {
       return {
         name: name as string,
         value: data[name] || "",
         onChange: (value: string) => {
-          setData((prev) => ({ ...prev, [name]: value }));
+          setDataState((prev) => ({ ...prev, [name]: value }));
         },
         onBlur: () => {
           setTouched((prev) => new Set(prev).add(name));
@@ -55,5 +62,6 @@ export function useForm<SchemaShape extends Record<string, Schema<any>>>(
     data,
     register,
     touched,
+    setData,
   };
 }

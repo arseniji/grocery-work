@@ -7,3 +7,4 @@ export { RefreshIcon } from "./refresh-icon";
 export { BoxIcon } from "./box-icon";
 export { TelegramIcon } from "./telegram-icon";
 export { VkIcon } from "./vk-icon";
+export { UserIcon } from "./user-icon";
