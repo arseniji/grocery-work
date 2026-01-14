@@ -10,6 +10,26 @@ class Order < ApplicationRecord
     delivered: 'delivered',
     cancelled: 'cancelled'
   }
-  
-  validates :status, presence: true
+
+  #Статус
+  validates :status, 
+      presence: { message: "не может быть пустым" },
+      inclusion: { 
+        in: statuses.keys, 
+        message: "должен быть одним из допустимых статусов" 
+      }
+
+  #ID заказчика
+  validates :user_id, 
+    presence: { 
+      message: "не может быть пустым" 
+    }
+
+  #Описание
+  validates :description, 
+    allow_nil: true,
+    length: { 
+      maximum: 500,
+      too_long: "не может превышать %{count} символов"
+    }
 end

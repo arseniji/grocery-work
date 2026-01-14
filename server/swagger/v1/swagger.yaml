@@ -1,0 +1,766 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/admin/product":
+    get:
+      summary: Получить список продуктов
+      tags:
+      - Admin Product
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: page_size
+        in: query
+        description: Размер страницы
+        default: 50
+        schema:
+          type: integer
+      - name: page
+        in: query
+        description: Номер страницы
+        default: 1
+        schema:
+          type: integer
+      - name: category
+        in: query
+        description: Категория
+        schema:
+          type: string
+      - name: search
+        in: query
+        description: Поисковый запрос
+        schema:
+          type: string
+      - name: sorted_fields
+        in: query
+        description: Поля сортировки
+        schema:
+          type: string
+      responses:
+        '200':
+          description: список продуктов
+    post:
+      summary: Добавить продукт
+      tags:
+      - Admin Product
+      security:
+      - bearerAuth: []
+      parameters: []
+      responses:
+        '200':
+          description: продукт добавлен
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  product:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      product_name:
+                        type: string
+                      price:
+                        type: string
+                      rating:
+                        type: string
+                      category:
+                        type: string
+                      quantity:
+                        type: integer
+                      measurement_unit:
+                        type: string
+                      description:
+                        type: string
+                      img_path:
+                        type: string
+                      created_at:
+                        type: string
+                        format: date-time
+                      updated_at:
+                        type: string
+                        format: date-time
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_name:
+                  type: string
+                price:
+                  type: number
+                rating:
+                  type: number
+                category:
+                  type: string
+                quantity:
+                  type: integer
+                measurement_unit:
+                  type: string
+                description:
+                  type: string
+                image:
+                  type: string
+                  description: Изображение (base64/URL)
+              required:
+              - product_name
+              - price
+              - category
+              - quantity
+  "/api/v1/admin/product/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      description: ID продукта
+      schema:
+        type: integer
+    get:
+      summary: Получить детали продукта
+      tags:
+      - Admin Product
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: детали продукта
+    put:
+      summary: Обновить продукт
+      tags:
+      - Admin Product
+      security:
+      - bearerAuth: []
+      parameters: []
+      responses:
+        '200':
+          description: продукт обновлен
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  product:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      product_name:
+                        type: string
+                      price:
+                        type: string
+                      rating:
+                        type: string
+                      category:
+                        type: string
+                      quantity:
+                        type: integer
+                      measurement_unit:
+                        type: string
+                      description:
+                        type: string
+                      img_path:
+                        type: string
+                      created_at:
+                        type: string
+                        format: date-time
+                      updated_at:
+                        type: string
+                        format: date-time
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_name:
+                  type: string
+                price:
+                  type: number
+                rating:
+                  type: number
+                category:
+                  type: string
+                quantity:
+                  type: integer
+                measurement_unit:
+                  type: string
+                description:
+                  type: string
+                image:
+                  type: string
+                  description: Изображение (base64/URL)
+    delete:
+      summary: Удалить продукт
+      tags:
+      - Admin Product
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: продукт удален
+  "/api/v1/admin/profile":
+    get:
+      summary: Получить список пользователей
+      tags:
+      - Admin User
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: page_size
+        in: query
+        description: Размер страницы
+        default: 50
+        schema:
+          type: integer
+      - name: page
+        in: query
+        description: Номер страницы
+        default: 1
+        schema:
+          type: integer
+      - name: role
+        in: query
+        description: Роль пользователя
+        schema:
+          type: string
+      - name: search
+        in: query
+        description: Поисковый запрос
+        schema:
+          type: string
+      - name: sorted_fields
+        in: query
+        description: Поля сортировки
+        schema:
+          type: string
+      responses:
+        '200':
+          description: список пользователей
+    post:
+      summary: Добавить пользователя
+      tags:
+      - Admin User
+      security:
+      - bearerAuth: []
+      parameters: []
+      responses:
+        '200':
+          description: пользователь добавлен
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  profile:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      login:
+                        type: string
+                      phone:
+                        type: string
+                      firstname:
+                        type: string
+                      lastname:
+                        type: string
+                      patronymic:
+                        type: string
+                      role:
+                        type: string
+                      created_at:
+                        type: string
+                        format: date-time
+                      updated_at:
+                        type: string
+                        format: date-time
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login:
+                  type: string
+                phone:
+                  type: string
+                firstname:
+                  type: string
+                lastname:
+                  type: string
+                patronymic:
+                  type: string
+                role:
+                  type: string
+                password:
+                  type: string
+              required:
+              - login
+              - phone
+              - firstname
+              - lastname
+              - role
+              - password
+  "/api/v1/admin/profile/{user_id}":
+    parameters:
+    - name: user_id
+      in: path
+      required: true
+      description: ID пользователя
+      schema:
+        type: integer
+    get:
+      summary: Получить информацию о пользователе
+      tags:
+      - Admin User
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: информация о пользователе
+    put:
+      summary: Обновить пользователя
+      tags:
+      - Admin User
+      security:
+      - bearerAuth: []
+      parameters: []
+      responses:
+        '200':
+          description: пользователь обновлен
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  profile:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      login:
+                        type: string
+                      phone:
+                        type: string
+                      firstname:
+                        type: string
+                      lastname:
+                        type: string
+                      patronymic:
+                        type: string
+                      role:
+                        type: string
+                      created_at:
+                        type: string
+                        format: date-time
+                      updated_at:
+                        type: string
+                        format: date-time
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login:
+                  type: string
+                phone:
+                  type: string
+                firstname:
+                  type: string
+                lastname:
+                  type: string
+                patronymic:
+                  type: string
+                role:
+                  type: string
+    delete:
+      summary: Удалить пользователя
+      tags:
+      - Admin User
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: пользователь удален
+  "/api/v1/login":
+    post:
+      summary: Авторизация пользователя
+      tags:
+      - Authorization
+      parameters: []
+      responses:
+        '200':
+          description: успешно авторизован
+        '401':
+          description: неверные credentials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login:
+                  type: string
+                password:
+                  type: string
+              required:
+              - login
+              - password
+  "/api/v1/logout":
+    delete:
+      summary: Выход из системы
+      tags:
+      - Base
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: успешно вышел
+  "/api/v1/session_expire":
+    get:
+      summary: Проверка истечения сессии
+      tags:
+      - Base
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: статус сессии
+  "/api/v1/cart/add":
+    post:
+      summary: Добавить товар в корзину
+      tags:
+      - Cart
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: product_id
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: quantity
+        in: query
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: успешно
+  "/api/v1/cart/add-one/{product_id}":
+    post:
+      summary: Увеличить количество товара в корзине
+      tags:
+      - Cart
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: product_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: успешно
+  "/api/v1/cart/remove/{product_id}":
+    delete:
+      summary: Удалить товар из корзины
+      tags:
+      - Cart
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: product_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: успешно
+  "/api/v1/cart/remove-one/{product_id}":
+    delete:
+      summary: Уменьшить количество товара в корзине
+      tags:
+      - Cart
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: product_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: успешно
+  "/api/v1/cart/clear":
+    delete:
+      summary: Очистить корзину
+      tags:
+      - Cart
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: успешно
+  "/api/v1/cart/":
+    get:
+      summary: Получить корзину
+      tags:
+      - Cart
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: успешно
+  "/api/v1/order/":
+    get:
+      summary: Получить заказы пользователя
+      tags:
+      - Orders
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: status
+        in: query
+        description: Статус заказа
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: Номер страницы
+        schema:
+          type: integer
+      - name: search
+        in: query
+        description: Поисковый запрос
+        schema:
+          type: string
+      - name: sort
+        in: query
+        description: Сортировка (например, created_at:desc)
+        schema:
+          type: string
+      - name: page_size
+        in: query
+        description: Размер страницы
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: успешно
+  "/api/v1/order/{order_id}":
+    get:
+      summary: Получить детали заказа
+      tags:
+      - Orders
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: order_id
+        in: path
+        required: true
+        description: ID заказа
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: успешно
+  "/api/v1/order/status_collection":
+    get:
+      summary: Получить все статусы заказов
+      tags:
+      - Orders
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: успешно
+  "/api/v1/order/create":
+    post:
+      summary: Создать заказ
+      tags:
+      - Orders
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: description
+        in: query
+        description: Описание заказа
+        schema:
+          type: string
+      responses:
+        '200':
+          description: успешно
+  "/api/v1/order/cancellation/{order_id}":
+    delete:
+      summary: Отменить заказ
+      tags:
+      - Orders
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: order_id
+        in: path
+        required: true
+        description: ID заказа
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: успешно
+  "/api/v1/products/categories":
+    get:
+      summary: Получить все категории
+      tags:
+      - Products
+      responses:
+        '200':
+          description: успешно
+  "/api/v1/products/top":
+    get:
+      summary: Получить топ товаров
+      tags:
+      - Products
+      parameters:
+      - name: size_top
+        in: query
+        description: Количество топ товаров
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: успешно
+  "/api/v1/products/{id}":
+    get:
+      summary: Получить детали товара
+      tags:
+      - Products
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID товара
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: успешно
+  "/api/v1/products/":
+    get:
+      summary: Получить страницу товаров
+      tags:
+      - Products
+      parameters:
+      - name: category
+        in: query
+        description: Категория
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: Номер страницы
+        schema:
+          type: integer
+      - name: search
+        in: query
+        description: Поисковый запрос
+        schema:
+          type: string
+      - name: sort
+        in: query
+        description: Сортировка
+        schema:
+          type: string
+      - name: page_size
+        in: query
+        description: Размер страницы
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: успешно
+  "/api/v1/profile/me":
+    get:
+      summary: Получить профиль пользователя
+      tags:
+      - Profile
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: успешно
+    patch:
+      summary: Обновить профиль пользователя
+      tags:
+      - Profile
+      security:
+      - bearerAuth: []
+      parameters: []
+      responses:
+        '200':
+          description: успешно обновлен
+    delete:
+      summary: Удалить профиль пользователя
+      tags:
+      - Profile
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: успешно удален
+  "/api/v1/register":
+    post:
+      summary: Регистрация пользователя
+      tags:
+      - Registration
+      parameters: []
+      responses:
+        '200':
+          description: успешно зарегистрирован
+        '422':
+          description: ошибка валидации
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login:
+                  type: string
+                phone:
+                  type: string
+                role:
+                  type: string
+                password:
+                  type: string
+                firstname:
+                  type: string
+                lastname:
+                  type: string
+                patronymic:
+                  type: string
+              required:
+              - login
+              - phone
+              - role
+              - password
+              - firstname
+              - lastname
+servers:
+- url: http://localhost:3000
+  description: Development server
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
