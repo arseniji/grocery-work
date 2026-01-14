@@ -17,6 +17,8 @@ export interface ComboBoxProps {
   width?: string;
   error?: boolean;
   errorMessage?: string;
+  name?: string;
+  onBlur?: () => void;
 }
 
 const Container = styled.div<{ width?: string }>`

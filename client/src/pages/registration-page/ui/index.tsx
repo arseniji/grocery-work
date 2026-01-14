@@ -8,7 +8,7 @@ import {
   InputGroup,
   Label,
 } from "./styled";
-import { Button, Input } from "@/shared/ui";
+import { Button, ComboBox, Input } from "@/shared/ui";
 import { BodyM, ErrorMsg, TitleL } from "@/shared/ui/captions";
 import { useForm } from "@/lib/hooks";
 import {
@@ -99,6 +99,25 @@ export const RegistrationPage = () => {
           {touched.has("password") && errors.password && (
             <ErrorMsg>{errors.password.message}</ErrorMsg>
           )}
+        </InputGroup>
+        <InputGroup>
+          <Label>Роль</Label>
+          <ComboBox
+            name={register("role").name}
+            value={register("role").value}
+            onChange={register("role").onChange}
+            placeholder="Выберите роль"
+            options={[
+              {
+                value: "admin",
+                label: "Админ",
+              },
+              {
+                value: "customer",
+                label: "Покупатель",
+              },
+            ]}
+          />
         </InputGroup>
         <Button variant="primary" disabled={loading || !isValid} type="submit">
           {loading ? "Регистрация..." : "Зарегистрироваться"}
