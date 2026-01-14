@@ -4,4 +4,7 @@ export interface IProfile {
   login: string;
   patronymic: string;
   phone: string;
+  role: IRole;
 }
+
+export type IRole = "admin" | "customer";
