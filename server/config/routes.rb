@@ -69,6 +69,10 @@ Rails.application.routes.draw do
           post 'user/:user_id/order/:order_id/product/:product_id', to: "admin_order#add_product_orders_items"
           delete 'user/:user_id/order/:order_id/product/:product_id', to: "admin_order#delete_product_order_items"
         end
+        scope :data do
+          post 'import/:entity', to: "admin_data#import"
+          get 'export/:entity', to: "admin_data#export"
+        end
       end
     end
   end
