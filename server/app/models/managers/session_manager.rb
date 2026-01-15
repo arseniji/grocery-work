@@ -58,4 +58,9 @@ class SessionManager
     session.clear_cart
     session.save
   end
+
+  def self.get_session_for_session_id(user_id)
+    session = Session.find_by_user(user_id)
+    session
+  end
 end

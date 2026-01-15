@@ -1,0 +1,27 @@
+meta {
+  name: update_order_user_admin
+  type: http
+  seq: 35
+}
+
+put {
+  url: http://localhost:3000/api/v1/admin/order/user/29/order/9
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: 9qCi-tjcGo8-_w9EBOSO0IfyUG7lfAVKqZmPOf9Wq1g
+}
+
+body:json {
+  {
+    "status": "processing" ,
+    "description": "aaa"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "login": "sample_admin",
+    "phone": "+79990000001",
+    "password_digest": "$2a$12$KCL.eWbDuPx.VEBWUXffZuDKPcsYjpLFHpv11VTsr0gSxaZgQETEy",
+    "firstname": "Иван",
+    "lastname": "Админов",
+    "patronymic": "Админович",
+    "role": "admin"
+  },
+  {
+    "login": "sample_customer",
+    "phone": "+79990000002",
+    "password_digest": "$2a$12$L6pXLiroIgsN6a2b1bDlLesEnF53YcTEaySOBYcgws6/v51UurMuC",
+    "firstname": "Петр",
+    "lastname": "Покупатель",
+    "patronymic": "Покупателевич",
+    "role": "customer"
+  }
+]
