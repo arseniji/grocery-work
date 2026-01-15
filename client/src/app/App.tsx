@@ -10,7 +10,7 @@ import { CartPage } from "@/pages/cart-page";
 import { ProfilePage } from "@/pages/profile-page";
 import { OrderPage } from "@/pages/order-page";
 import { AdminLayout } from "@/layouts/admin-layout";
-import { AdminPage } from "@/pages/admin";
+import { AdminUsersPage } from "@/pages/admin";
 
 function App() {
   return (
@@ -26,7 +26,8 @@ function App() {
             <Route path="order/:id" element={<OrderPage />} />
           </Route>
           <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<AdminPage />} />
+            <Route index element={<AdminUsersPage />} />
+            <Route path="users" element={<AdminUsersPage />} />
           </Route>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/registration" element={<RegistrationPage />} />

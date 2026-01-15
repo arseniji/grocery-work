@@ -1,3 +1,3 @@
-export const AdminPage = () => {
+export const AdminUsersPage = () => {
   return <></>;
 };
