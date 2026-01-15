@@ -127,6 +127,7 @@ export const AdminUsersPage = () => {
   const handleSubmit = async (data: any) => {
     try {
       if (isEditing && editingUserId) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { password, ...updateData } = data;
         await adminApi.updateUser(
           editingUserId,
