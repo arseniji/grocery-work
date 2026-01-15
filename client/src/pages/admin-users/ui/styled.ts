@@ -30,5 +30,40 @@ export const PaginationContainer = styled.div`
 export const ControlsWrapper = styled.div`
   display: flex;
   width: 100%;
+  flex-direction: column;
+  gap: 16px;
+`;
+
+export const RowWrapper = styled.div`
+  display: flex;
   align-items: center;
+  gap: 16px;
+`;
+
+export const FormWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+`;
+
+export const FormRow = styled.div`
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+`;
+
+export const FormField = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+`;
+
+export const ErrorText = styled.span`
+  color: red;
+  font-size: 12px;
 `;

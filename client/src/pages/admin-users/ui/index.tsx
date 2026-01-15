@@ -4,6 +4,7 @@ import {
   LoaderWrapper,
   Main,
   PaginationContainer,
+  RowWrapper,
 } from "./styled";
 import type { AxiosError } from "axios";
 import { DataTable, Toast } from "@/feat";
@@ -13,6 +14,14 @@ import { Loader, Button, ComboBox } from "@/shared/ui";
 import { TitleM, TitleXS } from "@/shared/ui/captions";
 import { useNavigate, useSearchParams } from "react-router";
 import { getSortingOptions } from "../utils";
+import {
+  AdminUserAddSchema,
+  type AdminUserAddType,
+  type AdminUserEditType,
+} from "@/entities/user/schemas";
+import type { ShortUser } from "@/lib/api/admin/types";
+import type { IProfile } from "@/entities/profile/types";
+import { AdminUserForm } from "./admin-user-form";
 
 export const AdminUsersPage = () => {
   const navigate = useNavigate();
@@ -24,6 +33,11 @@ export const AdminUsersPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [data, setData] = useState<GetUsersRes>();
   const [selected, setSelected] = useState<Record<string, any>>();
+  const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [editingUser, setEditingUser] = useState<IProfile>();
+  const [editingUserId, setEditingUserId] = useState<number>();
+  const [isLoadingEdit, setIsLoadingEdit] = useState<boolean>(false);
 
   const loadUsers = useCallback(async () => {
     setIsLoading(true);
@@ -77,6 +91,98 @@ export const AdminUsersPage = () => {
     }
   };
 
+  const handleAddUser = () => {
+    setIsEditing(false);
+    setEditingUser(undefined);
+    setIsFormOpen(true);
+  };
+
+  const handleEditUser = async () => {
+    if (selected) {
+      setIsEditing(true);
+      setEditingUserId((selected as ShortUser).userId);
+      setIsLoadingEdit(true);
+      try {
+        const response = await adminApi.getUser((selected as ShortUser).userId);
+        setEditingUser((response as any).data || response);
+        setIsFormOpen(true);
+      } catch (err) {
+        const error = err as AxiosError;
+        console.log(error);
+        Toast.show({
+          type: "error",
+          title: "Ошибка!",
+          msg: "Ошибка получения данных пользователя",
+        });
+      } finally {
+        setIsLoadingEdit(false);
+      }
+    }
+  };
+
+  const handleCloseForm = () => {
+    setIsFormOpen(false);
+  };
+
+  const handleSubmit = async (data: any) => {
+    try {
+      if (isEditing && editingUserId) {
+        const { password, ...updateData } = data;
+        await adminApi.updateUser(
+          editingUserId,
+          updateData as AdminUserEditType
+        );
+        Toast.show({
+          type: "msg",
+          title: "Успех!",
+          msg: "Пользователь обновлен",
+        });
+      } else {
+        await adminApi.addUser(data as AdminUserAddType);
+        Toast.show({
+          type: "msg",
+          title: "Успех!",
+          msg: "Пользователь добавлен",
+        });
+      }
+      loadUsers();
+      setIsFormOpen(false);
+    } catch (err) {
+      const error = err as AxiosError;
+      console.log(error);
+      Toast.show({
+        type: "error",
+        title: "Ошибка!",
+        msg: isEditing
+          ? "Ошибка обновления пользователя"
+          : "Ошибка добавления пользователя",
+      });
+    }
+  };
+
+  const handleDeleteUser = async () => {
+    if (selected) {
+      try {
+        await adminApi.deleteUser((selected as ShortUser).userId);
+        Toast.show({
+          type: "msg",
+          title: "Успех!",
+          msg: "Пользователь удален",
+        });
+        loadUsers();
+        setSelected(undefined);
+      } catch (err) {
+        const error = err as AxiosError;
+        console.log(error);
+        Toast.show({
+          type: "error",
+          title: "Ошибка!",
+          msg: "Ошибка удаления пользователя",
+        });
+      }
+    }
+  };
+
   return (
     <Main>
       <TitleM>Пользователи</TitleM>
@@ -87,12 +193,51 @@ export const AdminUsersPage = () => {
       ) : (
         <>
           <ControlsWrapper>
-            <ComboBox
-              placeholder="Сортировать по:"
-              options={getSortingOptions(data?.users?.at(0))}
-              onChange={handleSort}
-            />
+            <RowWrapper style={{ justifyContent: "space-between" }}>
+              <ComboBox
+                placeholder="Сортировать по:"
+                options={getSortingOptions(data?.users?.at(0))}
+                onChange={handleSort}
+              />
+            </RowWrapper>
+            <RowWrapper>
+              <Button variant={"border"} onClick={handleAddUser}>
+                Добавить
+              </Button>
+              <Button
+                variant={"border"}
+                disabled={!selected}
+                onClick={handleEditUser}
+              >
+                Изменить
+              </Button>
+              <Button
+                variant={"border"}
+                disabled={!selected}
+                onClick={handleDeleteUser}
+              >
+                Удалить
+              </Button>
+            </RowWrapper>
           </ControlsWrapper>
+          {(isFormOpen || isLoadingEdit) &&
+            (isLoadingEdit ? (
+              <LoaderWrapper>
+                <Loader />
+              </LoaderWrapper>
+            ) : (
+              <AdminUserForm
+                schema={AdminUserAddSchema}
+                initialValues={editingUser || {}}
+                isEditing={isEditing}
+                onSubmit={handleSubmit}
+                onCancel={handleCloseForm}
+                title={
+                  isEditing ? "Изменить пользователя" : "Добавить пользователя"
+                }
+                submitLabel={isEditing ? "Сохранить" : "Добавить"}
+              />
+            ))}
           <DataTable data={data?.users} onSelect={setSelected} />
           <PaginationContainer>
             {page > 1 && (
