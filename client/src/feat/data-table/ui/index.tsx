@@ -1,14 +1,24 @@
-import { Container, Table, Th, Td } from "./styled";
+import { useState } from "react";
+import { Container, Table, Th, Td, Tr } from "./styled";
 
 interface DataTableProps {
   data?: Record<string, any>[];
   keys: Array<string>;
+  onSelect?: (value: Record<string, any>) => void;
 }
 
-export const DataTable = ({ data, keys }: DataTableProps) => {
+export const DataTable = ({ data, keys, onSelect }: DataTableProps) => {
+  const [selectedIndex, setSelectedIndex] = useState<number>();
+
   if (!data || data.length === 0) {
     return <Container>No data available</Container>;
   }
+
+  const handleSelect = (value: Record<string, any>, index: number) => {
+    if (!onSelect) return;
+    onSelect(value);
+    setSelectedIndex(index);
+  };
 
   return (
     <Container>
@@ -22,11 +32,15 @@ export const DataTable = ({ data, keys }: DataTableProps) => {
         </thead>
         <tbody>
           {data.map((row, index) => (
-            <tr key={index}>
+            <Tr
+              key={index}
+              onClick={() => handleSelect(row, index)}
+              isActive={selectedIndex === index}
+            >
               {keys.map((key) => (
                 <Td key={key}>{String(row[key])}</Td>
               ))}
-            </tr>
+            </Tr>
           ))}
         </tbody>
       </Table>

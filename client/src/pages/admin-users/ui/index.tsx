@@ -10,6 +10,7 @@ import { TitleM } from "@/shared/ui/captions";
 export const AdminUsersPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [data, setData] = useState<GetUsersRes>();
+  const [selected, setSelected] = useState<Record<string, any>>();
 
   const loadUsers = useCallback(async () => {
     try {
@@ -45,6 +46,7 @@ export const AdminUsersPage = () => {
         <DataTable
           data={data?.users}
           keys={["userId", "firstname", "lastname", "login", "role"]}
+          onSelect={setSelected}
         />
       )}
     </Main>

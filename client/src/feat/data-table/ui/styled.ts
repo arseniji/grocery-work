@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Container = styled.div`
   flex: 1;
@@ -22,4 +22,12 @@ export const Th = styled.th`
 export const Td = styled.td`
   border: 1px solid #ddd;
   padding: 12px;
+`;
+
+export const Tr = styled.tr<{ isActive: boolean }>`
+  ${({ isActive }) =>
+    isActive &&
+    css`
+      background-color: #e0e0e0;
+    `}
 `;

@@ -9,7 +9,7 @@ export const Main = styled.main`
   box-shadow: 4px 0px 10px 0px rgba(34, 60, 80, 0.2);
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 16px;
 `;
 
 export const LoaderWrapper = styled.div`
