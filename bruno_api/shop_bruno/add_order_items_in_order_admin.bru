@@ -1,0 +1,26 @@
+meta {
+  name: add_order_items_in_order_admin
+  type: http
+  seq: 36
+}
+
+post {
+  url: http://localhost:3000/api/v1/admin/order/user/29/order/9/product/123
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: 9qCi-tjcGo8-_w9EBOSO0IfyUG7lfAVKqZmPOf9Wq1g
+}
+
+body:json {
+  {
+    "quantity":10
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
