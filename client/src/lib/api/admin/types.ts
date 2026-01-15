@@ -34,3 +34,23 @@ export interface GetProductsRes {
   meta: GetMeta;
   products: ShortProduct[];
 }
+
+export interface GetProductRes {
+  success: boolean;
+  id: number;
+  name: string;
+  price: string;
+  rating: string;
+  category: string;
+  details: {
+    description: string;
+    unit: string;
+    imageUrl: string;
+    quantity: 80;
+  };
+  timestamps: {
+    createdAt: string;
+    updatedAt: string;
+  };
+  metadata: object;
+}

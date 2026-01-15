@@ -228,8 +228,21 @@ export const AdminProductsPage = () => {
               </LoaderWrapper>
             ) : (
               <AdminProductForm
+                key={isEditing ? "edit" : "add"}
                 schema={AdminProductAddSchema}
-                initialValues={editingProduct || {}}
+                initialValues={
+                  isEditing && editingProduct
+                    ? {
+                        product_name: editingProduct.name,
+                        price: parseFloat(editingProduct.price),
+                        rating: editingProduct.rating,
+                        category: editingProduct.category,
+                        description: editingProduct.details.description,
+                        measurement_unit: editingProduct.details.unit,
+                        quantity: editingProduct.details.quantity,
+                      }
+                    : {}
+                }
                 onSubmit={handleSubmit}
                 onCancel={handleCloseForm}
                 title={isEditing ? "Изменить продукт" : "Добавить продукт"}

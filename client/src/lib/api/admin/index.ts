@@ -1,5 +1,5 @@
 import { createEndpoint } from "../core";
-import type { GetUsersRes, GetProductsRes } from "./types";
+import type { GetUsersRes, GetProductsRes, GetProductRes } from "./types";
 
 class AdminApi {
   public async getUsers(
@@ -72,7 +72,10 @@ class AdminApi {
   }
 
   public async getProduct(productId: number) {
-    return createEndpoint(`v1/admin/product/${productId}`, "GET")();
+    return createEndpoint<GetProductRes>(
+      `v1/admin/product/${productId}`,
+      "GET"
+    )();
   }
 
   public async updateProduct(
