@@ -21,3 +21,16 @@ export interface GetUsersRes {
   meta: GetMeta;
   users: ShortUser[];
 }
+
+export interface ShortProduct {
+  id: number;
+  name: string;
+  price: string;
+  category: string;
+}
+
+export interface GetProductsRes {
+  success: boolean;
+  meta: GetMeta;
+  products: ShortProduct[];
+}
