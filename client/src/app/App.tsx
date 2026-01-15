@@ -10,7 +10,7 @@ import { CartPage } from "@/pages/cart-page";
 import { ProfilePage } from "@/pages/profile-page";
 import { OrderPage } from "@/pages/order-page";
 import { AdminLayout } from "@/layouts/admin-layout";
-import { AdminUsersPage } from "@/pages/admin";
+import { AdminUsersPage } from "@/pages/admin-users";
 
 function App() {
   return (
