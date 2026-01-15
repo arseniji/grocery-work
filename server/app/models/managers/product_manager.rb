@@ -17,14 +17,14 @@ class ProductManager < BaseManager
     end
   end
 
-  def self.get_product_page(page_size:, number_page:, category: '', search: '', sorted_fields: {})
+  def self.get_product_page(page_size:, number_page:, category: '', search: {}, sorted_fields: {}, search_fields: [])
     products = Product.all
     result = paginate_with_filters(
       products,
       page_size: page_size,
       number_page: number_page,
-      filters: { category: category }.compact,
-      search_fields: ['product_name', 'description'],
+      filters: { category: category, search: search }.compact,
+      search_fields: search_fields,
       sorted_fields: sorted_fields,
       default_order: { created_at: :desc }
     )

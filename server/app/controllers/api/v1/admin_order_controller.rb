@@ -1,25 +1,29 @@
 class Api::V1::AdminOrderController < Api::V1::AdminBaseController
   def get_all_orders_user
+    search_hash = params[:search].to_s.split(',').map { |pair| pair.split(':', 2) }.to_h.transform_values(&:strip) rescue {}
+    sorted_fields_parsed = params[:sort].to_s.split(',').map { |pair| pair.split(':', 2) }.to_h.transform_values(&:strip) rescue {}
+
     user_id = params[:user_id]
     status = params[:status]     
     page = params[:page]             
-    search = params[:search]          
-    sort = params[:sort]     
+    search = search_hash     
     page_size = params[:page_size] 
-    sorted_fields = {}
-    if sort.present?
-      sort.split(',').each do |sort_param|
-        field, direction = sort_param.split(':')
-        sorted_fields[field] = direction if field && direction
-      end
-    end
+    sorted_fields = sorted_fields_parsed
+    # if sort.present?
+    #   sort.split(',').each do |sort_param|
+    #     field, direction = sort_param.split(':')
+    #     sorted_fields[field] = direction if field && direction
+    #   end
+    # end
     result = OrderManager.get_user_orders(
       user_id,
       number_page: page || 1,
       page_size: page_size || 20,
       search: search,
       status: status,
-      sorted_fields: sorted_fields)
+      sorted_fields: sorted_fields,
+      search_fields: ['id', 'user_id', 'description']
+      )
     render json: result    
   end
 

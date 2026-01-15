@@ -53,25 +53,18 @@ class BaseManager
   end
 
   # Применение поиска
-  def self.apply_search(query, search_term, search_fields)
-    return query if search_term.blank? || search_fields.empty?
+  def self.apply_search(query, search_hash, search_fields)
+    return query if search_hash.blank? || search_fields.empty?
     
-    search_term = "%#{search_term.strip}%"
-    
-    # Строим условие поиска
-    conditions = search_fields.map do |field|
-      if field.is_a?(Hash)
-        # Специальный случай для кастомных условий
-        field[:condition]
-      else
-        "#{field} ILIKE ?"
+    search_hash.each do |field, value|
+      next if value.blank?
+      
+      if search_fields.include?(field.to_s) && query.klass.column_names.include?(field.to_s)
+        query = query.where("#{field}::text ILIKE ?", "%#{value}%")
       end
     end
     
-    # Создаем массив параметров
-    values = conditions.map { |condition| condition.include?('?') ? search_term : nil }.compact
-    
-    query.where(conditions.join(' OR '), *values)
+    query
   end
 
   # Применение сортировки
