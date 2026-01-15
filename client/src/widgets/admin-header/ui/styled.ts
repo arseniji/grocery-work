@@ -1,13 +1,9 @@
-import { Container } from "@/shared/ui/container";
 import styled from "styled-components";
 
 export const Header = styled.header`
+  background-color: #fcfcfc;
   box-shadow: 0px 5px 8px 0px rgba(34, 60, 80, 0.2);
-`;
-
-export const HeaderContainer = styled.div`
-  ${Container};
-  padding: 20px 0;
+  padding: 20px 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;

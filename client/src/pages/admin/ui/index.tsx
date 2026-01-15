@@ -1,3 +1,5 @@
+import { Main } from "./styled";
+
 export const AdminUsersPage = () => {
-  return <></>;
+  return <Main>dada</Main>;
 };
