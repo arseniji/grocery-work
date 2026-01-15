@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<orders>
+  <order>
+    <user_id>1</user_id>
+    <status>delivered</status>
+    <description>Тестовый заказ для пользователя #1 (доставлен)</description>
+  </order>
+  <order>
+    <user_id>2</user_id>
+    <status>processing</status>
+    <description>Тестовый заказ для пользователя #2 (в обработке)</description>
+  </order>
+</orders>
