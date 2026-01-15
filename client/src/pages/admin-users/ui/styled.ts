@@ -19,3 +19,10 @@ export const LoaderWrapper = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
+export const PaginationContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+`;
