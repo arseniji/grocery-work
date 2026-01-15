@@ -3,9 +3,25 @@ import { Container, Table, Th, Td, Tr } from "./styled";
 
 interface DataTableProps {
   data?: Record<string, any>[];
-  keys?: Array<string>;
+  keys?: Record<string, string>;
   onSelect?: (value: Record<string, any>) => void;
 }
+
+const flattenKeys = (obj: any, prefix = ""): string[] => {
+  const keys: string[] = [];
+  for (const key in obj) {
+    if (obj[key] && typeof obj[key] === "object" && !Array.isArray(obj[key])) {
+      keys.push(...flattenKeys(obj[key], prefix ? `${prefix}.${key}` : key));
+    } else {
+      keys.push(prefix ? `${prefix}.${key}` : key);
+    }
+  }
+  return keys;
+};
+
+const getValueByPath = (obj: any, path: string): any => {
+  return path.split(".").reduce((current, key) => current && current[key], obj);
+};
 
 export const DataTable = ({ data, keys, onSelect }: DataTableProps) => {
   const [selectedIndex, setSelectedIndex] = useState<number>();
@@ -14,9 +30,11 @@ export const DataTable = ({ data, keys, onSelect }: DataTableProps) => {
     return <Container>No data available</Container>;
   }
 
-  let tableKeys = keys;
-  if (!tableKeys) {
-    tableKeys = Object.keys(data[0]).filter((key) => key !== "metadata");
+  let tableKeys: string[];
+  if (keys) {
+    tableKeys = Object.keys(keys);
+  } else {
+    tableKeys = flattenKeys(data[0]).filter((key) => !key.includes("metadata"));
   }
 
   const handleSelect = (value: Record<string, any>, index: number) => {
@@ -31,7 +49,7 @@ export const DataTable = ({ data, keys, onSelect }: DataTableProps) => {
         <thead>
           <tr>
             {tableKeys.map((key) => (
-              <Th key={key}>{key}</Th>
+              <Th key={key}>{keys ? keys[key] : key}</Th>
             ))}
           </tr>
         </thead>
@@ -42,8 +60,8 @@ export const DataTable = ({ data, keys, onSelect }: DataTableProps) => {
               onClick={() => handleSelect(row, index)}
               isActive={selectedIndex === index}
             >
-              {tableKeys!.map((key) => (
-                <Td key={key}>{String(row[key])}</Td>
+              {tableKeys.map((key) => (
+                <Td key={key}>{String(getValueByPath(row, key))}</Td>
               ))}
             </Tr>
           ))}
