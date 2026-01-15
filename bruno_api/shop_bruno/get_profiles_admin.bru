@@ -5,13 +5,17 @@ meta {
 }
 
 get {
-  url: http://localhost:3000/api/v1/admin/profile
+  url: http://localhost:3000/api/v1/admin/profile?sort=login:asc
   body: none
   auth: bearer
 }
 
+params:query {
+  sort: login:asc
+}
+
 auth:bearer {
-  token: x3ajB7QC7FQq-K5ukWN8W6JWhDVMi0mmhw8eF5O6FpE
+  token: EKlX9d3-EYljihHRkNIRGkuHb0SORgqj57oGZvbU0DU
 }
 
 settings {

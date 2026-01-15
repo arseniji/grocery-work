@@ -26,3 +26,9 @@ export const PaginationContainer = styled.div`
   align-items: center;
   gap: 20px;
 `;
+
+export const ControlsWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+`;
