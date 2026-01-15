@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<products>
+  <product>
+    <product_name>Тестовый продукт 1</product_name>
+    <price>99.99</price>
+    <rating>4.5</rating>
+    <description>Тестовый продукт для импорта/экспорта</description>
+    <measurement_unit>шт</measurement_unit>
+    <img_path>/images/products/test_product_1.jpg</img_path>
+    <category>vegetables</category>
+    <quantity>50</quantity>
+  </product>
+  <product>
+    <product_name>Тестовый продукт 2</product_name>
+    <price>149.5</price>
+    <rating>4.8</rating>
+    <description>Второй тестовый продукт для импорта/экспорта</description>
+    <measurement_unit>шт</measurement_unit>
+    <img_path>/images/products/test_product_2.jpg</img_path>
+    <category>fruits</category>
+    <quantity>30</quantity>
+  </product>
+</products>
