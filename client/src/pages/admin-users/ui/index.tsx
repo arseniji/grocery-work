@@ -66,11 +66,7 @@ export const AdminUsersPage = () => {
         </LoaderWrapper>
       ) : (
         <>
-          <DataTable
-            data={data?.users}
-            keys={["userId", "firstname", "lastname", "login", "role"]}
-            onSelect={setSelected}
-          />
+          <DataTable data={data?.users} onSelect={setSelected} />
           <PaginationContainer>
             {page > 1 && (
               <Button variant="border" onClick={handlePrevPage}>

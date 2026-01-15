@@ -3,7 +3,7 @@ import { Container, Table, Th, Td, Tr } from "./styled";
 
 interface DataTableProps {
   data?: Record<string, any>[];
-  keys: Array<string>;
+  keys?: Array<string>;
   onSelect?: (value: Record<string, any>) => void;
 }
 
@@ -12,6 +12,11 @@ export const DataTable = ({ data, keys, onSelect }: DataTableProps) => {
 
   if (!data || data.length === 0) {
     return <Container>No data available</Container>;
+  }
+
+  let tableKeys = keys;
+  if (!tableKeys) {
+    tableKeys = Object.keys(data[0]).filter((key) => key !== "metadata");
   }
 
   const handleSelect = (value: Record<string, any>, index: number) => {
@@ -25,7 +30,7 @@ export const DataTable = ({ data, keys, onSelect }: DataTableProps) => {
       <Table>
         <thead>
           <tr>
-            {keys.map((key) => (
+            {tableKeys.map((key) => (
               <Th key={key}>{key}</Th>
             ))}
           </tr>
@@ -37,7 +42,7 @@ export const DataTable = ({ data, keys, onSelect }: DataTableProps) => {
               onClick={() => handleSelect(row, index)}
               isActive={selectedIndex === index}
             >
-              {keys.map((key) => (
+              {tableKeys!.map((key) => (
                 <Td key={key}>{String(row[key])}</Td>
               ))}
             </Tr>
