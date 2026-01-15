@@ -1,23 +1,12 @@
 import { useState } from "react";
 import { Container, Table, Th, Td, Tr } from "./styled";
+import { flattenKeys } from "@/lib/commons";
 
 interface DataTableProps {
   data?: Record<string, any>[];
   keys?: Record<string, string>;
   onSelect?: (value: Record<string, any>) => void;
 }
-
-const flattenKeys = (obj: any, prefix = ""): string[] => {
-  const keys: string[] = [];
-  for (const key in obj) {
-    if (obj[key] && typeof obj[key] === "object" && !Array.isArray(obj[key])) {
-      keys.push(...flattenKeys(obj[key], prefix ? `${prefix}.${key}` : key));
-    } else {
-      keys.push(prefix ? `${prefix}.${key}` : key);
-    }
-  }
-  return keys;
-};
 
 const getValueByPath = (obj: any, path: string): any => {
   return path.split(".").reduce((current, key) => current && current[key], obj);

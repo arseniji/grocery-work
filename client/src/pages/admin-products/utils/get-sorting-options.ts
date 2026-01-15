@@ -1,10 +1,18 @@
+import { flattenKeys } from "@/lib/commons";
 import type { ComboBoxOption } from "@/shared/ui/combobox";
 
 export const getSortingOptions = (
   obj?: Record<string, any>
 ): ComboBoxOption[] => {
   if (!obj) return [];
-  const keys = Object.keys(obj).filter((key) => key !== "metadata");
+  const keys = flattenKeys(obj)
+    .filter((key) => !key.includes("metadata") && !key.includes("success"))
+    .map((key) => {
+      if (key.includes(".")) {
+        return key.split(".").at(-1);
+      }
+      return key;
+    });
 
   const options: ComboBoxOption[] = [];
 
