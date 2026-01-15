@@ -3,14 +3,14 @@ class OrderManager < BaseManager
 
   add_observer(CartManager)
   
-  def self.get_user_orders(user_id, number_page:, page_size:, search: '', status: '', sorted_fields: {})
+  def self.get_user_orders(user_id, number_page:, page_size:, status: '', search: {}, sorted_fields: {}, search_fields: [])
     orders = Order.where(user_id: user_id)
     result = paginate_with_filters(
       orders,
       page_size: page_size,
       number_page: number_page,
-      filters: { status: status }.compact,
-      search_fields: [{ condition: 'CAST(id AS TEXT) ILIKE ?' }, 'description'],
+      filters: { status: status, search: search }.compact,
+      search_fields: search_fields,
       sorted_fields: sorted_fields,
       default_order: { created_at: :desc }
     )

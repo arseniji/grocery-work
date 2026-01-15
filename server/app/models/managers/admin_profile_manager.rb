@@ -3,15 +3,15 @@ class AdminProfileManager < BaseManager
   add_observer(ProfileManager)
   add_observer(SessionManager)
 
-  def self.get_profiles(page_size:, number_page:, search: '', role: '', sorted_fields: {})
+  def self.get_profiles(page_size:, number_page:, search: {}, role: '', sorted_fields: {}, search_fields: [])
     users = User.all
     
     result = paginate_with_filters(
       users,
       page_size: page_size,
       number_page: number_page,
-      filters: { role: role }.compact,
-      search_fields: ['login', 'firstname', 'lastname', 'phone'],
+      filters: { role: role, search: search }.compact,
+      search_fields: search_fields,
       sorted_fields: sorted_fields,
       default_order: { created_at: :desc }
     )

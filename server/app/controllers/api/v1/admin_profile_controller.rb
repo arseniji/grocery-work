@@ -1,12 +1,16 @@
 class Api::V1::AdminProfileController < Api::V1::AdminBaseController
   
   def get_profiles
+    search_hash = params[:search].to_s.split(',').map { |pair| pair.split(':', 2) }.to_h.transform_values(&:strip) rescue {}
+    sorted_fields_parsed = params[:sort].to_s.split(',').map { |pair| pair.split(':', 2) }.to_h.transform_values(&:strip) rescue {}
+
     reuslt = AdminProfileManager.get_profiles(
       page_size: params[:page_size] || 50,
       number_page: params[:page] || 1,
       role: params[:role],
-      search: params[:search],
-      sorted_fields: params[:sorted_fields] || {}
+      search: search_hash,
+      sorted_fields: sorted_fields_parsed || {},
+      search_fields: ['id', 'login', 'phone', 'firstname', 'lastname', 'patronymic']
     )
     render json: reuslt
   end

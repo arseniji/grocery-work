@@ -4,6 +4,224 @@ info:
   title: API V1
   version: v1
 paths:
+  "/api/v1/admin/data/import/{entity}":
+    parameters:
+    - name: entity
+      in: path
+      required: true
+      description: Сущность для импорта (например, products, users)
+      schema:
+        type: string
+    post:
+      summary: Импорт данных
+      tags:
+      - Admin Import Export
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: file_format
+        in: query
+        description: Формат файла (json, xml)
+        default: json
+        schema:
+          type: string
+      responses:
+        '200':
+          description: данные импортированы
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: file
+        required: true
+        description: Файл для импорта
+  "/api/v1/admin/data/export/{entity}":
+    parameters:
+    - name: entity
+      in: path
+      required: true
+      description: Сущность для экспорта (например, products, users)
+      schema:
+        type: string
+    get:
+      summary: Экспорт данных
+      tags:
+      - Admin Import Export
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: file_format
+        in: query
+        description: Формат файла (json, xml)
+        default: json
+        schema:
+          type: string
+      responses:
+        '200':
+          description: данные экспортированы
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                  exported_at:
+                    type: string
+                    format: date-time
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                  exported_at:
+                    type: string
+                    format: date-time
+  "/api/v1/admin/order/user/{user_id}":
+    parameters:
+    - name: user_id
+      in: path
+      required: true
+      description: ID пользователя
+      schema:
+        type: integer
+    get:
+      summary: Получить все заказы пользователя
+      tags:
+      - Admin Order
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: status
+        in: query
+        description: Статус заказа
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: Номер страницы
+        default: 1
+        schema:
+          type: integer
+      - name: page_size
+        in: query
+        description: Размер страницы
+        default: 20
+        schema:
+          type: integer
+      - name: search
+        in: query
+        description: Поисковый запрос
+        schema:
+          type: string
+      - name: sort
+        in: query
+        description: Сортировка (например, created_at:desc)
+        schema:
+          type: string
+      responses:
+        '200':
+          description: список заказов
+  "/api/v1/admin/order/user/{user_id}/order/{order_id}":
+    parameters:
+    - name: user_id
+      in: path
+      required: true
+      description: ID пользователя
+      schema:
+        type: integer
+    - name: order_id
+      in: path
+      required: true
+      description: ID заказа
+      schema:
+        type: integer
+    get:
+      summary: Получить детали заказа пользователя
+      tags:
+      - Admin Order
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: детали заказа
+    put:
+      summary: Обновить заказ пользователя
+      tags:
+      - Admin Order
+      security:
+      - bearerAuth: []
+      parameters: []
+      responses:
+        '200':
+          description: заказ обновлен
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                description:
+                  type: string
+  "/api/v1/admin/order/user/{user_id}/order/{order_id}/product/{product_id}":
+    parameters:
+    - name: user_id
+      in: path
+      required: true
+      description: ID пользователя
+      schema:
+        type: integer
+    - name: order_id
+      in: path
+      required: true
+      description: ID заказа
+      schema:
+        type: integer
+    - name: product_id
+      in: path
+      required: true
+      description: ID продукта
+      schema:
+        type: integer
+    post:
+      summary: Добавить товар в заказ
+      tags:
+      - Admin Order
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: quantity
+        in: query
+        description: Количество
+        default: 1
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: товар добавлен
+    delete:
+      summary: Удалить товар из заказа
+      tags:
+      - Admin Order
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: quantity
+        in: query
+        description: Количество для удаления
+        default: 1
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: товар удален
   "/api/v1/admin/product":
     get:
       summary: Получить список продуктов
