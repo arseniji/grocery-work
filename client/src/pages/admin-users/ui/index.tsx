@@ -42,7 +42,10 @@ export const AdminUsersPage = () => {
           <Loader />
         </LoaderWrapper>
       ) : (
-        <DataTable />
+        <DataTable
+          data={data?.users}
+          keys={["userId", "firstname", "lastname", "login", "role"]}
+        />
       )}
     </Main>
   );
