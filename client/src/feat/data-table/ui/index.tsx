@@ -34,7 +34,9 @@ export const DataTable = ({ data, keys, onSelect }: DataTableProps) => {
   if (keys) {
     tableKeys = Object.keys(keys);
   } else {
-    tableKeys = flattenKeys(data[0]).filter((key) => !key.includes("metadata"));
+    tableKeys = flattenKeys(data[0]).filter(
+      (key) => !key.includes("metadata") && !key.includes("success")
+    );
   }
 
   const handleSelect = (value: Record<string, any>, index: number) => {
