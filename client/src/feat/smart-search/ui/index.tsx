@@ -6,7 +6,7 @@ import {
   QueryContainer,
   SearchContainer,
 } from "./styled";
-import { ComboBox, Input } from "@/shared/ui";
+import { Button, ComboBox, Input } from "@/shared/ui";
 import type { ComboBoxOption } from "@/shared/ui/combobox";
 import { BodyM } from "@/shared/ui/captions";
 import { CrossIcon, PlusIcon } from "@/shared/icons";
@@ -40,7 +40,6 @@ export const SmartSearch = ({
     }
     filterOptions(newQ);
     setQuery(newQ);
-    onChange(newQ);
     setSearchValue("");
   };
 
@@ -51,7 +50,6 @@ export const SmartSearch = ({
       .join(",");
     filterOptions(newQ);
     setQuery(newQ);
-    onChange(newQ);
   };
 
   return (
@@ -88,6 +86,9 @@ export const SmartSearch = ({
             </Query>
           ))}
       </QueryContainer>
+      <Button variant="border" onClick={() => onChange(query)}>
+        Искать
+      </Button>
     </Container>
   );
 };

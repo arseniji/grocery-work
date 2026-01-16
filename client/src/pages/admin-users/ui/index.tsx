@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import {
+  ColWrapper,
   ControlsWrapper,
   LoaderWrapper,
   Main,
@@ -212,38 +213,38 @@ export const AdminUsersPage = () => {
       ) : (
         <>
           <ControlsWrapper>
-            <RowWrapper style={{ justifyContent: "space-between" }}>
+            <ColWrapper>
               <ComboBox
                 placeholder="Сортировать по:"
                 options={getSortingOptions(data?.users?.at(0))}
                 onChange={handleSort}
               />
+              <RowWrapper>
+                <Button variant={"border"} onClick={handleAddUser}>
+                  Добавить
+                </Button>
+                <Button
+                  variant={"border"}
+                  disabled={!selected}
+                  onClick={handleEditUser}
+                >
+                  Изменить
+                </Button>
+                <Button
+                  variant={"border"}
+                  disabled={!selected}
+                  onClick={handleDeleteUser}
+                >
+                  Удалить
+                </Button>
+              </RowWrapper>
+            </ColWrapper>
 
-              <SmartSearch
-                initialValue={search}
-                options={getSearchOptions(data?.users?.at(0))}
-                onChange={handleSearch}
-              />
-            </RowWrapper>
-            <RowWrapper>
-              <Button variant={"border"} onClick={handleAddUser}>
-                Добавить
-              </Button>
-              <Button
-                variant={"border"}
-                disabled={!selected}
-                onClick={handleEditUser}
-              >
-                Изменить
-              </Button>
-              <Button
-                variant={"border"}
-                disabled={!selected}
-                onClick={handleDeleteUser}
-              >
-                Удалить
-              </Button>
-            </RowWrapper>
+            <SmartSearch
+              initialValue={search}
+              options={getSearchOptions(data?.users?.at(0))}
+              onChange={handleSearch}
+            />
           </ControlsWrapper>
           {(isFormOpen || isLoadingEdit) &&
             (isLoadingEdit ? (

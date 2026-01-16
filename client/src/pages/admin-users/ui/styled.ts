@@ -30,13 +30,19 @@ export const PaginationContainer = styled.div`
 export const ControlsWrapper = styled.div`
   display: flex;
   width: 100%;
-  flex-direction: column;
+  justify-content: space-between;
   gap: 16px;
 `;
 
 export const RowWrapper = styled.div`
   display: flex;
   align-items: center;
+  gap: 16px;
+`;
+
+export const ColWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   gap: 16px;
 `;
 

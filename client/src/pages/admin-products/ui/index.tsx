@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import {
+  ColWrapper,
   ControlsWrapper,
   LoaderWrapper,
   Main,
@@ -213,37 +214,38 @@ export const AdminProductsPage = () => {
       ) : (
         <>
           <ControlsWrapper>
-            <RowWrapper style={{ justifyContent: "space-between" }}>
+            <ColWrapper>
               <ComboBox
                 placeholder="Сортировать по:"
                 options={getSortingOptions(data?.products?.at(0))}
                 onChange={handleSort}
               />
-              <SmartSearch
-                initialValue={search}
-                options={getSearchOptions(data?.products?.at(0))}
-                onChange={handleSearch}
-              />
-            </RowWrapper>
-            <RowWrapper>
-              <Button variant={"border"} onClick={handleAddProduct}>
-                Добавить
-              </Button>
-              <Button
-                variant={"border"}
-                disabled={!selected}
-                onClick={handleEditProduct}
-              >
-                Изменить
-              </Button>
-              <Button
-                variant={"border"}
-                disabled={!selected}
-                onClick={handleDeleteProduct}
-              >
-                Удалить
-              </Button>
-            </RowWrapper>
+
+              <RowWrapper>
+                <Button variant={"border"} onClick={handleAddProduct}>
+                  Добавить
+                </Button>
+                <Button
+                  variant={"border"}
+                  disabled={!selected}
+                  onClick={handleEditProduct}
+                >
+                  Изменить
+                </Button>
+                <Button
+                  variant={"border"}
+                  disabled={!selected}
+                  onClick={handleDeleteProduct}
+                >
+                  Удалить
+                </Button>
+              </RowWrapper>
+            </ColWrapper>
+            <SmartSearch
+              initialValue={search}
+              options={getSearchOptions(data?.products?.at(0))}
+              onChange={handleSearch}
+            />
           </ControlsWrapper>
           {(isFormOpen || isLoadingEdit) &&
             (isLoadingEdit ? (
