@@ -13,10 +13,11 @@ import { AdminLayout } from "@/layouts/admin-layout";
 import { AdminUsersPage } from "@/pages/admin-users";
 import { AdminProductsPage } from "@/pages/admin-products";
 import { AboutPage } from "@/pages/about-page";
+import { ErrorBoundary } from "@/shared/ui";
 
 function App() {
   return (
-    <>
+    <ErrorBoundary>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainLayout />}>
@@ -38,7 +39,7 @@ function App() {
         </Routes>
       </BrowserRouter>
       <ToastProvider />
-    </>
+    </ErrorBoundary>
   );
 }
 

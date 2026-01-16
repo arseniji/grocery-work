@@ -1,5 +1,4 @@
 import { useCallback, useState } from "react";
-import type { AxiosError } from "axios";
 import { adminApi } from "@/lib/api/admin";
 import { Toast } from "@/feat";
 import type {
@@ -36,9 +35,7 @@ export const useProductActions = (
         setEditingProduct(response as unknown as Product);
         setIsFormOpen(true);
       }
-    } catch (err) {
-      const error = err as AxiosError;
-      console.log(error);
+    } catch {
       Toast.show({
         type: "error",
         title: "Ошибка!",
@@ -76,9 +73,7 @@ export const useProductActions = (
         }
         onSuccess();
         setIsFormOpen(false);
-      } catch (err) {
-        const error = err as AxiosError;
-        console.log(error);
+      } catch {
         Toast.show({
           type: "error",
           title: "Ошибка!",
@@ -101,9 +96,7 @@ export const useProductActions = (
         msg: "Продукт удален",
       });
       onSuccess();
-    } catch (err) {
-      const error = err as AxiosError;
-      console.log(error);
+    } catch {
       Toast.show({
         type: "error",
         title: "Ошибка!",

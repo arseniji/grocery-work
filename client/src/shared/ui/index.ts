@@ -5,3 +5,4 @@ export { ProductCard } from "./product-card";
 export { OrderCard } from "./order-card";
 export { StarRating } from "./star-rating";
 export { ComboBox } from "./combobox";
+export { ErrorBoundary } from "./error-boundary";

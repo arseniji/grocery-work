@@ -1,21 +1,21 @@
 import { useCallback, useEffect, useState } from "react";
 import { adminApi } from "@/lib/api/admin";
-import type { GetProductsRes } from "@/lib/api/admin/types";
+import type { GetUsersRes } from "@/lib/api/admin/types";
 import { Toast } from "@/feat";
 
-export const useProducts = (
+export const useUsers = (
   page: number,
   itemsPerPage: number,
   sort?: string,
   search?: string
 ) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [data, setData] = useState<GetProductsRes>();
+  const [data, setData] = useState<GetUsersRes>();
 
-  const loadProducts = useCallback(async () => {
+  const loadUsers = useCallback(async () => {
     setIsLoading(true);
     try {
-      const response = await adminApi.getProducts(
+      const response = await adminApi.getUsers(
         page,
         itemsPerPage,
         sort,
@@ -28,15 +28,15 @@ export const useProducts = (
       Toast.show({
         type: "error",
         title: "Ошибка!",
-        msg: "Ошибка получения продуктов",
+        msg: "Ошибка получения пользователей",
       });
     }
     setIsLoading(false);
   }, [page, itemsPerPage, sort, search]);
 
   useEffect(() => {
-    loadProducts();
-  }, [loadProducts]);
+    loadUsers();
+  }, [loadUsers]);
 
-  return { isLoading, data, refetch: loadProducts };
+  return { isLoading, data, refetch: loadUsers };
 };

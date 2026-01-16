@@ -310,25 +310,27 @@ export const ProfilePage = () => {
             ))}
           </OrdersList>
         )}
-        <PaginationContainer>
-          {currentPage > 1 && (
-            <Button variant="border" onClick={handlePrevPage}>
-              Предыдущая
-            </Button>
-          )}
+        {Number(totalPages) > 1 && (
+          <PaginationContainer>
+            {currentPage > 1 && (
+              <Button variant="border" onClick={handlePrevPage}>
+                Предыдущая
+              </Button>
+            )}
 
-          {totalPages && (
-            <TitleXS>
-              {currentPage} / {totalPages}
-            </TitleXS>
-          )}
+            {totalPages && (
+              <TitleXS>
+                {currentPage} / {totalPages}
+              </TitleXS>
+            )}
 
-          {orders.length === 10 && (
-            <Button variant="border" onClick={handleNextPage}>
-              Следующая
-            </Button>
-          )}
-        </PaginationContainer>
+            {orders.length === 10 && (
+              <Button variant="border" onClick={handleNextPage}>
+                Следующая
+              </Button>
+            )}
+          </PaginationContainer>
+        )}
       </ProfileContainer>
     </Main>
   );
