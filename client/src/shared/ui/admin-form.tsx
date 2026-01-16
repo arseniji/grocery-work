@@ -2,7 +2,12 @@ import { useForm } from "@/lib/hooks";
 import { ObjectSchema } from "@/lib/validators/base-schemas/object-schema";
 import { Button, Input } from "@/shared/ui";
 import { TitleXS } from "@/shared/ui/captions";
-import { ErrorText, FormField, FormRow, FormWrapper } from "@/shared/ui/styled";
+import {
+  ErrorText,
+  FormField,
+  FormRow,
+  FormWrapper,
+} from "@/shared/ui/styled.ts";
 
 interface FormFieldConfig {
   name: string;
