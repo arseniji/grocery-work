@@ -12,6 +12,7 @@ import { OrderPage } from "@/pages/order-page";
 import { AdminLayout } from "@/layouts/admin-layout";
 import { AdminUsersPage } from "@/pages/admin-users";
 import { AdminProductsPage } from "@/pages/admin-products";
+import { AboutPage } from "@/pages/about-page";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="cart" element={<CartPage />} />
             <Route path="profile" element={<ProfilePage />} />
             <Route path="order/:id" element={<OrderPage />} />
+            <Route path="about" element={<AboutPage />} />
           </Route>
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminUsersPage />} />
