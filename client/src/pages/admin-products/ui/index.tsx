@@ -7,7 +7,7 @@ import {
   RowWrapper,
 } from "./styled";
 import type { AxiosError } from "axios";
-import { DataTable, Toast } from "@/feat";
+import { DataTable, SmartSearch, Toast } from "@/feat";
 import { adminApi } from "@/lib/api/admin";
 import type { GetProductsRes } from "@/lib/api/admin/types";
 import { Loader, Button, ComboBox } from "@/shared/ui";
@@ -22,12 +22,14 @@ import {
 import type { ShortProduct } from "@/lib/api/admin/types";
 import type { Product } from "@/entities/product/types";
 import { AdminProductForm } from "./admin-product-form";
+import { getSearchOptions } from "../utils/get-search-options";
 
 export const AdminProductsPage = () => {
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const page = parseInt(params.get("page") || "1", 10);
   const sort = params.get("sort") || undefined;
+  const search = params.get("search") || undefined;
   const itemsPerPage = 10;
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -42,7 +44,12 @@ export const AdminProductsPage = () => {
   const loadProducts = useCallback(async () => {
     setIsLoading(true);
     try {
-      const response = await adminApi.getProducts(page, itemsPerPage, sort);
+      const response = await adminApi.getProducts(
+        page,
+        itemsPerPage,
+        sort,
+        search
+      );
       if (response.success) {
         setData(response);
       }
@@ -56,7 +63,7 @@ export const AdminProductsPage = () => {
       });
     }
     setIsLoading(false);
-  }, [page, itemsPerPage, sort]);
+  }, [page, itemsPerPage, sort, search]);
 
   useEffect(() => {
     loadProducts();
@@ -89,6 +96,18 @@ export const AdminProductsPage = () => {
       navigate(`/admin/products?${newParams.toString()}`);
       return;
     }
+  };
+
+  const handleSearch = (query?: string) => {
+    if (query) {
+      const newParams = new URLSearchParams(params);
+      newParams.set("search", query);
+      navigate(`/admin/products?${newParams.toString()}`);
+      return;
+    }
+    const newParams = new URLSearchParams(params);
+    newParams.delete("search");
+    navigate(`/admin/products?${newParams.toString()}`);
   };
 
   const handleAddProduct = () => {
@@ -199,6 +218,11 @@ export const AdminProductsPage = () => {
                 placeholder="Сортировать по:"
                 options={getSortingOptions(data?.products?.at(0))}
                 onChange={handleSort}
+              />
+              <SmartSearch
+                initialValue={search}
+                options={getSearchOptions(data?.products?.at(0))}
+                onChange={handleSearch}
               />
             </RowWrapper>
             <RowWrapper>
