@@ -9,11 +9,13 @@ import {
   FormWrapper,
   RowWrapper,
 } from "./styled";
+import type { AdminProductAddType } from "@/entities/product/schemas";
+import { PRODUCT_FORM_FIELDS } from "../constants/form-fields";
 
 interface AdminProductFormProps {
   schema: ObjectSchema<any>;
-  initialValues?: Record<string, any>;
-  onSubmit: (data: any) => void;
+  initialValues?: Partial<AdminProductAddType>;
+  onSubmit: (data: AdminProductAddType) => void;
   onCancel: () => void;
   title: string;
   submitLabel: string;
@@ -31,81 +33,27 @@ export const AdminProductForm = ({
 
   const handleSubmit = () => {
     if (!form.isValid) return;
-    onSubmit(form.data);
+    onSubmit(form.data as AdminProductAddType);
   };
 
   return (
     <FormWrapper>
       <TitleXS>{title}</TitleXS>
-      <FormRow>
-        <FormField>
-          <label style={{ fontFamily: "Nunito", fontWeight: 700 }}>
-            Название продукта
-          </label>
-          <Input {...form.register("product_name")} />
-          {form.errors.product_name && (
-            <ErrorText>{form.errors.product_name.message}</ErrorText>
-          )}
-        </FormField>
-        <FormField>
-          <label style={{ fontFamily: "Nunito", fontWeight: 700 }}>Цена</label>
-          <Input type="number" {...form.register("price")} />
-          {form.errors.price && (
-            <ErrorText>{form.errors.price.message}</ErrorText>
-          )}
-        </FormField>
-      </FormRow>
-      <FormRow>
-        <FormField>
-          <label style={{ fontFamily: "Nunito", fontWeight: 700 }}>
-            Рейтинг
-          </label>
-          <Input {...form.register("rating")} />
-          {form.errors.rating && (
-            <ErrorText>{form.errors.rating.message}</ErrorText>
-          )}
-        </FormField>
-        <FormField>
-          <label style={{ fontFamily: "Nunito", fontWeight: 700 }}>
-            Категория
-          </label>
-          <Input {...form.register("category")} />
-          {form.errors.category && (
-            <ErrorText>{form.errors.category.message}</ErrorText>
-          )}
-        </FormField>
-        <FormField>
-          <label style={{ fontFamily: "Nunito", fontWeight: 700 }}>
-            Единица измерения
-          </label>
-          <Input {...form.register("measurement_unit")} />
-          {form.errors.measurement_unit && (
-            <ErrorText>{form.errors.measurement_unit.message}</ErrorText>
-          )}
-        </FormField>
-      </FormRow>
-      <FormRow>
-        <FormField>
-          <label style={{ fontFamily: "Nunito", fontWeight: 700 }}>
-            Количество
-          </label>
-          <Input type="number" {...form.register("quantity")} />
-          {form.errors.quantity && (
-            <ErrorText>{form.errors.quantity.message}</ErrorText>
-          )}
-        </FormField>
-      </FormRow>
-      <FormRow>
-        <FormField>
-          <label style={{ fontFamily: "Nunito", fontWeight: 700 }}>
-            Описание
-          </label>
-          <Input {...form.register("description")} />
-          {form.errors.description && (
-            <ErrorText>{form.errors.description.message}</ErrorText>
-          )}
-        </FormField>
-      </FormRow>
+      {PRODUCT_FORM_FIELDS.map((row, rowIndex) => (
+        <FormRow key={rowIndex}>
+          {row.map(({ name, label, type }) => (
+            <FormField key={name}>
+              <label style={{ fontFamily: "Nunito", fontWeight: 700 }}>
+                {label}
+              </label>
+              <Input type={type} {...form.register(name)} />
+              {form.errors[name] && (
+                <ErrorText>{form.errors[name].message}</ErrorText>
+              )}
+            </FormField>
+          ))}
+        </FormRow>
+      ))}
       <RowWrapper>
         <Button
           variant={"primary"}
