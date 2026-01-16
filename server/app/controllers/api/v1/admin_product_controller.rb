@@ -1,12 +1,16 @@
 class Api::V1::AdminProductController < Api::V1::AdminBaseController
   
   def get_products
+    search_hash = params[:search].to_s.split(',').map { |pair| pair.split(':', 2) }.to_h.transform_values(&:strip) rescue {}
+    sorted_fields_parsed = params[:sort].to_s.split(',').map { |pair| pair.split(':', 2) }.to_h.transform_values(&:strip) rescue {}
+
     result = ProductManager.get_product_page(
       page_size: params[:page_size] || 50,
       number_page: params[:page] || 1,
       category: params[:category],
-      search: params[:search],
-      sorted_fields: params[:sorted_fields] || {}
+      search: search_hash,
+      sorted_fields: sorted_fields_parsed,
+      search_fields: ['id', 'product_name', 'description', 'rating', 'price']
     )
     
     render json: result

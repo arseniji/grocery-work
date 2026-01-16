@@ -1,0 +1,28 @@
+meta {
+  name: import_data_admin
+  type: http
+  seq: 38
+}
+
+post {
+  url: http://localhost:3000/api/v1/admin/data/import/user?file_format=json
+  body: multipartForm
+  auth: bearer
+}
+
+params:query {
+  file_format: json
+}
+
+auth:bearer {
+  token: 9qCi-tjcGo8-_w9EBOSO0IfyUG7lfAVKqZmPOf9Wq1g
+}
+
+body:multipart-form {
+  file: @file(/home/danil/designer-pattern-shop/grocery-shop/server/db/import_export_examples/users.json)
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
