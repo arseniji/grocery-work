@@ -10,7 +10,7 @@ import { usePagination } from "../hooks/usePagination";
 import { useProductActions } from "../hooks/useProductActions";
 import { ProductControls } from "./product-controls";
 import { ProductTable } from "./product-table";
-import { PaginationControls } from "./pagination-controls";
+import { PaginationControls } from "@/shared/ui";
 import type { ShortProduct } from "@/lib/api/admin/types";
 
 export const AdminProductsPage = () => {
@@ -69,6 +69,7 @@ export const AdminProductsPage = () => {
         <>
           <ProductControls
             data={data}
+            sort={sort}
             search={search}
             onAdd={handleAddProduct}
             onEdit={handleEditProduct}
@@ -101,7 +102,12 @@ export const AdminProductsPage = () => {
               !!(data?.products && data.products.length === itemsPerPage)
             }
             onPrev={() => handlePrevPage(page)}
-            onNext={() => handleNextPage(page, true)}
+            onNext={() =>
+              handleNextPage(
+                page,
+                !!(data?.products && data.products.length === itemsPerPage)
+              )
+            }
           />
         </>
       )}

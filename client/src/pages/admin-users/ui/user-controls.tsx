@@ -3,10 +3,10 @@ import { SmartSearch } from "@/feat";
 import { Button, ComboBox } from "@/shared/ui";
 import { getSortingOptions } from "../utils";
 import { getSearchOptions } from "../utils/get-search-options";
-import type { GetProductsRes } from "@/lib/api/admin/types";
+import type { GetUsersRes } from "@/lib/api/admin/types";
 
-interface ProductControlsProps {
-  data?: GetProductsRes;
+interface UserControlsProps {
+  data?: GetUsersRes;
   search?: string;
   sort?: string;
   onAdd: () => void;
@@ -17,7 +17,7 @@ interface ProductControlsProps {
   selected: boolean;
 }
 
-export const ProductControls = ({
+export const UserControls = ({
   data,
   search,
   sort,
@@ -27,12 +27,12 @@ export const ProductControls = ({
   onSort,
   onSearch,
   selected,
-}: ProductControlsProps) => (
+}: UserControlsProps) => (
   <ControlsWrapper>
     <ColWrapper>
       <ComboBox
         placeholder="Сортировать по:"
-        options={getSortingOptions(data?.products?.at(0))}
+        options={getSortingOptions(data?.users?.at(0))}
         onChange={onSort}
         value={sort}
       />
@@ -51,7 +51,7 @@ export const ProductControls = ({
     </ColWrapper>
     <SmartSearch
       initialValue={search}
-      options={getSearchOptions(data?.products?.at(0))}
+      options={getSearchOptions(data?.users?.at(0))}
       onChange={onSearch}
     />
   </ControlsWrapper>

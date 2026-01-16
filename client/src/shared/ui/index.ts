@@ -6,3 +6,4 @@ export { OrderCard } from "./order-card";
 export { StarRating } from "./star-rating";
 export { ComboBox } from "./combobox";
 export { ErrorBoundary } from "./error-boundary";
+export { PaginationControls } from "./pagination-controls";

@@ -28,3 +28,10 @@ export const ErrorText = styled.span`
   color: red;
   font-size: 12px;
 `;
+
+export const PaginationContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+`;

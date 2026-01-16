@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { PaginationContainer } from "./styled";
-import { Button } from "@/shared/ui";
-import { TitleXS } from "@/shared/ui/captions";
+import { Button } from "./button";
+import { TitleXS } from "./captions";
 
 interface PaginationControlsProps {
   page: number;

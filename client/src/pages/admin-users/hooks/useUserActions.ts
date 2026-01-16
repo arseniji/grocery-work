@@ -10,7 +10,7 @@ import type { IProfile } from "@/entities/profile/types";
 
 export const useUserActions = (
   onSuccess: () => void,
-  selected?: Record<string, any>,
+  selected?: ShortUser,
   onDeleteSuccess?: () => void
 ) => {
   const [isFormOpen, setIsFormOpen] = useState<boolean>(false);

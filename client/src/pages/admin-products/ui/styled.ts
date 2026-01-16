@@ -20,13 +20,6 @@ export const LoaderWrapper = styled.div`
   justify-content: center;
 `;
 
-export const PaginationContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-`;
-
 export const ControlsWrapper = styled.div`
   display: flex;
   width: 100%;
