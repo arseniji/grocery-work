@@ -7,13 +7,13 @@ import {
   RowWrapper,
 } from "./styled";
 import type { AxiosError } from "axios";
-import { DataTable, Toast } from "@/feat";
+import { DataTable, SmartSearch, Toast } from "@/feat";
 import { adminApi } from "@/lib/api/admin";
 import type { GetUsersRes } from "@/lib/api/admin/types";
 import { Loader, Button, ComboBox } from "@/shared/ui";
 import { TitleM, TitleXS } from "@/shared/ui/captions";
 import { useNavigate, useSearchParams } from "react-router";
-import { getSortingOptions } from "../utils";
+import { getSearchOptions, getSortingOptions } from "../utils";
 import {
   AdminUserAddSchema,
   type AdminUserAddType,
@@ -28,6 +28,7 @@ export const AdminUsersPage = () => {
   const [params] = useSearchParams();
   const page = parseInt(params.get("page") || "1", 10);
   const sort = params.get("sort") || undefined;
+  const search = params.get("search") || undefined;
   const itemsPerPage = 10;
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -42,7 +43,12 @@ export const AdminUsersPage = () => {
   const loadUsers = useCallback(async () => {
     setIsLoading(true);
     try {
-      const response = await adminApi.getUsers(page, itemsPerPage, sort);
+      const response = await adminApi.getUsers(
+        page,
+        itemsPerPage,
+        sort,
+        search
+      );
       if (response.success) {
         setData(response);
       }
@@ -56,7 +62,7 @@ export const AdminUsersPage = () => {
       });
     }
     setIsLoading(false);
-  }, [page, itemsPerPage, sort]);
+  }, [page, itemsPerPage, sort, search]);
 
   useEffect(() => {
     loadUsers();
@@ -89,6 +95,18 @@ export const AdminUsersPage = () => {
       navigate(`/admin/users?${newParams.toString()}`);
       return;
     }
+  };
+
+  const handleSearch = (query?: string) => {
+    if (query) {
+      const newParams = new URLSearchParams(params);
+      newParams.set("search", query);
+      navigate(`/admin/users?${newParams.toString()}`);
+      return;
+    }
+    const newParams = new URLSearchParams(params);
+    newParams.delete("search");
+    navigate(`/admin/users?${newParams.toString()}`);
   };
 
   const handleAddUser = () => {
@@ -199,6 +217,12 @@ export const AdminUsersPage = () => {
                 placeholder="Сортировать по:"
                 options={getSortingOptions(data?.users?.at(0))}
                 onChange={handleSort}
+              />
+
+              <SmartSearch
+                initialValue={search}
+                options={getSearchOptions(data?.users?.at(0))}
+                onChange={handleSearch}
               />
             </RowWrapper>
             <RowWrapper>

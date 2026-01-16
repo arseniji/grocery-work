@@ -5,12 +5,13 @@ class AdminApi {
   public async getUsers(
     page: number = 1,
     pageSize: number = 10,
-    sort?: string
+    sort?: string,
+    search?: string
   ) {
     return createEndpoint<GetUsersRes>(
       "v1/admin/profile",
       "GET"
-    )({ page, pageSize, sort });
+    )({ page, pageSize, sort, search });
   }
 
   public async addUser(data: {
