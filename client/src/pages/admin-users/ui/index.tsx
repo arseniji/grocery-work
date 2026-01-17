@@ -61,13 +61,13 @@ export const AdminUsersPage = () => {
     manager.execute("api", () => handleSubmit(data));
   };
 
+  const onDelete = () => {
+    manager.execute("api", handleDeleteUser);
+  };
+
   useEffect(() => {
     const command = new ApiCommand();
     manager.add("api", command);
-
-    return () => {
-      manager.remove("api");
-    };
   }, []);
 
   return (
@@ -85,7 +85,7 @@ export const AdminUsersPage = () => {
             search={search}
             onAdd={onAdd}
             onEdit={onEdit}
-            onDelete={handleDeleteUser}
+            onDelete={onDelete}
             onSort={handleSort}
             onSearch={handleSearch}
             selected={!!selected}
