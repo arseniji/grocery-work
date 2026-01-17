@@ -9,9 +9,8 @@ interface OrderControlsProps {
   data?: GetOrdersRes;
   search?: string;
   sort?: string;
-  onAdd: () => void;
+  onDetails: () => void;
   onEdit: () => void;
-  onDelete: () => void;
   onSort: (sort?: string) => void;
   onSearch: (query?: string) => void;
   selected: boolean;
@@ -24,6 +23,7 @@ export const OrderControls = ({
   onEdit,
   onSort,
   onSearch,
+  onDetails,
   selected,
 }: OrderControlsProps) => (
   <ControlsWrapper>
@@ -38,6 +38,9 @@ export const OrderControls = ({
       <RowWrapper>
         <Button variant={"border"} disabled={!selected} onClick={onEdit}>
           Изменить
+        </Button>
+        <Button variant={"border"} disabled={!selected} onClick={onDetails}>
+          Подробнее
         </Button>
       </RowWrapper>
       <RowWrapper>

@@ -8,6 +8,7 @@ import type {
   GetProductsRes,
   GetProductRes,
   GetOrdersRes,
+  GetOrderDetailsRes,
 } from "./types";
 
 class AdminApi {
@@ -116,6 +117,42 @@ class AdminApi {
       `v1/admin/order/user/${userId}/order/${orderId}`,
       "PUT",
     )(data);
+  }
+
+  public async getOrderDetails(userId: number, orderId: number) {
+    return createEndpoint<GetOrderDetailsRes>(
+      `v1/admin/order/user/${userId}/order/${orderId}`,
+      "GET",
+    )();
+  }
+
+  public async addOrderItem(
+    userId: number,
+    orderId: number,
+    productId: number,
+    quantity: number,
+  ) {
+    return createEndpoint<{
+      success: boolean;
+      error?: {
+        message: string;
+      };
+    }>(
+      `v1/admin/order/user/${userId}/order/${orderId}/product/${productId}`,
+      "POST",
+    )({ quantity });
+  }
+
+  public async removeOrderItem(
+    userId: number,
+    orderId: number,
+    productId: number,
+    quantity: number,
+  ) {
+    return createEndpoint<{ success: boolean }, { quantity: number }>(
+      `v1/admin/order/user/${userId}/order/${orderId}/product/${productId}`,
+      "DELETE",
+    )({ quantity: quantity });
   }
 
   public async deleteOrder(orderId: number) {

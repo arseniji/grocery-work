@@ -6,21 +6,18 @@ import type {
   AdminOrderAddType,
   AdminOrderEditType,
 } from "@/entities/order/schemas";
+import { useNavigate } from "react-router";
 
 export const useOrderActions = (
   onSuccess: () => void,
   selected?: ShortOrder,
   onDeselect?: () => void,
 ) => {
+  const navigate = useNavigate();
+
   const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [editingOrder, setEditingOrder] = useState<ShortOrder>();
-
-  const handleAddOrder = useCallback(() => {
-    setIsEditing(false);
-    setEditingOrder(undefined);
-    setIsFormOpen(true);
-  }, []);
 
   const handleEditOrder = useCallback(async () => {
     if (!selected) return;
@@ -71,34 +68,18 @@ export const useOrderActions = (
     [isEditing, editingOrder, onSuccess, onDeselect],
   );
 
-  const handleDeleteOrder = useCallback(async () => {
+  const handleDetails = useCallback(async () => {
     if (!selected) return;
-    try {
-      await adminApi.deleteOrder(selected.id);
-      Toast.show({
-        type: "msg",
-        title: "Успех!",
-        msg: "Заказ удален",
-      });
-      onSuccess();
-      onDeselect?.();
-    } catch {
-      Toast.show({
-        type: "error",
-        title: "Ошибка!",
-        msg: "Ошибка удаления заказа",
-      });
-    }
-  }, [selected, onSuccess, onDeselect]);
+    navigate(`/admin/orders/${selected.userId}/${selected.id}`);
+  }, [selected, navigate]);
 
   return {
     isFormOpen,
     isEditing,
     editingOrder,
-    handleAddOrder,
     handleEditOrder,
     handleCloseForm,
     handleSubmit,
-    handleDeleteOrder,
+    handleDetails,
   };
 };

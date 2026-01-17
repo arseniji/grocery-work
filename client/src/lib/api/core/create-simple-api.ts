@@ -60,7 +60,9 @@ export const createSimpleApi = (baseURL: string) => {
     headers?: RawAxiosRequestHeaders,
     options?: APIOptions,
   ) {
-    const sendParamsInBody = ["POST", "PUT", "PATCH"].includes(httpMethod);
+    const sendParamsInBody = ["POST", "PUT", "PATCH", "DELETE"].includes(
+      httpMethod,
+    );
 
     if (method.indexOf("/") === 0) {
       console.error("Api calls can't start with /", { method });

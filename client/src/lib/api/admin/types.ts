@@ -68,3 +68,34 @@ export interface GetProductRes {
   };
   metadata: object;
 }
+
+export interface GetOrderDetailsRes {
+  success: boolean;
+  order: {
+    id: number;
+    description: string;
+    status: string;
+    timestamps: {
+      createdAt: string;
+      updatedAt: string;
+    };
+  };
+  products: {
+    id: number;
+    productName: string;
+    price: string;
+    details?: {
+      image_url: string;
+    };
+    metadata: {
+      orderDetails: {
+        quantityInOrder: number;
+        totalPriceForItem: string;
+      };
+    };
+  }[];
+  summary: {
+    itemsCount: number;
+    totalPrice: string;
+  };
+}
