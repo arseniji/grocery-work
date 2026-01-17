@@ -17,7 +17,7 @@ interface FormFieldConfig {
 
 interface AdminFormProps {
   schema: ObjectSchema<any>;
-  fields: readonly (readonly FormFieldConfig[])[];
+  fields: FormFieldConfig[][];
   initialValues?: Record<string, any>;
   onSubmit: (data: any) => void;
   onCancel: () => void;
@@ -46,19 +46,17 @@ export const AdminForm = ({
       <TitleXS>{title}</TitleXS>
       {fields.map((row, rowIndex) => (
         <FormRow key={rowIndex}>
-          {row
-            .filter((r) => r.name !== "password")
-            .map(({ name, label, type }) => (
-              <FormField key={name}>
-                <label style={{ fontFamily: "Nunito", fontWeight: 700 }}>
-                  {label}
-                </label>
-                <Input type={type} {...form.register(name)} />
-                {form.errors[name] && (
-                  <ErrorText>{form.errors[name].message}</ErrorText>
-                )}
-              </FormField>
-            ))}
+          {row.map(({ name, label, type }) => (
+            <FormField key={name}>
+              <label style={{ fontFamily: "Nunito", fontWeight: 700 }}>
+                {label}
+              </label>
+              <Input type={type} {...form.register(name)} />
+              {form.errors[name] && (
+                <ErrorText>{form.errors[name].message}</ErrorText>
+              )}
+            </FormField>
+          ))}
         </FormRow>
       ))}
       <FormRow>

@@ -1,6 +1,9 @@
 import { ObjectSchema } from "@/lib/validators/base-schemas/object-schema";
 import { AdminForm } from "@/shared/ui/admin-form";
-import { USER_FORM_FIELDS } from "../constants/form-fields.ts";
+import {
+  USER_FORM_FIELDS,
+  USER_FORM_FIELDS_ADD,
+} from "../constants/form-fields.ts";
 
 interface AdminUserFormProps {
   addSchema: ObjectSchema<any>;
@@ -25,7 +28,7 @@ export const AdminUserForm = ({
 }: AdminUserFormProps) => (
   <AdminForm
     schema={type === "add" ? addSchema : editSchema}
-    fields={USER_FORM_FIELDS}
+    fields={type === "add" ? USER_FORM_FIELDS_ADD : USER_FORM_FIELDS}
     initialValues={initialValues}
     onSubmit={onSubmit}
     onCancel={onCancel}
