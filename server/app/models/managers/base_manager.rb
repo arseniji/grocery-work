@@ -8,18 +8,20 @@ class BaseManager
     filters: {},
     search_fields: [],
     sorted_fields: {},
-    default_order: { created_at: :desc }
+    default_order: { created_at: :desc },
+    allowed_search_fields: nil,
+    allowed_sort_fields: nil
   )
 
     query = apply_filters(base_query, filters)
     
 
     if filters[:search].present? && search_fields.any?
-      query = apply_search(query, filters[:search], search_fields)
+      query = apply_search(query, filters[:search], search_fields, allowed_search_fields)
     end
     
 
-    query = apply_sorting(query, sorted_fields, default_order)
+    query = apply_sorting(query, sorted_fields, default_order, allowed_sort_fields)
     
 
     total_count = query.count
@@ -53,14 +55,28 @@ class BaseManager
   end
 
   # Применение поиска
-  def self.apply_search(query, search_hash, search_fields)
+  def self.apply_search(query, search_hash, search_fields, allowed_search_fields = nil)
     return query if search_hash.blank? || search_fields.empty?
     
     search_hash.each do |field, value|
       next if value.blank?
       
-      if search_fields.include?(field.to_s) && query.klass.column_names.include?(field.to_s)
-        query = query.where("#{field}::text ILIKE ?", "%#{value}%")
+      field_str = field.to_s
+      if search_fields.include?(field_str)
+        # Если указаны разрешенные поля, проверяем их
+        if allowed_search_fields
+          if allowed_search_fields.include?(field_str)
+            # Если поле содержит точку (например, "users.login"), используем его как есть
+            if field_str.include?('.')
+              query = query.where("#{field_str}::text ILIKE ?", "%#{value}%")
+            else
+              query = query.where("#{query.klass.table_name}.#{field_str}::text ILIKE ?", "%#{value}%")
+            end
+          end
+        # Иначе проверяем только поля основной таблицы (старая логика)
+        elsif query.klass.column_names.include?(field_str)
+          query = query.where("#{field_str}::text ILIKE ?", "%#{value}%")
+        end
       end
     end
     
@@ -68,11 +84,21 @@ class BaseManager
   end
 
   # Применение сортировки
-  def self.apply_sorting(query, sorted_fields, default_order)
+  def self.apply_sorting(query, sorted_fields, default_order, allowed_sort_fields = nil)
     if sorted_fields.present? && sorted_fields.is_a?(Hash)
       sorted_fields.each do |field, direction|
-        if valid_sort_field?(query, field, direction)
-          query = query.order("#{field} #{direction}")
+        if valid_sort_field?(query, field, direction, allowed_sort_fields)
+          field_str = field.to_s
+          # Если поле содержит точку (например, "users.login"), используем его как есть
+          if field_str.include?('.')
+            query = query.order("#{field_str} #{direction}")
+          elsif allowed_sort_fields
+            # Если указаны разрешенные поля, добавляем префикс таблицы для явности
+            query = query.order("#{query.klass.table_name}.#{field_str} #{direction}")
+          else
+            # Старая логика для обратной совместимости
+            query = query.order("#{field_str} #{direction}")
+          end
         end
       end
       query
@@ -82,9 +108,19 @@ class BaseManager
   end
 
   # Проверка валидности поля для сортировки
-  def self.valid_sort_field?(query, field, direction)
-    query.klass.column_names.include?(field.to_s) && 
-    ['asc', 'desc'].include?(direction.to_s.downcase)
+  def self.valid_sort_field?(query, field, direction, allowed_sort_fields = nil)
+    field_str = field.to_s
+    direction_valid = ['asc', 'desc'].include?(direction.to_s.downcase)
+    
+    return false unless direction_valid
+    
+    # Если указаны разрешенные поля, проверяем их
+    if allowed_sort_fields
+      return allowed_sort_fields.include?(field_str)
+    end
+    
+    # Иначе проверяем только поля основной таблицы
+    query.klass.column_names.include?(field_str)
   end
 
   # Генерация метаданных для пагинации
