@@ -24,14 +24,14 @@ class Api::V1::AdminProfileController < Api::V1::AdminBaseController
     user_data = build_profile_data(params)
     user_data[:password] = params[:password]
     user_data[:password_confirmation] = params[:password]
-    result = AdminProfileManager.add_profile(user_data)
+    result = AdminProfileManager.add_profile(user_data, user_id: @current_user.id)
     render json: result
   end
 
   def update_profile
     user_data = build_profile_data(params)
     user_id = params[:user_id]
-    result = AdminProfileManager.update_profile(user_id, user_data)
+    result = AdminProfileManager.update_profile(user_id, user_data, current_user_id: @current_user.id)
     render json: result
   end
 

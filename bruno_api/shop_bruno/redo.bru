@@ -1,0 +1,16 @@
+meta {
+  name: redo
+  type: http
+  seq: 41
+}
+
+post {
+  url: http://localhost:3000/v1/admin/command/redo
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

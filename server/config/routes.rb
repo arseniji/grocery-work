@@ -63,7 +63,7 @@ Rails.application.routes.draw do
           delete ':user_id', to: "admin_profile#delete_profile"
         end
         scope :order do
-          get 'user/:user_id', to: "admin_order#get_all_orders_user"
+          get '/', to: "admin_order#get_all_orders_user"
           get 'user/:user_id/order/:order_id', to: "admin_order#get_order_detail_user"
           put 'user/:user_id/order/:order_id', to: "admin_order#update_orders"
           post 'user/:user_id/order/:order_id/product/:product_id', to: "admin_order#add_product_orders_items"
@@ -72,6 +72,12 @@ Rails.application.routes.draw do
         scope :data do
           post 'import/:entity', to: "admin_data#import"
           get 'export/:entity', to: "admin_data#export"
+        end
+        scope :command do
+          post 'undo', to: "command#undo"
+          post 'redo', to: "command#redo"
+          get 'history', to: "command#history"
+          delete 'history', to: "command#clear_history"
         end
       end
     end

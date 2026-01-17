@@ -1,0 +1,15 @@
+meta {
+  name: delete_history
+  type: http
+  seq: 43
+}
+
+delete {
+  url: http:/api/v1/admin/command/history
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}

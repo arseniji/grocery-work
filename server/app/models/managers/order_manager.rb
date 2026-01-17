@@ -147,7 +147,7 @@ class OrderManager < BaseManager
   end
 
   def self.get_all_status_orders()
-    status_names = Order.statuses.keys
+    status_names = Order.valid_statuses
     status_collection = status_names.map do |status_name|
       Status.new(status_name)
     end
