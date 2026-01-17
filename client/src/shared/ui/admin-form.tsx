@@ -46,17 +46,19 @@ export const AdminForm = ({
       <TitleXS>{title}</TitleXS>
       {fields.map((row, rowIndex) => (
         <FormRow key={rowIndex}>
-          {row.map(({ name, label, type }) => (
-            <FormField key={name}>
-              <label style={{ fontFamily: "Nunito", fontWeight: 700 }}>
-                {label}
-              </label>
-              <Input type={type} {...form.register(name)} />
-              {form.errors[name] && (
-                <ErrorText>{form.errors[name].message}</ErrorText>
-              )}
-            </FormField>
-          ))}
+          {row
+            .filter((r) => r.name !== "password")
+            .map(({ name, label, type }) => (
+              <FormField key={name}>
+                <label style={{ fontFamily: "Nunito", fontWeight: 700 }}>
+                  {label}
+                </label>
+                <Input type={type} {...form.register(name)} />
+                {form.errors[name] && (
+                  <ErrorText>{form.errors[name].message}</ErrorText>
+                )}
+              </FormField>
+            ))}
         </FormRow>
       ))}
       <FormRow>

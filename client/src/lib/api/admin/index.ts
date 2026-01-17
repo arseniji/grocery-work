@@ -1,3 +1,7 @@
+import type {
+  AdminProductAddType,
+  AdminProductEditType,
+} from "@/entities/product/schemas";
 import { createEndpoint } from "../core";
 import type {
   GetUsersRes,
@@ -65,15 +69,7 @@ class AdminApi {
     )({ page, pageSize, sort, search });
   }
 
-  public async addProduct(data: {
-    product_name: string;
-    price: number;
-    rating: string;
-    category: string;
-    description: string;
-    measurement_unit: string;
-    quantity: number;
-  }) {
+  public async addProduct(data: AdminProductAddType) {
     return createEndpoint("v1/admin/product", "POST")(data);
   }
 
@@ -84,18 +80,7 @@ class AdminApi {
     )();
   }
 
-  public async updateProduct(
-    productId: number,
-    data: {
-      product_name: string;
-      price: number;
-      rating: string;
-      category: string;
-      description: string;
-      measurement_unit: string;
-      quantity: number;
-    },
-  ) {
+  public async updateProduct(productId: number, data: AdminProductEditType) {
     return createEndpoint(`v1/admin/product/${productId}`, "PUT")(data);
   }
 

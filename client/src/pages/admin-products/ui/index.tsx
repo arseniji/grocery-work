@@ -46,12 +46,12 @@ export const AdminProductsPage = () => {
     () =>
       isEditing && editingProduct
         ? {
-            product_name: editingProduct.name,
+            productName: editingProduct.productName,
             price: parseFloat(editingProduct.price),
             rating: editingProduct.rating,
             category: editingProduct.category,
             description: editingProduct.details.description,
-            measurement_unit: editingProduct.details.unit,
+            measurementUnit: editingProduct.details.unit,
             quantity: editingProduct.details.quantity,
           }
         : {},

@@ -3,7 +3,10 @@ import { LoaderWrapper, Main } from "./styled";
 import { Loader } from "@/shared/ui";
 import { TitleM } from "@/shared/ui/captions";
 import { useSearchParams } from "react-router";
-import { AdminUserAddSchema } from "@/entities/user/schemas";
+import {
+  AdminUserAddSchema,
+  AdminUserEditSchema,
+} from "@/entities/user/schemas";
 import { AdminUserForm } from "./admin-user-form";
 import { useUsers, useUserActions } from "../hooks";
 import { UserControls } from "./user-controls";
@@ -20,6 +23,7 @@ export const AdminUsersPage = () => {
   const itemsPerPage = 10;
 
   const [selected, setSelected] = useState<ShortUser | undefined>();
+  const [formType, setFormType] = useState<"edit" | "add">("add");
 
   const { isLoading, data, refetch } = useUsers(
     page,
@@ -41,6 +45,16 @@ export const AdminUsersPage = () => {
     handleDeleteUser,
   } = useUserActions(refetch, selected, () => setSelected(undefined));
 
+  const onEdit = () => {
+    handleEditUser();
+    setFormType("edit");
+  };
+
+  const onAdd = () => {
+    handleAddUser();
+    setFormType("add");
+  };
+
   return (
     <Main>
       <TitleM>Пользователи</TitleM>
@@ -54,8 +68,8 @@ export const AdminUsersPage = () => {
             data={data}
             sort={sort}
             search={search}
-            onAdd={handleAddUser}
-            onEdit={handleEditUser}
+            onAdd={onAdd}
+            onEdit={onEdit}
             onDelete={handleDeleteUser}
             onSort={handleSort}
             onSearch={handleSearch}
@@ -68,7 +82,9 @@ export const AdminUsersPage = () => {
               </LoaderWrapper>
             ) : (
               <AdminUserForm
-                schema={AdminUserAddSchema}
+                addSchema={AdminUserAddSchema}
+                editSchema={AdminUserEditSchema}
+                type={formType}
                 initialValues={editingUser || {}}
                 onSubmit={handleSubmit}
                 onCancel={handleCloseForm}

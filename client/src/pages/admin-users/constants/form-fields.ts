@@ -11,4 +11,5 @@ export const USER_FORM_FIELDS = [
     { name: "phone", label: "Телефон", type: "tel" },
     { name: "role", label: "Роль", type: "text" },
   ],
+  [{ name: "password", label: "Пароль", type: "password" }],
 ] as const;

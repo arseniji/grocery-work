@@ -21,9 +21,7 @@ export const OrderControls = ({
   data,
   search,
   sort,
-  onAdd,
   onEdit,
-  onDelete,
   onSort,
   onSearch,
   selected,
@@ -38,14 +36,8 @@ export const OrderControls = ({
       />
 
       <RowWrapper>
-        <Button variant={"border"} onClick={onAdd}>
-          Добавить
-        </Button>
         <Button variant={"border"} disabled={!selected} onClick={onEdit}>
           Изменить
-        </Button>
-        <Button variant={"border"} disabled={!selected} onClick={onDelete}>
-          Удалить
         </Button>
       </RowWrapper>
       <RowWrapper>
