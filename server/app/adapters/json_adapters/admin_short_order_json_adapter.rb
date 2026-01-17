@@ -5,8 +5,8 @@ class AdminShortOrderJsonAdapter < BaseJsonAdapter
       id: @object.id,
       status: @object.status,
       description: @object.description,
+      user_id: @object.user.id,
       users: {
-        user_id: @object.user.id,
         login: @object.user.login,
         firstname: @object.user.firstname,
         lastname: @object.user.lastname
