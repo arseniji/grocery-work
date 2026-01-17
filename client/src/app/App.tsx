@@ -14,31 +14,34 @@ import { AdminUsersPage } from "@/pages/admin-users";
 import { AdminProductsPage } from "@/pages/admin-products";
 import { AboutPage } from "@/pages/about-page";
 import { ErrorBoundary } from "@/shared/ui";
+import { UndoProvider } from "@/feat/undo";
 
 function App() {
   return (
     <ErrorBoundary>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<MainLayout />}>
-            <Route index element={<HomePage />} />
-            <Route path="shop" element={<ShopPage />} />
-            <Route path="product/:id" element={<ProductPage />} />
-            <Route path="cart" element={<CartPage />} />
-            <Route path="profile" element={<ProfilePage />} />
-            <Route path="order/:id" element={<OrderPage />} />
-            <Route path="about" element={<AboutPage />} />
-          </Route>
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<AdminUsersPage />} />
-            <Route path="users" element={<AdminUsersPage />} />
-            <Route path="products" element={<AdminProductsPage />} />
-          </Route>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/registration" element={<RegistrationPage />} />
-        </Routes>
-      </BrowserRouter>
-      <ToastProvider />
+      <UndoProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<MainLayout />}>
+              <Route index element={<HomePage />} />
+              <Route path="shop" element={<ShopPage />} />
+              <Route path="product/:id" element={<ProductPage />} />
+              <Route path="cart" element={<CartPage />} />
+              <Route path="profile" element={<ProfilePage />} />
+              <Route path="order/:id" element={<OrderPage />} />
+              <Route path="about" element={<AboutPage />} />
+            </Route>
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<AdminUsersPage />} />
+              <Route path="users" element={<AdminUsersPage />} />
+              <Route path="products" element={<AdminProductsPage />} />
+            </Route>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/registration" element={<RegistrationPage />} />
+          </Routes>
+        </BrowserRouter>
+        <ToastProvider />
+      </UndoProvider>
     </ErrorBoundary>
   );
 }
