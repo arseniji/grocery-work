@@ -18,6 +18,8 @@ import {
   Summary,
   AddProductSection,
 } from "./styled";
+import { ApiCommand } from "@/lib/command/entities/api-command";
+import { manager } from "@/lib/command";
 
 export const AdminOrderEditPage = () => {
   const { userId, orderId } = useParams();
@@ -180,6 +182,11 @@ export const AdminOrderEditPage = () => {
   );
 
   useEffect(() => {
+    const command = new ApiCommand();
+    manager.add("api", command);
+  }, []);
+
+  useEffect(() => {
     loadOrder();
     loadProducts();
   }, [loadOrder, loadProducts]);
@@ -236,7 +243,9 @@ export const AdminOrderEditPage = () => {
           <Button
             onClick={() => {
               if (selectedProduct) {
-                handleAddItem(selectedProduct, addQuantity);
+                manager.execute("api", () =>
+                  handleAddItem(selectedProduct, addQuantity),
+                );
               }
             }}
             disabled={isUpdating || !selectedProduct}
@@ -264,13 +273,19 @@ export const AdminOrderEditPage = () => {
                   style={{ display: "flex", gap: "10px", marginTop: "10px" }}
                 >
                   <Button
-                    onClick={() => handleAddItem(product.id, 1)}
+                    onClick={() =>
+                      manager.execute("api", () => handleAddItem(product.id, 1))
+                    }
                     disabled={isUpdating}
                   >
                     +1
                   </Button>
                   <Button
-                    onClick={() => handleRemoveItem(product.id, 1)}
+                    onClick={() =>
+                      manager.execute("api", () =>
+                        handleRemoveItem(product.id, 1),
+                      )
+                    }
                     disabled={isUpdating}
                   >
                     -1

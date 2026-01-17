@@ -202,6 +202,8 @@ class AdminApi {
   }
 
   public undo = createEndpoint("v1/admin/command/undo", "POST");
+
+  public history = createEndpoint("v1/admin/command/history", "GET");
 }
 
 export const adminApi = new AdminApi();

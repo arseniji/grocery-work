@@ -11,12 +11,12 @@ export class ApiCommand implements Command<() => void, void> {
   public undo() {
     try {
       adminApi.undo();
-      window.location.reload();
       Toast.show({
         title: "Отмена",
         type: "msg",
         msg: "Действие успешно отменено",
       });
+      window.location.reload();
     } catch (err) {
       const error = err as AxiosError;
       console.log(error);
