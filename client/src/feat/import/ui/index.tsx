@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/shared/ui";
 import { adminApi } from "@/lib/api/admin";
+import { Toast } from "@/feat/toast";
 
 interface ImportButtonsProps {
   type: "orders" | "products" | "users";
@@ -40,10 +41,13 @@ export const ImportButtons = ({
       }
 
       if (response) {
-        alert("Импорт выполнен успешно");
+        Toast.show({
+          type: "msg",
+          title: "Успех",
+          msg: "Импорт выполнен успешно",
+        });
         onImportSuccess?.();
         setSelectedFile(null);
-        // Reset file input
         const input = document.getElementById(
           `file-input-${type}`,
         ) as HTMLInputElement;
@@ -51,7 +55,11 @@ export const ImportButtons = ({
       }
     } catch (error) {
       console.error("Import failed:", error);
-      alert("Ошибка импорта");
+      Toast.show({
+        type: "error",
+        title: "Ошибка!",
+        msg: "Ошибка импорта данных",
+      });
     } finally {
       setIsImporting(false);
     }
