@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LoaderWrapper, Main } from "./styled";
 import { Loader } from "@/shared/ui";
 import { TitleM } from "@/shared/ui/captions";
@@ -14,6 +14,8 @@ import { UserTable } from "./user-table";
 import { PaginationControls } from "@/shared/ui";
 import type { ShortUser } from "@/lib/api/admin/types";
 import { usePagination } from "@/lib/hooks";
+import { ApiCommand } from "@/lib/command/entities/api-command";
+import { manager } from "@/lib/command";
 
 export const AdminUsersPage = () => {
   const [params] = useSearchParams();
@@ -55,6 +57,19 @@ export const AdminUsersPage = () => {
     setFormType("add");
   };
 
+  const onSubmit = (data: any) => {
+    manager.execute("api", () => handleSubmit(data));
+  };
+
+  useEffect(() => {
+    const command = new ApiCommand();
+    manager.add("api", command);
+
+    return () => {
+      manager.remove("api");
+    };
+  }, []);
+
   return (
     <Main>
       <TitleM>Пользователи</TitleM>
@@ -86,7 +101,7 @@ export const AdminUsersPage = () => {
                 editSchema={AdminUserEditSchema}
                 type={formType}
                 initialValues={editingUser || {}}
-                onSubmit={handleSubmit}
+                onSubmit={onSubmit}
                 onCancel={handleCloseForm}
                 title={
                   isEditing ? "Изменить пользователя" : "Добавить пользователя"

@@ -200,6 +200,8 @@ class AdminApi {
     formData.append("file_format", format);
     return createEndpoint(`v1/admin/data/import/user`, "POST")(formData);
   }
+
+  public undo = createEndpoint("v1/admin/command/undo", "POST");
 }
 
 export const adminApi = new AdminApi();
