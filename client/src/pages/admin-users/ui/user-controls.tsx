@@ -1,5 +1,5 @@
 import { ColWrapper, ControlsWrapper, RowWrapper } from "./styled";
-import { SmartSearch, ExportButtons } from "@/feat";
+import { SmartSearch, ExportButtons, ImportButtons } from "@/feat";
 import { Button, ComboBox } from "@/shared/ui";
 import { getSortingOptions } from "../utils";
 import { getSearchOptions } from "../utils/get-search-options";
@@ -48,7 +48,10 @@ export const UserControls = ({
           Удалить
         </Button>
       </RowWrapper>
-      <ExportButtons type="users" />
+      <RowWrapper>
+        <ExportButtons type="users" />
+      </RowWrapper>
+      <ImportButtons type="users" />
     </ColWrapper>
     <SmartSearch
       initialValue={search}

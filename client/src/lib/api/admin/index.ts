@@ -153,6 +153,27 @@ class AdminApi {
       "GET",
     )({ file_format: format });
   }
+
+  public async importOrders(file: File, format: "json" | "xml" = "json") {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("file_format", format);
+    return createEndpoint(`v1/admin/data/import/orders`, "POST")(formData);
+  }
+
+  public async importProducts(file: File, format: "json" | "xml" = "json") {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("file_format", format);
+    return createEndpoint(`v1/admin/data/import/products`, "POST")(formData);
+  }
+
+  public async importUsers(file: File, format: "json" | "xml" = "json") {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("file_format", format);
+    return createEndpoint(`v1/admin/data/import/user`, "POST")(formData);
+  }
 }
 
 export const adminApi = new AdminApi();
