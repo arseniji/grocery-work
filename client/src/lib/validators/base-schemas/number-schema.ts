@@ -9,7 +9,8 @@ export class NumberSchema extends Schema<number> {
     super();
     this.rules.push({
       message: options?.message || "Поле должно быть числом",
-      ruleFunction: (value: unknown) => typeof value === "number",
+      ruleFunction: (value: unknown) =>
+        typeof parseInt(value as string) === "number",
     });
   }
 

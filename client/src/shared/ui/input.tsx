@@ -6,11 +6,17 @@ interface InputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> {
   icon?: () => JSX.Element;
   onChange?: (value: string) => void;
+  containerStyle?: React.CSSProperties;
 }
 
-export const Input = ({ icon, onChange, ...props }: InputProps) => {
+export const Input = ({
+  icon,
+  onChange,
+  containerStyle,
+  ...props
+}: InputProps) => {
   return (
-    <Container>
+    <Container style={containerStyle}>
       {icon && icon()}
       <NativeInput {...props} onChange={(e) => onChange?.(e.target.value)} />
     </Container>

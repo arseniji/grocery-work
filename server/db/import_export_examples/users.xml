@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<users>
+  <user>
+    <login>sample_admin</login>
+    <phone>+79990000001</phone>
+    <password_digest>$2a$12$KCL.eWbDuPx.VEBWUXffZuDKPcsYjpLFHpv11VTsr0gSxaZgQETEy</password_digest>
+    <firstname>Иван</firstname>
+    <lastname>Админов</lastname>
+    <patronymic>Админович</patronymic>
+    <role>admin</role>
+  </user>
+  <user>
+    <login>sample_customer</login>
+    <phone>+79990000002</phone>
+    <password_digest>$2a$12$L6pXLiroIgsN6a2b1bDlLesEnF53YcTEaySOBYcgws6/v51UurMuC</password_digest>
+    <firstname>Петр</firstname>
+    <lastname>Покупатель</lastname>
+    <patronymic>Покупателевич</patronymic>
+    <role>customer</role>
+  </user>
+</users>

@@ -21,6 +21,7 @@ import { Button, Input, Loader, OrderCard } from "@/shared/ui";
 import { ErrorMsg, TitleM, TitleXS } from "@/shared/ui/captions";
 import { orderApi } from "@/lib/api/order";
 import type { IOrder, IOrderStatus } from "@/entities/order/types";
+import type { IRole } from "@/entities/profile/types";
 
 export const ProfilePage = () => {
   const navigate = useNavigate();
@@ -35,11 +36,13 @@ export const ProfilePage = () => {
   const [totalPages, setTotalPages] = useState<number>();
   const [statuses, setStatuses] = useState<IOrderStatus[]>([]);
   const [selectedStatus, setSelectedStatus] = useState<string>();
+  const [role, setRole] = useState<IRole | null>(null);
 
   const loadProfile = useCallback(async () => {
     try {
       const response = await profileApi.get();
       setData(response);
+      setRole(response.role);
     } catch (err) {
       const error = err as AxiosError;
       console.log(error);
@@ -267,6 +270,11 @@ export const ProfilePage = () => {
             </Button>
           </ButtonGroup>
         </Form>
+        {role === "admin" && (
+          <Button as="link" href="/admin">
+            Перейти в админ панель
+          </Button>
+        )}
       </ProfileContainer>
       <ProfileContainer>
         <TitleM style={{ alignSelf: "self-start" }}>Мои заказы</TitleM>
@@ -283,7 +291,12 @@ export const ProfilePage = () => {
           ))}
         </StatusContainer>
         {orders.length === 0 ? (
-          <TitleM>Таких заказов нет</TitleM>
+          <div>
+            <TitleM style={{ marginBottom: 16 }}>Заказов нет</TitleM>
+            <Button variant={"primary"} as={"link"} href="/shop">
+              Перейти к покупкам
+            </Button>
+          </div>
         ) : (
           <OrdersList>
             {orders.map((order) => (
@@ -297,25 +310,27 @@ export const ProfilePage = () => {
             ))}
           </OrdersList>
         )}
-        <PaginationContainer>
-          {currentPage > 1 && (
-            <Button variant="border" onClick={handlePrevPage}>
-              Предыдущая
-            </Button>
-          )}
+        {Number(totalPages) > 1 && (
+          <PaginationContainer>
+            {currentPage > 1 && (
+              <Button variant="border" onClick={handlePrevPage}>
+                Предыдущая
+              </Button>
+            )}
 
-          {totalPages && (
-            <TitleXS>
-              {currentPage} / {totalPages}
-            </TitleXS>
-          )}
+            {totalPages && (
+              <TitleXS>
+                {currentPage} / {totalPages}
+              </TitleXS>
+            )}
 
-          {orders.length === 10 && (
-            <Button variant="border" onClick={handleNextPage}>
-              Следующая
-            </Button>
-          )}
-        </PaginationContainer>
+            {orders.length === 10 && (
+              <Button variant="border" onClick={handleNextPage}>
+                Следующая
+              </Button>
+            )}
+          </PaginationContainer>
+        )}
       </ProfileContainer>
     </Main>
   );

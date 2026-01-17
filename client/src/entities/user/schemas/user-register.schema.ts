@@ -39,6 +39,7 @@ export const UserRegisterSchema = validator.object({
     .regexp(nameReg, {
       message: "Может содержать только буквы, дефисы и пробелы",
     }),
+  role: validator.string(),
 });
 
 export type UserRegisterType = Infer<typeof UserRegisterSchema>;

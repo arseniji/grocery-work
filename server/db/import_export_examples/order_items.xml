@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<order_items>
+  <order_item>
+    <order_id>1</order_id>
+    <product_id>1</product_id>
+    <quantity>2</quantity>
+    <price_at_order>99.99</price_at_order>
+  </order_item>
+  <order_item>
+    <order_id>1</order_id>
+    <product_id>2</product_id>
+    <quantity>1.5</quantity>
+    <price_at_order>149.5</price_at_order>
+  </order_item>
+</order_items>
