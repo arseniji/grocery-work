@@ -26,20 +26,21 @@ class Api::V1::AdminProductController < Api::V1::AdminBaseController
     product_data = build_product_data(params)
     result = AdminProductManager.update_product(
       params[:id], 
-      product_data 
+      product_data,
+      user_id: @current_user.id
     )
     render json: result
   end
   
 
   def delete_product
-    result = AdminProductManager.delete_product(params[:id])
+    result = AdminProductManager.delete_product(params[:id], user_id: @current_user.id)
     render json: result
   end
 
   def add_product
     product_data = build_product_data(params) 
-    result = AdminProductManager.add_product(product_data)
+    result = AdminProductManager.add_product(product_data, user_id: @current_user.id)
     render json: result
   end
     
