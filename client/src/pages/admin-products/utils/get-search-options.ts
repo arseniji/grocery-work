@@ -2,7 +2,7 @@ import { flattenKeys } from "@/lib/commons";
 import type { ComboBoxOption } from "@/shared/ui/combobox";
 
 export const getSearchOptions = (
-  obj?: Record<string, any>
+  obj?: Record<string, any>,
 ): ComboBoxOption[] => {
   if (!obj) return [];
   const keys = flattenKeys(obj)

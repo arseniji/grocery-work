@@ -1,9 +1,22 @@
-import type { ShortOrder } from "@/lib/api/admin/types";
+import { flattenKeys } from "@/lib/commons";
+import type { ComboBoxOption } from "@/shared/ui/combobox";
 
-export const getSearchOptions = (order?: ShortOrder) => {
-  if (!order) return [];
-  return Object.keys(order).map((key) => ({
-    label: key,
-    value: key,
-  }));
+export const getSearchOptions = (
+  obj?: Record<string, any>,
+): ComboBoxOption[] => {
+  if (!obj) return [];
+  const keys = flattenKeys(obj).filter(
+    (key) => !key.includes("metadata") && !key.includes("success"),
+  );
+
+  const options: ComboBoxOption[] = [];
+
+  keys.forEach((key) => {
+    options.push({
+      value: `${key}`,
+      label: `${key}`,
+    });
+  });
+
+  return options;
 };

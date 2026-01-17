@@ -56,7 +56,7 @@ export const SmartSearch = ({
     <Container>
       <SearchContainer>
         <ComboBox
-          width="150px"
+          width="250px"
           placeholder="Искать по:"
           options={filtered}
           onChange={setSearch}
