@@ -3,7 +3,7 @@ class CartProductJsonAdapter < BaseJsonAdapter
       {
         success: true,
         id: @object.id,
-        name: @object.product_name,
+        product_name: @object.product_name,
         price: @object.price,
         quantity: quantity,
         total_price: @object.price * quantity,
