@@ -1,9 +1,40 @@
-import { useCallback } from "react";
+// client/src/lib/hooks/usePagination.ts
+import { useCallback, useRef, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router";
+import { manager } from "@/lib/command/command-manager";
+import { FilterCommand } from "@/lib/command/entities/filter-command";
 
 export const usePagination = (basePath: string) => {
   const navigate = useNavigate();
   const [params] = useSearchParams();
+  const commandRef = useRef<FilterCommand | null>(null);
+
+  useEffect(() => {
+    if (!commandRef.current) {
+      commandRef.current = new FilterCommand(navigate, basePath);
+      manager.add("filter", commandRef.current);
+    }
+  }, [navigate, basePath]);
+
+  const handleCategory = useCallback(
+    (category: string) => {
+      const currentCategory = params.get("category");
+      if (currentCategory === category) {
+        manager.execute("filter", { key: "category", value: undefined });
+      } else {
+        manager.execute("filter", { key: "category", value: category });
+      }
+    },
+    [params],
+  );
+
+  const handleSort = useCallback((sort?: string) => {
+    manager.execute("filter", { key: "sort", value: sort });
+  }, []);
+
+  const handleSearch = useCallback((query?: string) => {
+    manager.execute("filter", { key: "search", value: query });
+  }, []);
 
   const updateParams = useCallback(
     (updates: Record<string, string | undefined>) => {
@@ -20,17 +51,6 @@ export const usePagination = (basePath: string) => {
     [navigate, params, basePath],
   );
 
-  const handleCategory = useCallback(
-    (category: string) => {
-      if (params.has("category")) {
-        updateParams({ category: undefined });
-        return;
-      }
-      updateParams({ category });
-    },
-    [updateParams, params],
-  );
-
   const handlePrevPage = useCallback(
     (page: number) => {
       if (page > 1) {
@@ -45,20 +65,6 @@ export const usePagination = (basePath: string) => {
       if (hasNext) {
         updateParams({ page: (page + 1).toString() });
       }
-    },
-    [updateParams],
-  );
-
-  const handleSort = useCallback(
-    (sort?: string) => {
-      updateParams({ sort });
-    },
-    [updateParams],
-  );
-
-  const handleSearch = useCallback(
-    (query?: string) => {
-      updateParams({ search: query });
     },
     [updateParams],
   );

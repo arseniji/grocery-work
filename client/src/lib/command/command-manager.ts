@@ -10,9 +10,6 @@ export class CommandManager {
   }
 
   public add(name: string, command: Command<any, any>) {
-    if (this.bank[name]) {
-      throw Error("Команда с таким именем уже существует");
-    }
     this.bank[name] = command;
   }
 
