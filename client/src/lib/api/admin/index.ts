@@ -121,12 +121,16 @@ class AdminApi {
 
   public async updateOrder(
     orderId: number,
+    userId: number,
     data: {
       description: string;
       status: string;
     },
   ) {
-    return createEndpoint(`v1/admin/order/${orderId}`, "PUT")(data);
+    return createEndpoint(
+      `v1/admin/order/user/${userId}/order/${orderId}`,
+      "PUT",
+    )(data);
   }
 
   public async deleteOrder(orderId: number) {

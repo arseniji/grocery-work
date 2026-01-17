@@ -38,6 +38,7 @@ export const useOrderActions = (
       try {
         if (isEditing && editingOrder) {
           await adminApi.updateOrder(
+            editingOrder.userId,
             editingOrder.id,
             data as AdminOrderEditType,
           );

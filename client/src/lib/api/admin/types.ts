@@ -40,6 +40,7 @@ export interface ShortOrder {
   description: string;
   status: string;
   createdAt: string;
+  userId: number;
 }
 
 export interface GetOrdersRes {
