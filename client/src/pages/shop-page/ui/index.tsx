@@ -13,22 +13,24 @@ import type { AxiosError } from "axios";
 import { useEffect, useState, useCallback } from "react";
 import { productsApi } from "@/lib/api/products";
 import type { Category, Product } from "@/entities/product/types";
-import { useNavigate, useSearchParams } from "react-router";
 import { Toast } from "@/feat";
 import { sortOptions } from "../constants/sort-options";
+import { usePagination } from "@/lib/hooks";
+import { useSearchParams } from "react-router";
 
 export const ShopPage = () => {
-  const navigate = useNavigate();
   const [params] = useSearchParams();
   const page = parseInt(params.get("page") || "1", 10);
   const search = params.get("search") || undefined;
   const sort = params.get("sort") || undefined;
   const category = params.get("category") || undefined;
+  const { handlePrevPage, handleNextPage, handleSort, handleCategory } =
+    usePagination("/shop");
 
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [totalPages, setTotalPages] = useState<number>();
+  const [totalPages, setTotalPages] = useState<number>(0);
   const itemsPerPage = 12;
 
   const loadProducts = useCallback(async () => {
@@ -39,7 +41,7 @@ export const ShopPage = () => {
         itemsPerPage,
         sort,
         category,
-        search
+        search,
       );
       if (response.success) {
         setProducts(response.products);
@@ -55,7 +57,7 @@ export const ShopPage = () => {
       console.log(error);
     }
     setIsLoading(false);
-  }, [page, search, sort, category]);
+  }, [category, page, search, sort]);
 
   const loadCategories = useCallback(async () => {
     try {
@@ -79,49 +81,6 @@ export const ShopPage = () => {
     loadProducts();
     loadCategories();
   }, [loadProducts, loadCategories]);
-
-  const handlePrevPage = () => {
-    if (page > 1) {
-      const newParams = new URLSearchParams(params);
-      newParams.set("page", (page - 1).toString());
-      navigate(`/shop?${newParams.toString()}`);
-    }
-  };
-
-  const handleNextPage = () => {
-    if (products.length === itemsPerPage) {
-      const newParams = new URLSearchParams(params);
-      newParams.set("page", (page + 1).toString());
-      navigate(`/shop?${newParams.toString()}`);
-    }
-  };
-
-  const handleCategory = (name: string) => {
-    if (category === name) {
-      const newParams = new URLSearchParams(params);
-      newParams.delete("category");
-      navigate(`/shop?${newParams.toString()}`);
-      return;
-    }
-    if (categories.length > 0) {
-      const newParams = new URLSearchParams(params);
-      newParams.set("category", name);
-      navigate(`/shop?${newParams.toString()}`);
-    }
-  };
-
-  const handleSort = (sort?: string) => {
-    if (sort) {
-      const newParams = new URLSearchParams(params);
-      newParams.set("sort", sort);
-      navigate(`/shop?${newParams.toString()}`);
-    } else {
-      const newParams = new URLSearchParams(params);
-      newParams.delete("sort");
-      navigate(`/shop?${newParams.toString()}`);
-      return;
-    }
-  };
 
   return (
     <Main>
@@ -169,7 +128,7 @@ export const ShopPage = () => {
             </ProductsList>
             <PaginationContainer>
               {page > 1 && (
-                <Button variant="border" onClick={handlePrevPage}>
+                <Button variant="border" onClick={() => handlePrevPage(page)}>
                   Предыдущая
                 </Button>
               )}
@@ -181,7 +140,10 @@ export const ShopPage = () => {
               )}
 
               {products.length === itemsPerPage && (
-                <Button variant="border" onClick={handleNextPage}>
+                <Button
+                  variant="border"
+                  onClick={() => handleNextPage(page, page <= totalPages)}
+                >
                   Следующая
                 </Button>
               )}

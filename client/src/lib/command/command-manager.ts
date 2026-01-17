@@ -1,4 +1,4 @@
-import type { Command } from "./enteties/command";
+import type { Command } from "./entities/command";
 
 export class CommandManager {
   bank: Record<string, Command<any, any>>;

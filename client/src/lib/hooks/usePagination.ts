@@ -20,6 +20,17 @@ export const usePagination = (basePath: string) => {
     [navigate, params, basePath],
   );
 
+  const handleCategory = useCallback(
+    (category: string) => {
+      if (params.has("category")) {
+        updateParams({ category: undefined });
+        return;
+      }
+      updateParams({ category });
+    },
+    [updateParams, params],
+  );
+
   const handlePrevPage = useCallback(
     (page: number) => {
       if (page > 1) {
@@ -52,5 +63,11 @@ export const usePagination = (basePath: string) => {
     [updateParams],
   );
 
-  return { handlePrevPage, handleNextPage, handleSort, handleSearch };
+  return {
+    handlePrevPage,
+    handleNextPage,
+    handleSort,
+    handleSearch,
+    handleCategory,
+  };
 };
