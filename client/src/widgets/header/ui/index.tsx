@@ -9,12 +9,18 @@ import {
 } from "./styled";
 import { BodyM, TitleXS } from "@/shared/ui/captions";
 import { routes } from "../contants/routes";
-import { NavLink, useNavigate, useSearchParams } from "react-router";
+import {
+  NavLink,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router";
 import { Button, Input } from "@/shared/ui";
 import type { AxiosError } from "axios";
 import { authApi } from "@/lib/api/auth";
 import { Toast } from "@/feat";
-import { useState, type FormEventHandler } from "react";
+import { type FormEventHandler } from "react";
+import { usePagination } from "@/lib/hooks";
 
 interface HeaderProps {
   isLogined: boolean;
@@ -23,8 +29,10 @@ interface HeaderProps {
 export const Header = ({ isLogined }: HeaderProps) => {
   const navigate = useNavigate();
   const [params] = useSearchParams();
+  const locale = useLocation();
+  const search = params.get("search") || "";
 
-  const [search, setSearch] = useState<string>(params.get("search") || "");
+  const { handleSearch } = usePagination(locale.pathname);
 
   const handleLogout = async () => {
     try {
@@ -33,7 +41,7 @@ export const Header = ({ isLogined }: HeaderProps) => {
         {},
         {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
-        }
+        },
       );
       if (response.success) {
         localStorage.removeItem("token");
@@ -84,7 +92,7 @@ export const Header = ({ isLogined }: HeaderProps) => {
             icon={SearchIcon}
             placeholder="Поиск..."
             value={search}
-            onChange={setSearch}
+            onChange={handleSearch}
           />
         </form>
 
