@@ -1,13 +1,17 @@
 meta {
-  name: get_all_order_user_admin
+  name: get_all_order_admin
   type: http
   seq: 33
 }
 
 get {
-  url: http://localhost:3000/api/v1/admin/order/user/2
+  url: http://localhost:3000/api/v1/admin/order/?search=login:example
   body: none
   auth: bearer
+}
+
+params:query {
+  search: login:example
 }
 
 auth:bearer {
