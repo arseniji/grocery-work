@@ -22,10 +22,13 @@ export const ExportButtons = ({ type }: ExportButtonsProps) => {
       }
 
       if (response) {
-        // Assuming the response is the file content as string
-        const blob = new Blob([response as string], {
-          type: `application/${format}`,
-        });
+        let content: string;
+        if (format === "json") {
+          content = JSON.stringify(response, null, 2);
+        } else {
+          content = response as string;
+        }
+        const blob = new Blob([content], { type: `application/${format}` });
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
