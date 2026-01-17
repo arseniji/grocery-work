@@ -85,7 +85,7 @@ export interface GetOrderDetailsRes {
     productName: string;
     price: string;
     details?: {
-      image_url: string;
+      imageUrl: string;
     };
     metadata: {
       orderDetails: {
