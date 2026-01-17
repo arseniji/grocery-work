@@ -132,6 +132,27 @@ class AdminApi {
   public async deleteOrder(orderId: number) {
     return createEndpoint(`v1/admin/order/${orderId}`, "DELETE")();
   }
+
+  public async exportOrders(format: "json" | "xml" = "json") {
+    return createEndpoint(
+      `v1/admin/data/export/orders`,
+      "GET",
+    )({ file_format: format });
+  }
+
+  public async exportProducts(format: "json" | "xml" = "json") {
+    return createEndpoint(
+      `v1/admin/data/export/products`,
+      "GET",
+    )({ file_format: format });
+  }
+
+  public async exportUsers(format: "json" | "xml" = "json") {
+    return createEndpoint(
+      `v1/admin/data/export/user`,
+      "GET",
+    )({ file_format: format });
+  }
 }
 
 export const adminApi = new AdminApi();
