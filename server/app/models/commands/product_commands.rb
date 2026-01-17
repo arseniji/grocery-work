@@ -1,6 +1,8 @@
+require_relative 'base_command' unless defined?(BaseCommand)
 
 # Команда для обновления продукта
-class UpdateProductCommand < BaseCommand
+unless defined?(UpdateProductCommand)
+  class UpdateProductCommand < BaseCommand
   def initialize(user_id:, product_id:, product_data:, previous_product_data:)
     super(user_id: user_id, description: "Обновление продукта ##{product_id}")
     @product_id = product_id
@@ -15,10 +17,12 @@ class UpdateProductCommand < BaseCommand
   def undo
     AdminProductManager.update_product(@product_id, @previous_product_data, use_command: false)
   end
+  end
 end
 
 # Команда для удаления продукта
-class DeleteProductCommand < BaseCommand
+unless defined?(DeleteProductCommand)
+  class DeleteProductCommand < BaseCommand
   def initialize(user_id:, product_id:, product_data:)
     super(user_id: user_id, description: "Удаление продукта ##{product_id}")
     @product_id = product_id
@@ -36,10 +40,12 @@ class DeleteProductCommand < BaseCommand
     product.save(validate: false) # Сохраняем без валидации, чтобы восстановить точное состояние
     AdminProductManager.update_product(@product_id, @product_data, use_command: false)
   end
+  end
 end
 
 # Команда для добавления продукта
-class AddProductCommand < BaseCommand
+unless defined?(AddProductCommand)
+  class AddProductCommand < BaseCommand
   def initialize(user_id:, product_data:, product_id: nil)
     super(user_id: user_id, description: "Добавление продукта")
     @product_data = product_data
@@ -66,5 +72,6 @@ class AddProductCommand < BaseCommand
     else
       { success: false, message: "Не удалось отменить: продукт не был создан" }
     end
+  end
   end
 end

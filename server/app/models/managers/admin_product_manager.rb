@@ -1,4 +1,4 @@
-require_relative '../commands/product_commands'
+require_relative '../commands/product_commands' unless defined?(UpdateProductCommand)
 
 class AdminProductManager < BaseManager
   def self.update_product(product_id, product_data, use_command: true, user_id: nil)

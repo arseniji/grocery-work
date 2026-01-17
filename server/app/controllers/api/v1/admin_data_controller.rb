@@ -16,7 +16,13 @@ class Api::V1::AdminDataController < Api::V1::AdminBaseController
       io: file
     )
 
-    render json: result
+    if result[:error].present? || result[:success] == false
+      # Устанавливаем статус из результата или по умолчанию
+      status = result[:http_status] || :unprocessable_entity
+      render json: result, status: status
+    else
+      render json: result, status: :ok
+    end
   end
 
   def export

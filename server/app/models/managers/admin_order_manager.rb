@@ -1,4 +1,4 @@
-require_relative '../commands/order_commands'
+require_relative '../commands/order_commands' unless defined?(UpdateOrderCommand)
 class AdminOrderManager < BaseManager
   extend CustomObservable
   add_observer(OrderManager)
