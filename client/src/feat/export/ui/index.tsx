@@ -39,7 +39,7 @@ export const ExportButtons = ({ type }: ExportButtonsProps) => {
         URL.revokeObjectURL(url);
       }
     } catch (error) {
-      console.error("Export failed:", error);
+      console.error(error);
     }
   };
 

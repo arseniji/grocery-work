@@ -29,7 +29,6 @@ export const SmartSearch = ({
 
   const filterOptions = (newQ: string) => {
     const opt = options.filter((opt) => !newQ.includes(opt.value));
-    console.log(opt);
     setFiltered(opt);
   };
 

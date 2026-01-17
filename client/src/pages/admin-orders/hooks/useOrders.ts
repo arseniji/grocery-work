@@ -23,7 +23,6 @@ export const useOrders = (
       );
       if (response.success) {
         setData(response);
-        console.log(response);
       }
     } catch {
       Toast.show({

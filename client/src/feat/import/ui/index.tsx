@@ -54,7 +54,7 @@ export const ImportButtons = ({
         if (input) input.value = "";
       }
     } catch (error) {
-      console.error("Import failed:", error);
+      console.error(error);
       Toast.show({
         type: "error",
         title: "Ошибка!",

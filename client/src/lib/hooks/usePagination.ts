@@ -1,4 +1,3 @@
-// client/src/lib/hooks/usePagination.ts
 import { useCallback, useRef, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 import { manager } from "@/lib/command/command-manager";
