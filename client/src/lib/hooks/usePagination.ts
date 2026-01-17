@@ -36,38 +36,17 @@ export const usePagination = (basePath: string) => {
     manager.execute("filter", { key: "search", value: query });
   }, []);
 
-  const updateParams = useCallback(
-    (updates: Record<string, string | undefined>) => {
-      const newParams = new URLSearchParams(params);
-      Object.entries(updates).forEach(([key, value]) => {
-        if (value) {
-          newParams.set(key, value);
-        } else {
-          newParams.delete(key);
-        }
-      });
-      navigate(`${basePath}?${newParams.toString()}`);
-    },
-    [navigate, params, basePath],
-  );
+  const handlePrevPage = useCallback((page: number) => {
+    if (page > 1) {
+      manager.execute("filter", { key: "page", value: (page - 1).toString() });
+    }
+  }, []);
 
-  const handlePrevPage = useCallback(
-    (page: number) => {
-      if (page > 1) {
-        updateParams({ page: (page - 1).toString() });
-      }
-    },
-    [updateParams],
-  );
-
-  const handleNextPage = useCallback(
-    (page: number, hasNext: boolean) => {
-      if (hasNext) {
-        updateParams({ page: (page + 1).toString() });
-      }
-    },
-    [updateParams],
-  );
+  const handleNextPage = useCallback((page: number, hasNext: boolean) => {
+    if (hasNext) {
+      manager.execute("filter", { key: "page", value: (page + 1).toString() });
+    }
+  }, []);
 
   return {
     handlePrevPage,

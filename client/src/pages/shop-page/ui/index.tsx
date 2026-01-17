@@ -102,6 +102,7 @@ export const ShopPage = () => {
 
         <SortContainer>
           <ComboBox
+            value={sort}
             options={sortOptions}
             placeholder="Сортировать по: "
             onChange={handleSort}
