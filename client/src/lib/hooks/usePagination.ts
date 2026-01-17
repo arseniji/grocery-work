@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 
-export const usePagination = () => {
+export const usePagination = (basePath: string) => {
   const navigate = useNavigate();
   const [params] = useSearchParams();
 
@@ -15,9 +15,9 @@ export const usePagination = () => {
           newParams.delete(key);
         }
       });
-      navigate(`/admin/users?${newParams.toString()}`);
+      navigate(`${basePath}?${newParams.toString()}`);
     },
-    [navigate, params]
+    [navigate, params, basePath],
   );
 
   const handlePrevPage = useCallback(
@@ -26,7 +26,7 @@ export const usePagination = () => {
         updateParams({ page: (page - 1).toString() });
       }
     },
-    [updateParams]
+    [updateParams],
   );
 
   const handleNextPage = useCallback(
@@ -35,21 +35,21 @@ export const usePagination = () => {
         updateParams({ page: (page + 1).toString() });
       }
     },
-    [updateParams]
+    [updateParams],
   );
 
   const handleSort = useCallback(
     (sort?: string) => {
       updateParams({ sort });
     },
-    [updateParams]
+    [updateParams],
   );
 
   const handleSearch = useCallback(
     (query?: string) => {
       updateParams({ search: query });
     },
-    [updateParams]
+    [updateParams],
   );
 
   return { handlePrevPage, handleNextPage, handleSort, handleSearch };

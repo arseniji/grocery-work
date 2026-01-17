@@ -5,11 +5,12 @@ import { TitleM } from "@/shared/ui/captions";
 import { useSearchParams } from "react-router";
 import { AdminUserAddSchema } from "@/entities/user/schemas";
 import { AdminUserForm } from "./admin-user-form";
-import { useUsers, useUserActions, usePagination } from "../hooks";
+import { useUsers, useUserActions } from "../hooks";
 import { UserControls } from "./user-controls";
 import { UserTable } from "./user-table";
 import { PaginationControls } from "@/shared/ui";
 import type { ShortUser } from "@/lib/api/admin/types";
+import { usePagination } from "@/lib/hooks";
 
 export const AdminUsersPage = () => {
   const [params] = useSearchParams();
@@ -24,10 +25,10 @@ export const AdminUsersPage = () => {
     page,
     itemsPerPage,
     sort,
-    search
+    search,
   );
   const { handlePrevPage, handleNextPage, handleSort, handleSearch } =
-    usePagination();
+    usePagination("/admin/users");
   const {
     isFormOpen,
     isEditing,
@@ -86,7 +87,7 @@ export const AdminUsersPage = () => {
             onNext={() =>
               handleNextPage(
                 page,
-                !!(data?.users && data.users.length === itemsPerPage)
+                !!(data?.users && data.users.length === itemsPerPage),
               )
             }
           />
