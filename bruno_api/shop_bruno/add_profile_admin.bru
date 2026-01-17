@@ -1,0 +1,32 @@
+meta {
+  name: add_profile_admin
+  type: http
+  seq: 30
+}
+
+post {
+  url: http://localhost:3000/api/v1/admin/profile/
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: x3ajB7QC7FQq-K5ukWN8W6JWhDVMi0mmhw8eF5O6FpE
+}
+
+body:json {
+  {
+    "login": "ivanovai",
+    "password": "Password123",
+    "phone": "+79999999988",
+    "firstname": "Иван",
+    "lastname": "Иванов",
+    "patronymic": "Иванович",
+    "role": "customer"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -10,6 +10,7 @@ class SessionManager
   end
   
   def self.user_authenticated(user, request_context = {})
+    Session.destroy_all_for_user(user.id)
     session = Session.create_for_user(
       user,
       request_context.merge(custom: { 
@@ -56,5 +57,10 @@ class SessionManager
     session = Session.find(session_id)
     session.clear_cart
     session.save
+  end
+
+  def self.get_session_for_session_id(user_id)
+    session = Session.find_by_user(user_id)
+    session
   end
 end

@@ -2,6 +2,15 @@ class User < ApplicationRecord
   has_secure_password
   has_many :orders, dependent: :destroy
 
+  ROLES = %w[customer admin].freeze
+
+  validates :role,
+  presence: { message: "не может быть пустым" },
+  inclusion: { 
+    in: ROLES,
+    message: "должна быть одной из доступных ролей: #{ROLES.join(', ')}" 
+  }
+
   validates :login, 
     presence: { message: "не может быть пустым" },
     uniqueness: { 

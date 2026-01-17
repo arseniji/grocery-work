@@ -54,6 +54,13 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  gem "rswag"
+  gem "swagger-ui"
+  gem 'rswag-specs'
+  gem 'rswag-api'
+  gem 'rswag-ui'
+  gem 'rspec-rails'
 end
 
 group :development do
@@ -67,3 +74,4 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+

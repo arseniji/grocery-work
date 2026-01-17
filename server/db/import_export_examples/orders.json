@@ -1,0 +1,12 @@
+[
+  {
+    "user_id": 1,
+    "status": "delivered",
+    "description": "Тестовый заказ для пользователя #1 (доставлен)"
+  },
+  {
+    "user_id": 2,
+    "status": "processing",
+    "description": "Тестовый заказ для пользователя #2 (в обработке)"
+  }
+]

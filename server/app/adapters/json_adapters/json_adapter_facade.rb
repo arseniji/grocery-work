@@ -9,10 +9,14 @@ class JsonAdapterFacade
     category: CategoryJsonAdapter,
     categories: CategoryCollectionJsonAdapter,
     orders: OrderCollectionJsonAdapter,
+    admin_orders: AdminOrderCollectionJsonAdapter,
     order_details: OrderDetailsCollectionJsonAdapter,
     status: StatusJsonAdapter,
     status_collection: StatusCollectionJsonAdapter,
     profile: ProfileJsonAdapter,
+    authorizate: AuthorizateJsonAdapter,
+    registration: RegistrationJsonAdapter,
+    profiles: ProfileCollectionJsonAdapter,
   }.freeze
   
   def self.adapt(object, type:, **options)

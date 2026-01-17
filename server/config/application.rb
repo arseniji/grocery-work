@@ -17,6 +17,7 @@ module Server
     config.api_only = true
 
     config.autoload_paths << Rails.root.join('app/models/managers')
+    config.autoload_paths << Rails.root.join('app/models/commands')
     config.autoload_paths << Rails.root.join('app/adapters/json_adapters')
     config.autoload_paths << Rails.root.join('app/observer')
 

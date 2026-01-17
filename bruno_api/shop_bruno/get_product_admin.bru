@@ -1,0 +1,24 @@
+meta {
+  name: get_product_admin
+  type: http
+  seq: 23
+}
+
+get {
+  url: http://127.0.0.1:3000/api/v1/admin/product?search=Киви
+  body: none
+  auth: bearer
+}
+
+params:query {
+  search: Киви
+}
+
+auth:bearer {
+  token: x3ajB7QC7FQq-K5ukWN8W6JWhDVMi0mmhw8eF5O6FpE
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

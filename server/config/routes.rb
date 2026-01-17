@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  mount Rswag::Ui::Engine => '/api-docs' if Rails.env.development?
+  mount Rswag::Api::Engine => '/api-docs' if Rails.env.development?
+
   namespace :api do
     namespace :v1 do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -43,6 +46,39 @@ Rails.application.routes.draw do
         get 'me', to: 'profile#get_me'
         patch 'me', to: 'profile#update_me'
         delete 'me', to: 'profile#delete_me_profile'
+      end
+      scope :admin do
+        scope :product do
+              get '/', to: "admin_product#get_products" 
+              get ':id', to: "admin_product#get_product_details" 
+              post '/', to: "admin_product#add_product" 
+              put ':id', to: "admin_product#update_product"
+              delete ':id', to: "admin_product#delete_product" 
+        end
+        scope :profile do
+          get '/', to: "admin_profile#get_profiles"
+          get ':user_id', to: "admin_profile#get_profile_info"
+          post '/', to: "admin_profile#add_profile"
+          put ':user_id', to: "admin_profile#update_profile"
+          delete ':user_id', to: "admin_profile#delete_profile"
+        end
+        scope :order do
+          get '/', to: "admin_order#get_all_orders_user"
+          get 'user/:user_id/order/:order_id', to: "admin_order#get_order_detail_user"
+          put 'user/:user_id/order/:order_id', to: "admin_order#update_orders"
+          post 'user/:user_id/order/:order_id/product/:product_id', to: "admin_order#add_product_orders_items"
+          delete 'user/:user_id/order/:order_id/product/:product_id', to: "admin_order#delete_product_order_items"
+        end
+        scope :data do
+          post 'import/:entity', to: "admin_data#import"
+          get 'export/:entity', to: "admin_data#export"
+        end
+        scope :command do
+          post 'undo', to: "command#undo"
+          post 'redo', to: "command#redo"
+          get 'history', to: "command#history"
+          delete 'history', to: "command#clear_history"
+        end
       end
     end
   end

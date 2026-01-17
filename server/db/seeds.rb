@@ -16,7 +16,8 @@ users = [
     password_digest: BCrypt::Password.create('admin123'),
     firstname: 'Иван',
     lastname: 'Петров',
-    patronymic: 'Сергеевич'
+    patronymic: 'Сергеевич',
+    role: 'admin',
   },
   {
     login: 'alex',
@@ -24,7 +25,8 @@ users = [
     password_digest: BCrypt::Password.create('user123'),
     firstname: 'Алексей',
     lastname: 'Смирнов',
-    patronymic: 'Игоревич'
+    patronymic: 'Игоревич',
+    role: 'customer',
   },
   {
     login: 'maria',
@@ -32,7 +34,8 @@ users = [
     password_digest: BCrypt::Password.create('user123'),
     firstname: 'Мария',
     lastname: 'Иванова',
-    patronymic: 'Дмитриевна'
+    patronymic: 'Дмитриевна',
+    role: 'customer',
   }
 ]
 

@@ -7,6 +7,7 @@ class ProfileJsonAdapter < BaseJsonAdapter
       firstname: @object.firstname,
       lastname: @object.lastname,
       patronymic: @object.patronymic,
+      role: @object.role,
       metadata: options[:metadata] || {}
   }.compact
   end

@@ -3,7 +3,7 @@ class ProductJsonAdapter < BaseJsonAdapter
       {
         success: true,
         id: @object.id,
-        name: @object.product_name,
+        product_name: @object.product_name,
         price: @object.price,
         rating: @object.rating,
         category: @object.category,

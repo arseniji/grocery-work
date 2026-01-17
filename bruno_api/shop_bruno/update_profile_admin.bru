@@ -1,0 +1,31 @@
+meta {
+  name: update_profile_admin
+  type: http
+  seq: 31
+}
+
+put {
+  url: http://localhost:3000/api/v1/admin/profile/36
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: x3ajB7QC7FQq-K5ukWN8W6JWhDVMi0mmhw8eF5O6FpE
+}
+
+body:json {
+  {
+    "login": "ivanov_updated",
+    "phone": "+79997654321",
+    "firstname": "Иван",
+    "lastname": "Петров",
+    "patronymic": "Сергеевич",
+    "role": "admin"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
