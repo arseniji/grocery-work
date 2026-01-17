@@ -75,7 +75,7 @@ export const CartPage = () => {
         });
       }
     },
-    [loadCart]
+    [loadCart],
   );
 
   const handleDecrease = useCallback(
@@ -93,7 +93,7 @@ export const CartPage = () => {
         });
       }
     },
-    [loadCart]
+    [loadCart],
   );
 
   const handleDelete = useCallback(
@@ -111,7 +111,7 @@ export const CartPage = () => {
         });
       }
     },
-    [loadCart]
+    [loadCart],
   );
 
   const createOrder = async () => {
@@ -167,6 +167,7 @@ export const CartPage = () => {
                 key={pr.id}
                 total_price={pr.quantity * parseInt(pr.price)}
                 {...pr}
+                productName={pr.productName}
                 onIncrease={() => handleIncrease(pr.id)}
                 onDecrease={() => handleDecrease(pr.id)}
                 onDelete={() => handleDelete(pr.id)}

@@ -120,7 +120,7 @@ export const ShopPage = () => {
                 <ProductCard
                   key={product.id}
                   id={product.id}
-                  name={product.name}
+                  productName={product.productName}
                   price={product.price}
                   rating={product.rating}
                   image={product.details.image_url}

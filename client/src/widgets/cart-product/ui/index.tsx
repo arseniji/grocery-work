@@ -20,7 +20,7 @@ type CartProductProps = Product & {
 };
 
 export const CartProduct = ({
-  name,
+  productName,
   price,
   details,
   quantity,
@@ -34,9 +34,9 @@ export const CartProduct = ({
 
   return (
     <CartProductContainer onClick={() => navigate(`/product/${id}`)}>
-      <Image src={details.image_url} alt={name} />
+      <Image src={details.image_url} alt={productName} />
       <InfoWrapper>
-        <TitleS>{name}</TitleS>
+        <TitleS>{productName}</TitleS>
         <BodyM>{price}р за шт.</BodyM>
         <QuantityWrapper>
           <Button variant="border" onClick={onDecrease}>

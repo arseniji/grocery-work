@@ -1,7 +1,7 @@
 export interface Product {
   success: boolean;
   id: number;
-  name: string;
+  productName: string;
   price: string;
   rating: string;
   category: string;
