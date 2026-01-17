@@ -33,6 +33,7 @@ export const SmartSearch = ({
   };
 
   const handleAdd = () => {
+    if (!searchValue || !search) return;
     let newQ = `${search}:${searchValue}`;
     if (query) {
       newQ = `${query},${newQ}`;

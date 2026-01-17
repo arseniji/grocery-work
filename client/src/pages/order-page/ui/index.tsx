@@ -116,10 +116,10 @@ export const OrderPage = () => {
             <ProductItem key={product.id}>
               <ProductImage
                 src={product.details?.image_url || ""}
-                alt={product.name}
+                alt={product.productName}
               />
               <ProductInfo>
-                <TitleM>{product.name}</TitleM>
+                <TitleM>{product.productName}</TitleM>
                 <BodyM>Цена: {product.price}р</BodyM>
                 <BodyM>
                   Количество: {product.metadata.orderDetails.quantityInOrder}

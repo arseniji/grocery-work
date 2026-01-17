@@ -1,13 +1,13 @@
-import { flattenKeys } from "@/lib/commons";
+import { flattenKeys, snakeCase } from "@/lib/commons";
 import type { ComboBoxOption } from "@/shared/ui/combobox";
 
 export const getSearchOptions = (
   obj?: Record<string, any>,
 ): ComboBoxOption[] => {
   if (!obj) return [];
-  const keys = flattenKeys(obj).filter(
-    (key) => !key.includes("metadata") && !key.includes("success"),
-  );
+  const keys = flattenKeys(obj)
+    .filter((key) => !key.includes("metadata") && !key.includes("success"))
+    .map((key) => snakeCase(key));
 
   const options: ComboBoxOption[] = [];
 

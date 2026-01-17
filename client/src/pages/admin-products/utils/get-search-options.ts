@@ -1,4 +1,4 @@
-import { flattenKeys } from "@/lib/commons";
+import { flattenKeys, snakeCase } from "@/lib/commons";
 import type { ComboBoxOption } from "@/shared/ui/combobox";
 
 export const getSearchOptions = (
@@ -11,7 +11,7 @@ export const getSearchOptions = (
       if (key.includes(".")) {
         return key.split(".").at(-1);
       }
-      return key;
+      return snakeCase(key);
     });
 
   const options: ComboBoxOption[] = [];
