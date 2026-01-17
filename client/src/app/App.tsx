@@ -15,11 +15,12 @@ import { AdminProductsPage } from "@/pages/admin-products";
 import { AboutPage } from "@/pages/about-page";
 import { ErrorBoundary } from "@/shared/ui";
 import { UndoProvider } from "@/feat/undo";
+import { manager } from "@/lib/command";
 
 function App() {
   return (
     <ErrorBoundary>
-      <UndoProvider>
+      <UndoProvider manager={manager}>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<MainLayout />}>

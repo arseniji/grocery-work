@@ -9,6 +9,17 @@ export class CommandManager {
     this.history = [];
   }
 
+  public add(name: string, command: Command<any, any>) {
+    if (this.bank[name]) {
+      throw Error("Команда с таким именем уже существует");
+    }
+    this.bank[name] = command;
+  }
+
+  public remove(name: string) {
+    delete this.bank[name];
+  }
+
   public execute(name: string, params: any) {
     const command = this.bank[name];
     if (!command) return;
@@ -24,3 +35,5 @@ export class CommandManager {
     command.undo();
   }
 }
+
+export const manager = new CommandManager();

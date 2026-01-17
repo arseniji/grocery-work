@@ -1,6 +1,6 @@
 import type { CommandManager } from "@/lib/command";
 import type { ReactElement } from "react";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 
 interface UndoProviderProps {
   children: ReactElement | ReactElement[];
@@ -8,16 +8,19 @@ interface UndoProviderProps {
 }
 
 export const UndoProvider = ({ children, manager }: UndoProviderProps) => {
-  const handleUndo = (event: KeyboardEvent) => {
-    if (event.ctrlKey && (event.key === "z" || event.key === "я")) {
-      manager.undo();
-    }
-  };
+  const handleUndo = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.ctrlKey && (event.key === "z" || event.key === "я")) {
+        manager.undo();
+      }
+    },
+    [manager],
+  );
 
   useEffect(() => {
     document.addEventListener("keydown", handleUndo);
     return () => document.removeEventListener("keydown", handleUndo);
-  }, []);
+  }, [handleUndo]);
 
   return <>{children}</>;
 };

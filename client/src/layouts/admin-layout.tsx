@@ -1,9 +1,21 @@
 import { AdminHeader, AdminNav } from "@/widgets";
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import styled from "styled-components";
 import { Container as ShContainer } from "@/shared/ui/container";
+import { manager, NavigateCommand } from "@/lib/command";
+import { useLayoutEffect } from "react";
 
 export const AdminLayout = () => {
+  const navigate = useNavigate();
+  manager.add("navigate", new NavigateCommand(navigate));
+
+  useLayoutEffect(() => {
+    manager.add("navigate", new NavigateCommand(navigate));
+    return () => {
+      manager.remove("navigate");
+    };
+  }, [navigate]);
+
   return (
     <Container>
       <AdminHeader />

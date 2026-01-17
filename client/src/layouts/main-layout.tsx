@@ -3,7 +3,8 @@ import { Footer, Header } from "@/widgets";
 import { Loader } from "@/shared/ui";
 import { Outlet, useNavigate, useLocation } from "react-router";
 import styled from "styled-components";
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
+import { manager, NavigateCommand } from "@/lib/command";
 
 const securePaths = ["/cart", "/profile", "/order"];
 
@@ -11,6 +12,15 @@ export const MainLayout = () => {
   const { isAuth, isLoading } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+
+  manager.add("navigate", new NavigateCommand(navigate));
+
+  useLayoutEffect(() => {
+    manager.add("navigate", new NavigateCommand(navigate));
+    return () => {
+      manager.remove("navigate");
+    };
+  }, [navigate]);
 
   useEffect(() => {
     if (!isLoading) {

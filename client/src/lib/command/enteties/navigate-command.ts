@@ -1,10 +1,11 @@
+import type { NavigateFunction } from "react-router";
 import type { Command } from "./command";
 
 export class NavigateCommand implements Command<string, void> {
-  private readonly navigate: (path: string) => void;
+  private readonly navigate: NavigateFunction;
   private history: string[];
 
-  constructor(navFunc: (path: string) => void) {
+  constructor(navFunc: NavigateFunction) {
     this.navigate = navFunc;
     this.history = [];
   }
