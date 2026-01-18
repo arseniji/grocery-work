@@ -1,4 +1,4 @@
-import type { Command } from "./enteties/command";
+import type { Command } from "./entities/command";
 
 export class CommandManager {
   bank: Record<string, Command<any, any>>;
@@ -7,6 +7,14 @@ export class CommandManager {
   constructor() {
     this.bank = {};
     this.history = [];
+  }
+
+  public add(name: string, command: Command<any, any>) {
+    this.bank[name] = command;
+  }
+
+  public remove(name: string) {
+    delete this.bank[name];
   }
 
   public execute(name: string, params: any) {
@@ -24,3 +32,5 @@ export class CommandManager {
     command.undo();
   }
 }
+
+export const manager = new CommandManager();

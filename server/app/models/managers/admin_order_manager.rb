@@ -1,33 +1,108 @@
+require_relative '../commands/order_commands' unless defined?(UpdateOrderCommand)
 class AdminOrderManager < BaseManager
   extend CustomObservable
   add_observer(OrderManager)
 
+  def self.get_all_orders(number_page:, page_size:, status: '', search: {}, sorted_fields: {}, search_fields: [])
+    orders = Order.joins(:user).includes(:user)
+    
+    # Определяем разрешенные поля для поиска и сортировки
+    allowed_search_fields = ['id', 'user_id', 'description', 'users.login', 'users.firstname', 'users.lastname']
+    allowed_sort_fields = ['id', 'user_id', 'status', 'description', 'created_at', 'updated_at', 'users.login', 'users.firstname', 'users.lastname']
+    
+    result = paginate_with_filters(
+      orders,
+      page_size: page_size,
+      number_page: number_page,
+      filters: { status: status, search: search }.compact,
+      search_fields: search_fields.presence || allowed_search_fields,
+      sorted_fields: sorted_fields,
+      default_order: { created_at: :desc },
+      allowed_search_fields: allowed_search_fields,
+      allowed_sort_fields: allowed_sort_fields
+    )
+    
+    pagination_meta = generate_pagination_meta(
+      result[:total_count],
+      page_size,
+      number_page,
+      {
+        status: status.presence,
+        search: search.presence,
+        sorted_fields: sorted_fields.presence
+      }.compact
+    )
+    
+    JsonAdapterFacade.adapt_collection(
+      result[:results],
+      type: :admin_orders,
+      pagination_meta: pagination_meta,
+      metadata: {
+        filters: pagination_meta[:filters]
+      }
+    )
+  end
 
-  def self.update_orders(order_data, user_id, order_id, current_user_id)
+  def self.update_orders(order_data, user_id, order_id, current_user_id, use_command: true)
     puts current_user_id, user_id
     order = find_order_with_validation(order_id, current_user_id)
     return order unless order.is_a?(Order)
 
+    # Сохраняем предыдущее состояние для отмены
+    previous_order_data = {
+      status: order.status,
+      description: order.description
+    }
+
     handle_status_change(order, order_data[:status]) if order_data[:status].present?
 
     if order.update(order_data)
-      fetch_updated_order(order.user_id, order_id)
+      result = fetch_updated_order(order.user_id, order_id)
+      
+      # Создаем команду для отмены, если включено
+      if use_command
+        command = UpdateOrderCommand.new(
+          user_id: current_user_id,
+          order_id: order_id,
+          order_data: order_data,
+          previous_order_data: previous_order_data,
+          current_user_id: current_user_id
+        )
+        CommandManager.execute_command(command, current_user_id)
+      end
+      
+      result
     else
       error_response_validation(order.errors)
     end
   end
 
-  def self.add_product_orders_items(product_id, order_id, user_id, current_user_id, quantity: 1)
+  def self.add_product_orders_items(product_id, order_id, user_id, current_user_id, quantity: 1, use_command: true)
     order = find_order_with_validation(order_id, current_user_id, allowed_statuses: ['processing', 'pending'])
     return order unless order.is_a?(Order)
 
     product = find_product_with_validation(product_id, quantity)
     return product unless product.is_a?(Product)
 
-    process_product_addition(order, product, quantity)
+    result = process_product_addition(order, product, quantity)
+    
+    # Создаем команду для отмены, если включено и операция успешна
+    if use_command && result.is_a?(Hash) && result[:success] != false
+      command = AddProductToOrderCommand.new(
+        user_id: current_user_id,
+        product_id: product_id,
+        order_id: order_id,
+        user_id_param: user_id,
+        current_user_id: current_user_id,
+        quantity: quantity
+      )
+      CommandManager.add_command_to_history(command, current_user_id, result)
+    end
+    
+    result
   end
 
-  def self.delete_product_order_items(product_id, order_id, user_id, current_user_id, quantity_to_remove: nil)
+  def self.delete_product_order_items(product_id, order_id, user_id, current_user_id, quantity_to_remove: nil, use_command: true)
     order = find_order_with_validation(order_id, current_user_id, allowed_statuses: ['processing', 'pending'])
     return order unless order.is_a?(Order)
 
@@ -37,7 +112,32 @@ class AdminOrderManager < BaseManager
     quantity_to_remove = validate_and_get_quantity_to_remove(order_item, quantity_to_remove)
     return quantity_to_remove unless quantity_to_remove.is_a?(Integer)
 
-    process_product_removal(order, order_item, quantity_to_remove)
+    # Сохраняем состояние для отмены
+    was_destroyed = (quantity_to_remove == order_item.quantity)
+    previous_order_item_data = {
+      order_item_id: order_item.id,
+      quantity: order_item.quantity,
+      price_at_order: order_item.price_at_order,
+      was_destroyed: was_destroyed
+    }
+
+    result = process_product_removal(order, order_item, quantity_to_remove)
+    
+    # Создаем команду для отмены, если включено и операция успешна
+    if use_command && result.is_a?(Hash) && result[:success] != false
+      command = RemoveProductFromOrderCommand.new(
+        user_id: current_user_id,
+        product_id: product_id,
+        order_id: order_id,
+        user_id_param: user_id,
+        current_user_id: current_user_id,
+        quantity_to_remove: quantity_to_remove,
+        previous_order_item_data: previous_order_item_data
+      )
+      CommandManager.add_command_to_history(command, current_user_id, result)
+    end
+    
+    result
   end
 
 

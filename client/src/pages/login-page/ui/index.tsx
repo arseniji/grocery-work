@@ -32,7 +32,7 @@ export const LoginPage = () => {
       const response = await authApi.login(data as UserLoginType);
 
       localStorage.setItem("token", response.session.sessionId);
-      console.log(response);
+
       navigate("/");
     } catch (err) {
       const error = err as AxiosError;

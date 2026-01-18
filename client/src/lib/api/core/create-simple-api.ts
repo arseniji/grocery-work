@@ -1,16 +1,11 @@
 import axios from "axios";
 import type { Method, RawAxiosRequestHeaders } from "axios";
 import { fillEndpointTemplate } from "./fill-endpoint-template";
+import { camelCase, snakeCase } from "@/lib/commons";
 
 interface APIOptions {
   isRefreshToken?: boolean;
 }
-
-const camelCase = (str: string): string =>
-  str.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
-
-const snakeCase = (str: string): string =>
-  str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`);
 
 export const customHeaders: Record<string, string> = {};
 
@@ -26,7 +21,7 @@ const convertKeysToCamelCase = <T>(data: T): T => {
       const camelCaseKey = camelCase(key);
 
       converted[camelCaseKey as keyof T] = convertKeysToCamelCase(
-        data[key as keyof T]
+        data[key as keyof T],
       );
     });
 
@@ -48,7 +43,7 @@ const convertKeysToSnakeCase = <T>(data: T): T => {
       const snakeCaseKey = snakeCase(key);
 
       converted[snakeCaseKey as keyof T] = convertKeysToSnakeCase(
-        data[key as keyof T]
+        data[key as keyof T],
       );
     });
 
@@ -63,7 +58,7 @@ export const createSimpleApi = (baseURL: string) => {
     method: string,
     httpMethod: Method = "GET",
     headers?: RawAxiosRequestHeaders,
-    options?: APIOptions
+    options?: APIOptions,
   ) {
     const sendParamsInBody = ["POST", "PUT", "PATCH"].includes(httpMethod);
 
@@ -74,7 +69,7 @@ export const createSimpleApi = (baseURL: string) => {
     return async (
       params: P = {} as P,
       routeParams: RP = {} as RP,
-      callHeaders?: RawAxiosRequestHeaders
+      callHeaders?: RawAxiosRequestHeaders,
     ): Promise<R> => {
       const convertedParams =
         params instanceof FormData ? params : convertKeysToSnakeCase(params);
@@ -85,7 +80,7 @@ export const createSimpleApi = (baseURL: string) => {
         method: httpMethod,
         url: `${baseURL}/${fillEndpointTemplate(
           method,
-          routeParams as Record<string, unknown>
+          routeParams as Record<string, unknown>,
         )}`,
         data: sendParamsInBody ? convertedParams : undefined,
         params: sendParamsInBody ? undefined : convertedParams,

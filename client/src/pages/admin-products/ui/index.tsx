@@ -6,7 +6,7 @@ import { useSearchParams } from "react-router";
 import { AdminProductAddSchema } from "@/entities/product/schemas";
 import { AdminProductForm } from "./admin-product-form";
 import { useProducts } from "../hooks/useProducts";
-import { usePagination } from "../hooks/usePagination";
+import { usePagination } from "@/lib/hooks";
 import { useProductActions } from "../hooks/useProductActions";
 import { ProductControls } from "./product-controls";
 import { ProductTable } from "./product-table";
@@ -26,10 +26,10 @@ export const AdminProductsPage = () => {
     page,
     itemsPerPage,
     sort,
-    search
+    search,
   );
   const { handlePrevPage, handleNextPage, handleSort, handleSearch } =
-    usePagination();
+    usePagination("/admin/products");
   const {
     isFormOpen,
     isEditing,
@@ -55,7 +55,7 @@ export const AdminProductsPage = () => {
             quantity: editingProduct.details.quantity,
           }
         : {},
-    [isEditing, editingProduct]
+    [isEditing, editingProduct],
   );
 
   return (
@@ -105,7 +105,7 @@ export const AdminProductsPage = () => {
             onNext={() =>
               handleNextPage(
                 page,
-                !!(data?.products && data.products.length === itemsPerPage)
+                !!(data?.products && data.products.length === itemsPerPage),
               )
             }
           />

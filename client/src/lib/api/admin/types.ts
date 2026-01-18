@@ -35,6 +35,19 @@ export interface GetProductsRes {
   products: ShortProduct[];
 }
 
+export interface ShortOrder {
+  id: number;
+  description: string;
+  status: string;
+  createdAt: string;
+}
+
+export interface GetOrdersRes {
+  success: boolean;
+  meta: GetMeta;
+  orders: ShortOrder[];
+}
+
 export interface GetProductRes {
   success: boolean;
   id: number;

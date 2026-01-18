@@ -18,7 +18,6 @@ export const useAuth = () => {
 
     try {
       const response = await authApi.validToken();
-      console.log(response);
 
       if (response.expired || response.success === false) {
         setIsAuth(false);

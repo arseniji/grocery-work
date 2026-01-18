@@ -10,6 +10,9 @@ export const AdminNav = () => {
       <Button as="link" href="/admin/products">
         Продукты
       </Button>
+      <Button as="link" href="/admin/orders">
+        Заказы
+      </Button>
     </Nav>
   );
 };

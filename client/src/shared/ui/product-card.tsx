@@ -15,7 +15,7 @@ type ProductCardProps = Omit<
 
 export const ProductCard = ({
   image,
-  name,
+  productName,
   price,
   rating,
   id,
@@ -23,7 +23,7 @@ export const ProductCard = ({
   const navigate = useNavigate();
 
   const addToCart: React.MouseEventHandler<HTMLButtonElement> = async (
-    event
+    event,
   ) => {
     event.stopPropagation();
     if (!id) return;
@@ -52,7 +52,7 @@ export const ProductCard = ({
       <Image src={image} />
       <Wrapper>
         <div>
-          <TitleS>{name}</TitleS>
+          <TitleS>{productName}</TitleS>
           <BodyM>{price}р</BodyM>
         </div>
         <CartWrapper onClick={addToCart}>

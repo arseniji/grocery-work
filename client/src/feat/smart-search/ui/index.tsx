@@ -29,11 +29,11 @@ export const SmartSearch = ({
 
   const filterOptions = (newQ: string) => {
     const opt = options.filter((opt) => !newQ.includes(opt.value));
-    console.log(opt);
     setFiltered(opt);
   };
 
   const handleAdd = () => {
+    if (!searchValue || !search) return;
     let newQ = `${search}:${searchValue}`;
     if (query) {
       newQ = `${query},${newQ}`;
@@ -56,7 +56,7 @@ export const SmartSearch = ({
     <Container>
       <SearchContainer>
         <ComboBox
-          width="150px"
+          width="250px"
           placeholder="Искать по:"
           options={filtered}
           onChange={setSearch}
