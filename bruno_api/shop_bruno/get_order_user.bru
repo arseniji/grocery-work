@@ -1,0 +1,28 @@
+meta {
+  name: get_order_user
+  type: http
+  seq: 16
+}
+
+get {
+  url: http://127.0.0.1:3000/api/v1/order?page=1&page_size=20
+  body: none
+  auth: bearer
+}
+
+params:query {
+  page: 1
+  page_size: 20
+  ~sort: created_at:asc
+  ~status: delivered
+  ~search: 2
+}
+
+auth:bearer {
+  token: f0pyn8Wf61Zx0gYWZWiqozEhUXYUMEpsJDgMQDgjE0Q
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

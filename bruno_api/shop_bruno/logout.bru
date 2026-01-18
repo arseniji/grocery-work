@@ -1,0 +1,20 @@
+meta {
+  name: logout
+  type: http
+  seq: 4
+}
+
+delete {
+  url: http://localhost:3000/api/v1/logout
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: xsITgjq0UkXi_29VWg5yTkEeRuiJKNKaChJxGJnW2wI
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

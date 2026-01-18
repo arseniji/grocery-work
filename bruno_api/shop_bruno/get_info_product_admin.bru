@@ -1,0 +1,20 @@
+meta {
+  name: get_info_product_admin
+  type: http
+  seq: 24
+}
+
+get {
+  url: http://127.0.0.1:3000/api/v1/admin/product/155
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: x3ajB7QC7FQq-K5ukWN8W6JWhDVMi0mmhw8eF5O6FpE
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

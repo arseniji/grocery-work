@@ -1,0 +1,22 @@
+[
+  {
+    "product_name": "Тестовый продукт 1",
+    "price": 99.99,
+    "rating": 4.5,
+    "description": "Тестовый продукт для импорта/экспорта",
+    "measurement_unit": "шт",
+    "img_path": "/images/products/test_product_1.jpg",
+    "category": "vegetables",
+    "quantity": 50
+  },
+  {
+    "product_name": "Тестовый продукт 2",
+    "price": 149.5,
+    "rating": 4.8,
+    "description": "Второй тестовый продукт для импорта/экспорта",
+    "measurement_unit": "шт",
+    "img_path": "/images/products/test_product_2.jpg",
+    "category": "fruits",
+    "quantity": 30
+  }
+]
