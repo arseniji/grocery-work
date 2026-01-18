@@ -1,9 +1,14 @@
+import type {
+  AdminProductAddType,
+  AdminProductEditType,
+} from "@/entities/product/schemas";
 import { createEndpoint } from "../core";
 import type {
   GetUsersRes,
   GetProductsRes,
   GetProductRes,
   GetOrdersRes,
+  GetOrderDetailsRes,
 } from "./types";
 
 class AdminApi {
@@ -65,15 +70,7 @@ class AdminApi {
     )({ page, pageSize, sort, search });
   }
 
-  public async addProduct(data: {
-    product_name: string;
-    price: number;
-    rating: string;
-    category: string;
-    description: string;
-    measurement_unit: string;
-    quantity: number;
-  }) {
+  public async addProduct(data: AdminProductAddType) {
     return createEndpoint("v1/admin/product", "POST")(data);
   }
 
@@ -84,18 +81,7 @@ class AdminApi {
     )();
   }
 
-  public async updateProduct(
-    productId: number,
-    data: {
-      product_name: string;
-      price: number;
-      rating: string;
-      category: string;
-      description: string;
-      measurement_unit: string;
-      quantity: number;
-    },
-  ) {
+  public async updateProduct(productId: number, data: AdminProductEditType) {
     return createEndpoint(`v1/admin/product/${productId}`, "PUT")(data);
   }
 
@@ -121,12 +107,52 @@ class AdminApi {
 
   public async updateOrder(
     orderId: number,
+    userId: number,
     data: {
       description: string;
       status: string;
     },
   ) {
-    return createEndpoint(`v1/admin/order/${orderId}`, "PUT")(data);
+    return createEndpoint(
+      `v1/admin/order/user/${userId}/order/${orderId}`,
+      "PUT",
+    )(data);
+  }
+
+  public async getOrderDetails(userId: number, orderId: number) {
+    return createEndpoint<GetOrderDetailsRes>(
+      `v1/admin/order/user/${userId}/order/${orderId}`,
+      "GET",
+    )();
+  }
+
+  public async addOrderItem(
+    userId: number,
+    orderId: number,
+    productId: number,
+    quantity: number,
+  ) {
+    return createEndpoint<{
+      success: boolean;
+      error?: {
+        message: string;
+      };
+    }>(
+      `v1/admin/order/user/${userId}/order/${orderId}/product/${productId}`,
+      "POST",
+    )({ quantity });
+  }
+
+  public async removeOrderItem(
+    userId: number,
+    orderId: number,
+    productId: number,
+    quantity: number,
+  ) {
+    return createEndpoint<{ success: boolean }, { quantity: number }>(
+      `v1/admin/order/user/${userId}/order/${orderId}/product/${productId}`,
+      "DELETE",
+    )({ quantity: quantity });
   }
 
   public async deleteOrder(orderId: number) {
@@ -174,6 +200,10 @@ class AdminApi {
     formData.append("file_format", format);
     return createEndpoint(`v1/admin/data/import/user`, "POST")(formData);
   }
+
+  public undo = createEndpoint("v1/admin/command/undo", "POST");
+
+  public history = createEndpoint("v1/admin/command/history", "GET");
 }
 
 export const adminApi = new AdminApi();

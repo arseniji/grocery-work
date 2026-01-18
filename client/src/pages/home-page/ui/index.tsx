@@ -111,7 +111,7 @@ export const HomePage = () => {
                   productName={product.productName}
                   price={product.price}
                   rating={product.rating}
-                  image={product.details.image_url}
+                  image={product.details.imageUrl}
                 />
               ))}
             </ProductsList>

@@ -40,6 +40,7 @@ export interface ShortOrder {
   description: string;
   status: string;
   createdAt: string;
+  userId: number;
 }
 
 export interface GetOrdersRes {
@@ -66,4 +67,35 @@ export interface GetProductRes {
     updatedAt: string;
   };
   metadata: object;
+}
+
+export interface GetOrderDetailsRes {
+  success: boolean;
+  order: {
+    id: number;
+    description: string;
+    status: string;
+    timestamps: {
+      createdAt: string;
+      updatedAt: string;
+    };
+  };
+  products: {
+    id: number;
+    productName: string;
+    price: string;
+    details?: {
+      imageUrl: string;
+    };
+    metadata: {
+      orderDetails: {
+        quantityInOrder: number;
+        totalPriceForItem: string;
+      };
+    };
+  }[];
+  summary: {
+    itemsCount: number;
+    totalPrice: string;
+  };
 }

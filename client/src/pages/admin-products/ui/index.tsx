@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { LoaderWrapper, Main } from "./styled";
 import { Loader } from "@/shared/ui";
 import { TitleM } from "@/shared/ui/captions";
@@ -12,6 +12,8 @@ import { ProductControls } from "./product-controls";
 import { ProductTable } from "./product-table";
 import { PaginationControls } from "@/shared/ui";
 import type { ShortProduct } from "@/lib/api/admin/types";
+import { manager } from "@/lib/command";
+import { ApiCommand } from "@/lib/command/entities/api-command";
 
 export const AdminProductsPage = () => {
   const [params] = useSearchParams();
@@ -46,17 +48,30 @@ export const AdminProductsPage = () => {
     () =>
       isEditing && editingProduct
         ? {
-            product_name: editingProduct.name,
+            productName: editingProduct.productName,
             price: parseFloat(editingProduct.price),
             rating: editingProduct.rating,
             category: editingProduct.category,
             description: editingProduct.details.description,
-            measurement_unit: editingProduct.details.unit,
+            measurementUnit: editingProduct.details.unit,
             quantity: editingProduct.details.quantity,
           }
         : {},
     [isEditing, editingProduct],
   );
+
+  const onSubmit = (data: any) => {
+    manager.execute("api", () => handleSubmit(data));
+  };
+
+  const onDelete = () => {
+    manager.execute("api", handleDeleteProduct);
+  };
+
+  useEffect(() => {
+    const command = new ApiCommand();
+    manager.add("api", command);
+  }, []);
 
   return (
     <Main>
@@ -73,7 +88,7 @@ export const AdminProductsPage = () => {
             search={search}
             onAdd={handleAddProduct}
             onEdit={handleEditProduct}
-            onDelete={handleDeleteProduct}
+            onDelete={onDelete}
             onSort={handleSort}
             onSearch={handleSearch}
             selected={!!selected}
@@ -88,7 +103,7 @@ export const AdminProductsPage = () => {
                 key={isEditing ? "edit" : "add"}
                 schema={AdminProductAddSchema}
                 initialValues={initialValues}
-                onSubmit={handleSubmit}
+                onSubmit={onSubmit}
                 onCancel={handleCloseForm}
                 title={isEditing ? "Изменить продукт" : "Добавить продукт"}
                 submitLabel={isEditing ? "Сохранить" : "Добавить"}

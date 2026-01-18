@@ -133,7 +133,7 @@ export const ProductPage = () => {
   return (
     <Main>
       <ProductContainer>
-        <Image src={product.details.image_url} alt={product.productName} />
+        <Image src={product.details.imageUrl} alt={product.productName} />
         <Details>
           <Category>{product.category}</Category>
           <TitleL>{product.productName}</TitleL>
@@ -181,7 +181,7 @@ export const ProductPage = () => {
                 productName={p.productName}
                 price={p.price}
                 rating={p.rating}
-                image={p.details.image_url}
+                image={p.details.imageUrl}
               />
             ))}
           </ProductsList>

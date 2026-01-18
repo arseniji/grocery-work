@@ -10,7 +10,7 @@ import type { Product } from "@/entities/product/types";
 
 export const useProductActions = (
   onSuccess: () => void,
-  selected?: ShortProduct
+  selected?: ShortProduct,
 ) => {
   const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -56,7 +56,7 @@ export const useProductActions = (
         if (isEditing && editingProductId) {
           await adminApi.updateProduct(
             editingProductId,
-            data as AdminProductEditType
+            data as AdminProductEditType,
           );
           Toast.show({
             type: "msg",
@@ -83,7 +83,7 @@ export const useProductActions = (
         });
       }
     },
-    [isEditing, editingProductId, onSuccess]
+    [isEditing, editingProductId, onSuccess],
   );
 
   const handleDeleteProduct = useCallback(async () => {

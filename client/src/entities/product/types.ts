@@ -8,7 +8,7 @@ export interface Product {
   details: {
     description: string;
     unit: string;
-    image_url: string;
+    imageUrl: string;
     quantity: number;
   };
   timestamps: {

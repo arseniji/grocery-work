@@ -17,7 +17,7 @@ interface FormFieldConfig {
 
 interface AdminFormProps {
   schema: ObjectSchema<any>;
-  fields: readonly (readonly FormFieldConfig[])[];
+  fields: FormFieldConfig[][];
   initialValues?: Record<string, any>;
   onSubmit: (data: any) => void;
   onCancel: () => void;
