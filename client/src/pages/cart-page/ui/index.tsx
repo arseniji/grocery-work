@@ -7,14 +7,17 @@ import { useNavigate } from "react-router";
 import {
   CartList,
   CartWrapper,
+  CreateWrapper,
   Empty,
   LoaderWrapper,
   Main,
   MetaContainer,
+  Textarea,
 } from "./styled";
 import { BodyL, TitleL, TitleM } from "@/shared/ui/captions";
 import { Button, Loader } from "@/shared/ui";
 import { CartProduct } from "@/widgets/cart-product";
+import { orderApi } from "@/lib/api/order";
 
 type CartProductType = Product & { quantity: number };
 
@@ -24,6 +27,8 @@ export const CartPage = () => {
   const [products, setProducts] = useState<CartProductType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [total, setTotal] = useState<string>();
+  const [desc, setDesc] = useState<string>("");
+  const [isOrdering, setIsOrdering] = useState<boolean>();
 
   const loadCart = useCallback(async () => {
     try {
@@ -70,7 +75,7 @@ export const CartPage = () => {
         });
       }
     },
-    [loadCart]
+    [loadCart],
   );
 
   const handleDecrease = useCallback(
@@ -88,7 +93,7 @@ export const CartPage = () => {
         });
       }
     },
-    [loadCart]
+    [loadCart],
   );
 
   const handleDelete = useCallback(
@@ -106,8 +111,34 @@ export const CartPage = () => {
         });
       }
     },
-    [loadCart]
+    [loadCart],
   );
+
+  const createOrder = async () => {
+    setIsOrdering(true);
+    try {
+      const response = await orderApi.create({ description: desc });
+      if (response.success) {
+        Toast.show({
+          type: "msg",
+          title: "Успех!",
+          msg: "Заказ успешно создан",
+        });
+        setTimeout(() => {
+          navigate("/profile");
+        }, 1000);
+      }
+    } catch (err) {
+      const error = err as AxiosError;
+      console.log(error);
+      Toast.show({
+        type: "error",
+        title: "Ошибка",
+        msg: "Ошибка создания заказа",
+      });
+    }
+    setIsOrdering(false);
+  };
 
   useEffect(() => {
     loadCart();
@@ -136,6 +167,7 @@ export const CartPage = () => {
                 key={pr.id}
                 total_price={pr.quantity * parseInt(pr.price)}
                 {...pr}
+                productName={pr.productName}
                 onIncrease={() => handleIncrease(pr.id)}
                 onDecrease={() => handleDecrease(pr.id)}
                 onDelete={() => handleDelete(pr.id)}
@@ -143,12 +175,23 @@ export const CartPage = () => {
             ))}
           </CartList>
 
-          {total && (
-            <MetaContainer>
-              <BodyL>Общая сумма: {total}р</BodyL>
-            </MetaContainer>
+          {products.length !== 0 && (
+            <CreateWrapper>
+              <MetaContainer>
+                <BodyL>Общая сумма: {total}р</BodyL>
+              </MetaContainer>
+
+              <Textarea
+                placeholder="Введите описание для заказа (Необязпательно)"
+                value={desc}
+                onChange={({ target }) => setDesc(target.value)}
+              />
+
+              <Button variant="primary" onClick={createOrder}>
+                {isOrdering ? "Заказываем..." : "Сделать заказ"}
+              </Button>
+            </CreateWrapper>
           )}
-          <Button variant="primary">Сделать заказ</Button>
         </CartWrapper>
       )}
     </Main>

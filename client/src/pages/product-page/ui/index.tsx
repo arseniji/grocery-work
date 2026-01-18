@@ -64,11 +64,11 @@ export const ProductPage = () => {
           5,
           undefined,
           category,
-          undefined
+          undefined,
         );
         if (response.success) {
           const filtered = response.products.filter(
-            (p) => p.id !== product?.id
+            (p) => p.id !== product?.id,
           );
           setSimilarProducts(filtered.slice(0, 4));
         }
@@ -76,7 +76,7 @@ export const ProductPage = () => {
         console.log(err);
       }
     },
-    [product?.id]
+    [product?.id],
   );
 
   const addToCart = async () => {
@@ -133,10 +133,10 @@ export const ProductPage = () => {
   return (
     <Main>
       <ProductContainer>
-        <Image src={product.details.image_url} alt={product.name} />
+        <Image src={product.details.image_url} alt={product.productName} />
         <Details>
           <Category>{product.category}</Category>
-          <TitleL>{product.name}</TitleL>
+          <TitleL>{product.productName}</TitleL>
           <PriceRating>
             <Price>{product.price}р</Price>
             <StarRating rating={parseFloat(product.rating)} />
@@ -178,7 +178,7 @@ export const ProductPage = () => {
               <ProductCard
                 key={p.id}
                 id={p.id}
-                name={p.name}
+                productName={p.productName}
                 price={p.price}
                 rating={p.rating}
                 image={p.details.image_url}
@@ -190,7 +190,7 @@ export const ProductPage = () => {
               variant="border"
               onClick={() =>
                 navigate(
-                  `/shop?category=${encodeURIComponent(product.category)}`
+                  `/shop?category=${encodeURIComponent(product.category)}`,
                 )
               }
             >

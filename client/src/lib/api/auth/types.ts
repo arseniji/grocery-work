@@ -19,6 +19,7 @@ export interface LogoutRes {
 }
 
 export interface ValidTokenRes {
+  success: boolean;
   expired: boolean;
   timestamp: string;
 }

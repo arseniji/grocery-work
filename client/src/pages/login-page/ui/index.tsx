@@ -32,7 +32,7 @@ export const LoginPage = () => {
       const response = await authApi.login(data as UserLoginType);
 
       localStorage.setItem("token", response.session.sessionId);
-      console.log(response);
+
       navigate("/");
     } catch (err) {
       const error = err as AxiosError;
@@ -83,7 +83,7 @@ export const LoginPage = () => {
         <Button variant="primary" disabled={loading || !isValid} type="submit">
           {loading ? "Вход..." : "Войти"}
         </Button>
-        <Link to={"/register"} style={{ textAlign: "center" }}>
+        <Link to={"/registration"} style={{ textAlign: "center" }}>
           <BodyM>Нет аккаунта?</BodyM>
         </Link>
       </Form>

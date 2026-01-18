@@ -4,7 +4,7 @@ import { authApi } from "../api/auth";
 
 export const useAuth = () => {
   const [isAuth, setIsAuth] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const validateToken = async () => {
     setIsLoading(true);
@@ -12,13 +12,14 @@ export const useAuth = () => {
 
     if (!token) {
       setIsAuth(false);
+      setIsLoading(false);
       return;
     }
 
     try {
       const response = await authApi.validToken();
 
-      if (response.expired) {
+      if (response.expired || response.success === false) {
         setIsAuth(false);
         localStorage.removeItem("token");
         setIsLoading(false);
