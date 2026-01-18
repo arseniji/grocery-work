@@ -2,7 +2,7 @@
 # Очищаем старые данные
 require 'bcrypt'
 OrderItem.destroy_all
-Order.destroy_all  
+Order.destroy_all
 Product.destroy_all
 User.destroy_all
 
@@ -17,16 +17,16 @@ users = [
     firstname: 'Иван',
     lastname: 'Петров',
     patronymic: 'Сергеевич',
-    role: 'admin',
+    role: 'admin'
   },
   {
     login: 'alex',
-    phone: '+79994445566', 
+    phone: '+79994445566',
     password_digest: BCrypt::Password.create('user123'),
     firstname: 'Алексей',
     lastname: 'Смирнов',
     patronymic: 'Игоревич',
-    role: 'customer',
+    role: 'customer'
   },
   {
     login: 'maria',
@@ -35,7 +35,7 @@ users = [
     firstname: 'Мария',
     lastname: 'Иванова',
     patronymic: 'Дмитриевна',
-    role: 'customer',
+    role: 'customer'
   }
 ]
 
@@ -120,7 +120,7 @@ products = [
     category: 'vegetables',
     quantity: 80
   },
-  
+
   # ФРУКТЫ
   {
     product_name: 'Яблоки Гренни Смит',
@@ -172,7 +172,7 @@ products = [
     category: 'fruits',
     quantity: 60
   },
-  
+
   # МОЛОЧНЫЕ ПРОДУКТЫ
   {
     product_name: 'Молоко 3.2%',
@@ -234,7 +234,7 @@ products = [
     category: 'dairy',
     quantity: 150
   },
-  
+
   # МЯСО И ПТИЦА
   {
     product_name: 'Курица охлажденная',
@@ -276,7 +276,16 @@ products = [
     category: 'meat',
     quantity: 80
   },
-  
+  {
+    product_name: 'Чебупели Горячая штучка',
+    price: 99.99,
+    rating: 4.8,
+    description: 'Сочные с мясом, 300г',
+    measurement_unit: 'упак',
+    img_path: '/images/products/chebupelli_hot.jpg',
+    category: 'meat',
+    quantity: 1
+  },
   # РЫБА
   {
     product_name: 'Лосось свежий',
@@ -308,7 +317,7 @@ products = [
     category: 'fish',
     quantity: 40
   },
-  
+
   # БАКАЛЕЯ
   {
     product_name: 'Рис Жасмин',
@@ -379,7 +388,7 @@ products = [
     category: 'grocery',
     quantity: 160
   },
-  
+
   # НАПИТКИ
   {
     product_name: 'Вода минеральная',
@@ -421,7 +430,7 @@ products = [
     category: 'drinks',
     quantity: 140
   },
-  
+
   # ХЛЕБ И ВЫПЕЧКА
   {
     product_name: 'Хлеб Бородинский',
@@ -452,6 +461,16 @@ products = [
     img_path: '/images/products/buns.jpg',
     category: 'bakery',
     quantity: 80
+  },
+  {
+    product_name: 'Пряник грустный',
+    price: 20.99,
+    rating: 2.6,
+    description: 'С изюмом, 4 шт',
+    measurement_unit: 'упак',
+    img_path: '/images/products/pryanik.jpg',
+    category: 'bakery',
+    quantity: 1
   }
 ]
 
@@ -472,14 +491,14 @@ if alex
     status: :delivered,
     description: 'Доставить до 19:00, оставить у двери'
   )
-  
+
   # Добавляем продукты в заказ
   [
-    {name: 'Картофель', quantity: 2},
-    {name: 'Помидоры', quantity: 1},
-    {name: 'Огурцы', quantity: 1},
-    {name: 'Молоко 3.2%', quantity: 2},
-    {name: 'Хлеб Бородинский', quantity: 1}
+    { name: 'Картофель', quantity: 2 },
+    { name: 'Помидоры', quantity: 1 },
+    { name: 'Огурцы', quantity: 1 },
+    { name: 'Молоко 3.2%', quantity: 2 },
+    { name: 'Хлеб Бородинский', quantity: 1 }
   ].each do |item|
     product = Product.find_by(product_name: item[:name])
     if product
@@ -492,7 +511,7 @@ if alex
       product.update(quantity: product.quantity - item[:quantity])
     end
   end
-  
+
   puts "📦 Заказ #1 для #{alex.login}: #{order1.order_items.count} позиций"
 end
 
@@ -503,13 +522,13 @@ if maria
     status: :processing,
     description: 'Позвонить перед выездом курьера'
   )
-  
+
   [
-    {name: 'Яблоки Гренни Смит', quantity: 2},
-    {name: 'Бананы', quantity: 1},
-    {name: 'Клубника', quantity: 2},
-    {name: 'Йогурт питьевой', quantity: 6},
-    {name: 'Сыр Российский', quantity: 0.5}
+    { name: 'Яблоки Гренни Смит', quantity: 2 },
+    { name: 'Бананы', quantity: 1 },
+    { name: 'Клубника', quantity: 2 },
+    { name: 'Йогурт питьевой', quantity: 6 },
+    { name: 'Сыр Российский', quantity: 0.5 }
   ].each do |item|
     product = Product.find_by(product_name: item[:name])
     if product
@@ -522,7 +541,7 @@ if maria
       product.update(quantity: product.quantity - item[:quantity])
     end
   end
-  
+
   puts "📦 Заказ #2 для #{maria.login}: #{order2.order_items.count} позиций"
 end
 
@@ -533,16 +552,16 @@ if admin
     status: :pending,
     description: 'Собрать все свежее, для праздничного стола'
   )
-  
+
   [
-    {name: 'Лосось свежий', quantity: 1},
-    {name: 'Креветки тигровые', quantity: 1},
-    {name: 'Говядина вырезка', quantity: 1.5},
-    {name: 'Виноград Кишмиш', quantity: 2},
-    {name: 'Апельсины', quantity: 3},
-    {name: 'Сметана 20%', quantity: 2},
-    {name: 'Кофе молотый', quantity: 1},
-    {name: 'Чай черный', quantity: 2}
+    { name: 'Лосось свежий', quantity: 1 },
+    { name: 'Креветки тигровые', quantity: 1 },
+    { name: 'Говядина вырезка', quantity: 1.5 },
+    { name: 'Виноград Кишмиш', quantity: 2 },
+    { name: 'Апельсины', quantity: 3 },
+    { name: 'Сметана 20%', quantity: 2 },
+    { name: 'Кофе молотый', quantity: 1 },
+    { name: 'Чай черный', quantity: 2 }
   ].each do |item|
     product = Product.find_by(product_name: item[:name])
     if product
@@ -555,7 +574,7 @@ if admin
       product.update(quantity: product.quantity - item[:quantity])
     end
   end
-  
+
   puts "📦 Заказ #3 для #{admin.login}: #{order3.order_items.count} позиций"
 end
 
