@@ -5,8 +5,8 @@ services:
     image: postgres:13
     environment:
       POSTGRES_DB: shop_development
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: gshp
+      POSTGRES_PASSWORD: ghbdtnbrb
     ports:
       - "5433:5432"
     volumes:
@@ -57,12 +57,12 @@ services:
     environment:
       POSTGRES_HOST: postgres
       POSTGRES_PORT: 5432
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: gshp
+      POSTGRES_PASSWORD: ghbdtnbrb
       REDIS_URL: redis://redis:6379/0
       RAILS_ENV: development
       RAILS_MAX_THREADS: 5
-      SECRET_KEY_BASE: your_secret_key_base_here
+      SECRET_KEY_BASE: tvoia_mama
     stdin_open: true
     tty: true
 
