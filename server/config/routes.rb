@@ -48,12 +48,15 @@ Rails.application.routes.draw do
         delete 'me', to: 'profile#delete_me_profile'
       end
       scope :admin do
+        scope :report do
+          get '/', to: "admin_report#get_report"
+        end
         scope :product do
-              get '/', to: "admin_product#get_products" 
-              get ':id', to: "admin_product#get_product_details" 
-              post '/', to: "admin_product#add_product" 
-              put ':id', to: "admin_product#update_product"
-              delete ':id', to: "admin_product#delete_product" 
+          get '/', to: "admin_product#get_products"
+          get ':id', to: "admin_product#get_product_details"
+          post '/', to: "admin_product#add_product"
+          put ':id', to: "admin_product#update_product"
+          delete ':id', to: "admin_product#delete_product"
         end
         scope :profile do
           get '/', to: "admin_profile#get_profiles"

@@ -5,7 +5,7 @@ meta {
 }
 
 get {
-  url: http://localhost:3000/api/v1/products?page=1&page_size=20&sort=price:asc,rating:asc
+  url: http://localhost:3000/api/v1/products?page=1&page_size=20&sort=price:asc,rating:asc&category=ss&search=лу
   body: none
   auth: inherit
 }
@@ -14,8 +14,8 @@ params:query {
   page: 1
   page_size: 20
   sort: price:asc,rating:asc
-  ~category: ss
-  ~search: лу
+  category: ss
+  search: лу
 }
 
 settings {
