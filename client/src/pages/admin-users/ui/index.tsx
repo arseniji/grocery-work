@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LoaderWrapper, Main } from "./styled";
 import { Loader } from "@/shared/ui";
 import { TitleM } from "@/shared/ui/captions";
 import { useSearchParams } from "react-router";
-import { AdminUserAddSchema } from "@/entities/user/schemas";
+import {
+  AdminUserAddSchema,
+  AdminUserEditSchema,
+} from "@/entities/user/schemas";
 import { AdminUserForm } from "./admin-user-form";
 import { useUsers, useUserActions } from "../hooks";
 import { UserControls } from "./user-controls";
@@ -11,6 +14,8 @@ import { UserTable } from "./user-table";
 import { PaginationControls } from "@/shared/ui";
 import type { ShortUser } from "@/lib/api/admin/types";
 import { usePagination } from "@/lib/hooks";
+import { ApiCommand } from "@/lib/command/entities/api-command";
+import { manager } from "@/lib/command";
 
 export const AdminUsersPage = () => {
   const [params] = useSearchParams();
@@ -20,6 +25,7 @@ export const AdminUsersPage = () => {
   const itemsPerPage = 10;
 
   const [selected, setSelected] = useState<ShortUser | undefined>();
+  const [formType, setFormType] = useState<"edit" | "add">("add");
 
   const { isLoading, data, refetch } = useUsers(
     page,
@@ -41,6 +47,29 @@ export const AdminUsersPage = () => {
     handleDeleteUser,
   } = useUserActions(refetch, selected, () => setSelected(undefined));
 
+  const onEdit = () => {
+    handleEditUser();
+    setFormType("edit");
+  };
+
+  const onAdd = () => {
+    handleAddUser();
+    setFormType("add");
+  };
+
+  const onSubmit = (data: any) => {
+    manager.execute("api", () => handleSubmit(data));
+  };
+
+  const onDelete = () => {
+    manager.execute("api", handleDeleteUser);
+  };
+
+  useEffect(() => {
+    const command = new ApiCommand();
+    manager.add("api", command);
+  }, []);
+
   return (
     <Main>
       <TitleM>Пользователи</TitleM>
@@ -54,9 +83,9 @@ export const AdminUsersPage = () => {
             data={data}
             sort={sort}
             search={search}
-            onAdd={handleAddUser}
-            onEdit={handleEditUser}
-            onDelete={handleDeleteUser}
+            onAdd={onAdd}
+            onEdit={onEdit}
+            onDelete={onDelete}
             onSort={handleSort}
             onSearch={handleSearch}
             selected={!!selected}
@@ -68,9 +97,11 @@ export const AdminUsersPage = () => {
               </LoaderWrapper>
             ) : (
               <AdminUserForm
-                schema={AdminUserAddSchema}
+                addSchema={AdminUserAddSchema}
+                editSchema={AdminUserEditSchema}
+                type={formType}
                 initialValues={editingUser || {}}
-                onSubmit={handleSubmit}
+                onSubmit={onSubmit}
                 onCancel={handleCloseForm}
                 title={
                   isEditing ? "Изменить пользователя" : "Добавить пользователя"

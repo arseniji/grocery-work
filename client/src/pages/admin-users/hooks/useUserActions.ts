@@ -11,7 +11,7 @@ import type { IProfile } from "@/entities/profile/types";
 export const useUserActions = (
   onSuccess: () => void,
   selected?: ShortUser,
-  onDeleteSuccess?: () => void
+  onDeleteSuccess?: () => void,
 ) => {
   const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -52,12 +52,13 @@ export const useUserActions = (
   const handleSubmit = useCallback(
     async (data: AdminUserAddType | AdminUserEditType) => {
       try {
+        console.log(1111);
         if (isEditing && editingUserId) {
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const { password, ...updateData } = data as AdminUserAddType;
           await adminApi.updateUser(
             editingUserId,
-            updateData as AdminUserEditType
+            updateData as AdminUserEditType,
           );
           Toast.show({
             type: "msg",
@@ -84,7 +85,7 @@ export const useUserActions = (
         });
       }
     },
-    [isEditing, editingUserId, onSuccess]
+    [isEditing, editingUserId, onSuccess],
   );
 
   const handleDeleteUser = useCallback(async () => {

@@ -17,13 +17,13 @@ class JsonAdapterFacade
     authorizate: AuthorizateJsonAdapter,
     registration: RegistrationJsonAdapter,
     profiles: ProfileCollectionJsonAdapter,
+    report: AdminReportJsonAdapter,
   }.freeze
   
   def self.adapt(object, type:, **options)
     adapter_class = ADAPTERS[type.to_sym] || detect_adapter(object)
     
     raise ArgumentError, "Тип адаптера не найден: #{type}" unless adapter_class
-    
     adapter = adapter_class.new(object)
     
     # Передаем все опции в адаптер
@@ -57,6 +57,7 @@ class JsonAdapterFacade
     when ErrorObject then ErrorJsonAdapter
     when Array then ProductCollectionJsonAdapter
     when Category then CategoryJsonAdapter
+    when Report then AdminReportJsonAdapter
     else
       raise ArgumentError, "Не найден подходящий адаптер для объекта: #{object.class}"
     end

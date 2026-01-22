@@ -17,6 +17,7 @@ import { ErrorBoundary } from "@/shared/ui";
 import { UndoProvider } from "@/feat/undo";
 import { manager } from "@/lib/command";
 import { AdminOrdersPage } from "@/pages/admin-orders/ui";
+import { AdminOrderEditPage } from "@/pages/admin-order-edit";
 
 function App() {
   return (
@@ -38,6 +39,10 @@ function App() {
               <Route path="users" element={<AdminUsersPage />} />
               <Route path="products" element={<AdminProductsPage />} />
               <Route path="orders" element={<AdminOrdersPage />} />
+              <Route
+                path="orders/:userId/:orderId"
+                element={<AdminOrderEditPage />}
+              />
             </Route>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/registration" element={<RegistrationPage />} />

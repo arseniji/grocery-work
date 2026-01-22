@@ -34,11 +34,10 @@ export const AdminOrdersPage = () => {
     isFormOpen,
     isEditing,
     editingOrder,
-    handleAddOrder,
+    handleDetails,
     handleEditOrder,
     handleCloseForm,
     handleSubmit,
-    handleDeleteOrder,
   } = useOrderActions(refetch, selected, () => setSelected(undefined));
 
   return (
@@ -54,9 +53,8 @@ export const AdminOrdersPage = () => {
             data={data}
             sort={sort}
             search={search}
-            onAdd={handleAddOrder}
+            onDetails={handleDetails}
             onEdit={handleEditOrder}
-            onDelete={handleDeleteOrder}
             onSort={handleSort}
             onSearch={handleSearch}
             selected={!!selected}

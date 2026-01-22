@@ -1,7 +1,7 @@
 import { validator, type Infer } from "@/lib/validators";
 
 export const AdminProductAddSchema = validator.object({
-  product_name: validator
+  productName: validator
     .string()
     .min(1, { message: "Название продукта обязательно" })
     .max(100, { message: "Максимальная длина 100" }),
@@ -14,7 +14,7 @@ export const AdminProductAddSchema = validator.object({
     .string()
     .min(1, { message: "Описание обязательно" })
     .max(500, { message: "Максимальная длина 500" }),
-  measurement_unit: validator
+  measurementUnit: validator
     .string()
     .min(1, { message: "Единица измерения обязательна" }),
   quantity: validator
@@ -23,7 +23,7 @@ export const AdminProductAddSchema = validator.object({
 });
 
 export const AdminProductEditSchema = validator.object({
-  product_name: validator
+  productName: validator
     .string()
     .min(1, { message: "Название продукта обязательно" })
     .max(100, { message: "Максимальная длина 100" }),
@@ -36,7 +36,7 @@ export const AdminProductEditSchema = validator.object({
     .string()
     .min(1, { message: "Описание обязательно" })
     .max(500, { message: "Максимальная длина 500" }),
-  measurement_unit: validator
+  measurementUnit: validator
     .string()
     .min(1, { message: "Единица измерения обязательна" }),
   quantity: validator

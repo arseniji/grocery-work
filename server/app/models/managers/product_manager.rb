@@ -1,4 +1,3 @@
-
 class ProductManager < BaseManager
   
   def self.get_product_details(product_id: )

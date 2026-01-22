@@ -51,7 +51,7 @@ export class StringSchema extends Schema<string> {
 
   transform(
     transformator: (value: string) => string,
-    options?: StringValidatorOptions
+    options?: StringValidatorOptions,
   ): StringSchema {
     const msg = options?.message || `Поле нельзя преобразовать`;
     try {

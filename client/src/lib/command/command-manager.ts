@@ -1,12 +1,25 @@
+import type { AxiosError } from "axios";
 import type { Command } from "./entities/command";
+import { adminApi } from "../api/admin";
 
 export class CommandManager {
   bank: Record<string, Command<any, any>>;
   history: string[];
 
+  private loadHistory = async () => {
+    try {
+      const { history } = (await adminApi.history()) as { history: Array<any> };
+      this.history = history.map(() => "api");
+    } catch (err) {
+      const error = err as AxiosError;
+      console.error(error);
+    }
+  };
+
   constructor() {
     this.bank = {};
     this.history = [];
+    this.loadHistory();
   }
 
   public add(name: string, command: Command<any, any>) {
