@@ -6,7 +6,7 @@ import type { UserLoginType } from "@/entities/user/schemas/user-login.schema";
 class AuthApi {
   public register = createEndpoint<RegisterRes, UserRegisterType>(
     "v1/register",
-    "POST"
+    "POST",
   );
 
   public login = createEndpoint<LoginRes, UserLoginType>("v1/login", "POST");

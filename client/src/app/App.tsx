@@ -18,6 +18,8 @@ import { UndoProvider } from "@/feat/undo";
 import { manager } from "@/lib/command";
 import { AdminOrdersPage } from "@/pages/admin-orders/ui";
 import { AdminOrderEditPage } from "@/pages/admin-order-edit";
+import { ReportsLayout } from "@/layouts/reports-layout";
+import { ProductReportPage } from "@/pages/product-report-page";
 
 function App() {
   return (
@@ -43,6 +45,9 @@ function App() {
                 path="orders/:userId/:orderId"
                 element={<AdminOrderEditPage />}
               />
+              <Route path="reports" element={<ReportsLayout />}>
+                <Route index element={<ProductReportPage />} />
+              </Route>
             </Route>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/registration" element={<RegistrationPage />} />
