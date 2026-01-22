@@ -206,7 +206,7 @@ class AdminApi {
 
   public history = createEndpoint("v1/admin/command/history", "GET");
 
-  public reports = createEndpoint<GetReport, object, { domain: "products" }>(
+  public reports = createEndpoint<GetReport, object, { domain: string }>(
     "v1/admin/report?domain={domain}",
     "GET",
   );
