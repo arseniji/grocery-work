@@ -1,19 +1,16 @@
 require_relative 'admin_report_strategy'
 
 class AdminReportOrdersStrategy < AdminReportStrategy
-  def gather_report_data
-    {
-      total_orders: total_orders_count,
-      orders_by_status: orders_count_by_status,
-      status_distribution_percentage: status_distribution_percentage,
-      recent_orders: recent_orders_stats,
-      orders_with_items: orders_with_items_stats,
-      revenue_statistics: revenue_statistics,
-      created_at_range: created_at_date_range,
-      updated_at_range: updated_at_date_range,
-      average_items_per_order: average_items_per_order,
-      user_engagement: user_engagement_stats
-    }
+  def gather_report_data(report_obj)
+    super(report_obj)
+    report_obj.add_metric(:total_orders, total_orders_count)
+    report_obj.add_metric(:orders_by_status, orders_count_by_status)
+    report_obj.add_metric(:status_distribution_percentage, status_distribution_percentage)
+    report_obj.add_metric(:recent_orders, recent_orders_stats)
+    report_obj.add_metric(:orders_with_items, orders_with_items_stats)
+    report_obj.add_metric(:revenue_statistics, revenue_statistics)
+    report_obj.add_metric(:average_items_per_order, average_items_per_order)
+    report_obj.add_metric(:user_engagement, user_engagement_stats)
   end
 
   private
@@ -75,20 +72,6 @@ class AdminReportOrdersStrategy < AdminReportStrategy
       min_order_value: order_totals.any? ? order_totals.min.to_f.round(2) : 0,
       max_order_value: order_totals.any? ? order_totals.max.to_f.round(2) : 0,
       orders_with_price: order_totals.size,
-    }
-  end
-
-  def created_at_date_range
-    {
-      earliest: Order.minimum(:created_at),
-      latest: Order.maximum(:created_at)
-    }
-  end
-
-  def updated_at_date_range
-    {
-      earliest: Order.minimum(:updated_at),
-      latest: Order.maximum(:updated_at)
     }
   end
 

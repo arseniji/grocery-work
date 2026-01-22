@@ -1,27 +1,25 @@
 require_relative 'admin_report_strategy'
 
 class AdminReportProductsStrategy < AdminReportStrategy
-  def gather_report_data
-    {
-      total_products: total_products_count,
-      products_by_category: products_count_by_category,
-      category_distribution_percentage: category_distribution_percentage,
-      price_statistics: price_statistics,
-      rating_statistics: rating_statistics,
-      quantity_statistics: quantity_statistics,
-      top_rated_products: top_rated_products,
-      low_stock_products: low_stock_products,
-      out_of_stock_products: out_of_stock_products,
-      most_ordered_products: most_ordered_products,
-      products_without_orders: products_without_orders_count,
-      measurement_units_distribution: measurement_units_distribution,
-      revenue_by_product: revenue_by_product,
-      price_ranges: price_ranges_distribution,
-      created_at_range: created_at_date_range,
-      updated_at_range: updated_at_date_range,
-      average_product_name_length: average_product_name_length,
-      category_statistics: category_statistics
-    }
+  def gather_report_data(report_obj)
+    super(report_obj)
+    report_obj.add_metric(:total_products, total_products_count)
+    report_obj.add_metric(:products_by_category, products_count_by_category)
+    report_obj.add_metric(:category_distribution_percentage, category_distribution_percentage)
+    report_obj.add_metric(:price_statistics, price_statistics)
+    report_obj.add_metric(:rating_statistics, rating_statistics)
+    report_obj.add_metric(:quantity_statistics, quantity_statistics)
+    report_obj.add_metric(:top_rated_products, top_rated_products)
+    report_obj.add_metric(:low_stock_products, low_stock_products)
+    report_obj.add_metric(:out_of_stock_products, out_of_stock_products)
+    report_obj.add_metric(:most_ordered_products, most_ordered_products)
+    report_obj.add_metric(:products_without_orders, products_without_orders_count)
+    report_obj.add_metric(:measurement_units_distribution, measurement_units_distribution)
+    report_obj.add_metric(:revenue_by_product, revenue_by_product)
+    report_obj.add_metric(:price_ranges, price_ranges_distribution)
+    report_obj.add_metric(:created_at_range, created_at_date_range)
+    report_obj.add_metric(:updated_at_range, updated_at_date_range)
+    report_obj.add_metric(:category_statistics, category_statistics)
   end
 
   private
@@ -225,11 +223,6 @@ class AdminReportProductsStrategy < AdminReportStrategy
       earliest: Product.minimum(:updated_at),
       latest: Product.maximum(:updated_at)
     }
-  end
-
-  def average_product_name_length
-    result = Product.average("LENGTH(product_name)")
-    result ? result.to_f.round(2) : 0
   end
 
   def category_statistics

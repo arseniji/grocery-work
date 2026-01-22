@@ -17,9 +17,7 @@ class JsonAdapterFacade
     authorizate: AuthorizateJsonAdapter,
     registration: RegistrationJsonAdapter,
     profiles: ProfileCollectionJsonAdapter,
-    admin_report_users: AdminReportUsersJsonAdapter,
-    admin_report_orders: AdminReportOrdersJsonAdapter,
-    admin_report_products: AdminReportProductsJsonAdapter
+    report: AdminReportJsonAdapter,
   }.freeze
   
   def self.adapt(object, type:, **options)
@@ -59,6 +57,7 @@ class JsonAdapterFacade
     when ErrorObject then ErrorJsonAdapter
     when Array then ProductCollectionJsonAdapter
     when Category then CategoryJsonAdapter
+    when Report then AdminReportJsonAdapter
     else
       raise ArgumentError, "Не найден подходящий адаптер для объекта: #{object.class}"
     end
