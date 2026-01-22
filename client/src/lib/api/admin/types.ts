@@ -99,3 +99,9 @@ export interface GetOrderDetailsRes {
     totalPrice: string;
   };
 }
+
+export interface GetReport {
+  metrics: Record<string, any>;
+  generatedBy: string;
+  version: string;
+}

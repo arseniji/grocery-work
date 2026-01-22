@@ -9,6 +9,7 @@ import type {
   GetProductRes,
   GetOrdersRes,
   GetOrderDetailsRes,
+  GetReport,
 } from "./types";
 
 class AdminApi {
@@ -205,7 +206,10 @@ class AdminApi {
 
   public history = createEndpoint("v1/admin/command/history", "GET");
 
-  public reports = createEndpoint("v1/admin/report?domain=products", "GET");
+  public reports = createEndpoint<GetReport, object, { domain: "products" }>(
+    "v1/admin/report?domain={domain}",
+    "GET",
+  );
 }
 
 export const adminApi = new AdminApi();

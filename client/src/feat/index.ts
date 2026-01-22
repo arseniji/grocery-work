@@ -3,3 +3,4 @@ export { DataTable } from "./data-table";
 export { SmartSearch } from "./smart-search";
 export { ExportButtons } from "./export";
 export { ImportButtons } from "./import";
+export { ReportView } from "./report-view";
