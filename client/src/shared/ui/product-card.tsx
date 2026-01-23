@@ -49,7 +49,15 @@ export const ProductCard = ({
 
   return (
     <ProductContainer onClick={() => navigate(`/product/${id}`)}>
-      <Image src={image} />
+      <div
+        style={{
+          position: "relative",
+          flex: 1,
+          overflow: "hidden",
+        }}
+      >
+        <Image src={image} />
+      </div>
       <Wrapper>
         <div>
           <TitleS>{productName}</TitleS>
@@ -72,6 +80,7 @@ const ProductContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: end;
+  overflow: hidden;
 
   -webkit-box-shadow: 0px 0px 15px 0px rgba(34, 60, 80, 0.2);
   -moz-box-shadow: 0px 0px 15px 0px rgba(34, 60, 80, 0.2);
@@ -79,8 +88,9 @@ const ProductContainer = styled.div`
 `;
 
 const Image = styled.img`
-  width: 100%;
-  object-fit: contain;
+  object-fit: cover;
+  display: block;
+  margin: auto;
 `;
 
 const Wrapper = styled.div`

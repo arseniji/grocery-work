@@ -34,7 +34,7 @@ export const CartProduct = ({
 
   return (
     <CartProductContainer onClick={() => navigate(`/product/${id}`)}>
-      <Image src={details.image_url} alt={productName} />
+      <Image src={details.imageUrl} alt={productName} />
       <InfoWrapper>
         <TitleS>{productName}</TitleS>
         <BodyM>{price}р за шт.</BodyM>
