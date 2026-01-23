@@ -9,6 +9,7 @@ import type {
   GetProductRes,
   GetOrdersRes,
   GetOrderDetailsRes,
+  GetReport,
 } from "./types";
 
 class AdminApi {
@@ -204,6 +205,11 @@ class AdminApi {
   public undo = createEndpoint("v1/admin/command/undo", "POST");
 
   public history = createEndpoint("v1/admin/command/history", "GET");
+
+  public reports = createEndpoint<GetReport, object, { domain: string }>(
+    "v1/admin/report?domain={domain}",
+    "GET",
+  );
 }
 
 export const adminApi = new AdminApi();
