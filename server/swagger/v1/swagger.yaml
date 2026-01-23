@@ -4,6 +4,45 @@ info:
   title: API V1
   version: v1
 paths:
+  "/api/v1/admin/command/undo":
+    post:
+      summary: Отменить последнюю команду
+      tags:
+      - Admin Command
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: команда отменена
+  "/api/v1/admin/command/redo":
+    post:
+      summary: Повторить отмененную команду
+      tags:
+      - Admin Command
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: команда повторена
+  "/api/v1/admin/command/history":
+    get:
+      summary: Получить историю команд
+      tags:
+      - Admin Command
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: история команд
+    delete:
+      summary: Очистить историю команд
+      tags:
+      - Admin Command
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: история очищена
   "/api/v1/admin/data/import/{entity}":
     parameters:
     - name: entity
@@ -421,6 +460,23 @@ paths:
       responses:
         '200':
           description: продукт удален
+  "/api/v1/admin/report/":
+    get:
+      summary: Получить отчет
+      tags:
+      - Admin Report
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: type
+        in: query
+        description: Тип отчета (products, users, orders)
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: отчет
   "/api/v1/admin/profile":
     get:
       summary: Получить список пользователей
