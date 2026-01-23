@@ -29,42 +29,42 @@ services:
       timeout: 5s
       retries: 5
 
-  # client:
-  #   build: ./client
-  #   ports:
-  #     - "5173:5173"
-  #   volumes:
-  #     - ./client:/app
-  #     - /app/node_modules
-  #   env_file:
-  #     - ./client/.env.prod
-  #   depends_on:
-  #     - api
+  client:
+    build: ./client
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    env_file:
+      - ./client/.env.prod
+    depends_on:
+      - api
 
-  # api:
-  #   build: ./server
-  #   command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails server -p 3000 -b '0.0.0.0'"
-  #   volumes:
-  #     - ./server:/app
-  #     - bundle_cache:/usr/local/bundle  # для кэширования гемов
-  #   ports:
-  #     - "4000:3000"
-  #   depends_on:
-  #     postgres:
-  #       condition: service_healthy
-  #     redis:
-  #       condition: service_healthy
-  #   environment:
-  #     POSTGRES_HOST: postgres
-  #     POSTGRES_PORT: 5432
-  #     POSTGRES_USER: gshp
-  #     POSTGRES_PASSWORD: ghbdtnbrb
-  #     REDIS_URL: redis://redis:6379/0
-  #     RAILS_ENV: development
-  #     RAILS_MAX_THREADS: 5
-  #     SECRET_KEY_BASE: tvoia_mama
-  #   stdin_open: true
-  #   tty: true
+  api:
+    build: ./server
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails server -p 3000 -b '0.0.0.0'"
+    volumes:
+      - ./server:/app
+      - bundle_cache:/usr/local/bundle  # для кэширования гемов
+    ports:
+      - "4000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: gshp
+      POSTGRES_PASSWORD: ghbdtnbrb
+      REDIS_URL: redis://redis:6379/0
+      RAILS_ENV: development
+      RAILS_MAX_THREADS: 5
+      SECRET_KEY_BASE: tvoia_mama
+    stdin_open: true
+    tty: true
 
 volumes:
   postgres_data:
