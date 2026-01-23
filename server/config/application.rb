@@ -20,6 +20,8 @@ module Server
     config.autoload_paths << Rails.root.join('app/models/commands')
     config.autoload_paths << Rails.root.join('app/adapters/json_adapters')
     config.autoload_paths << Rails.root.join('app/observer')
+    config.autoload_paths << Rails.root.join('app/models/interfaces')
+    config.autoload_paths << Rails.root.join('app/models/loggers')
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.

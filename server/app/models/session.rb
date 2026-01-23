@@ -1,4 +1,4 @@
-class Session
+class Session < BaseSession
   attr_reader :id, :user_id, :data, :expires_at
   
   def initialize(id:, user_id:, data: {}, expires_at: nil)
