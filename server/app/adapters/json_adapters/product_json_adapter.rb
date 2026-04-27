@@ -11,7 +11,8 @@ class ProductJsonAdapter < BaseJsonAdapter
             description: @object.description,
             unit: @object.measurement_unit,
             image_url: @object.img_path,
-            quantity: @object.quantity
+            quantity: @object.quantity,
+            barcode: @object.barcode
         },
         timestamps: {
             created_at: @object.created_at,
