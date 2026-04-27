@@ -10,7 +10,7 @@ class Api::V1::AdminProductController < Api::V1::AdminBaseController
       category: params[:category],
       search: search_hash,
       sorted_fields: sorted_fields_parsed,
-      search_fields: ['id', 'product_name', 'description', 'rating', 'price']
+      search_fields: ['id', 'product_name', 'description', 'rating', 'price', 'barcode']
     )
     
     render json: result
@@ -55,7 +55,8 @@ class Api::V1::AdminProductController < Api::V1::AdminBaseController
       description: params[:description],
       measurement_unit: params[:measurement_unit] || params[:unit] || 'шт',
       quantity: params[:quantity],
-      img_path: params[:img_path].to_s
+      img_path: params[:img_path].to_s,
+      barcode: params[:barcode]
     }.compact
   end
 end
