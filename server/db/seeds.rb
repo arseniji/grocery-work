@@ -58,11 +58,12 @@ categories = {
   bakery: 'bakery'
 }
 
-# 3. Товары (продуктовый магазин) с новыми полями category и quantity
+# 3. Товары (продуктовый магазин) с новыми полями category, quantity и barcode
 products = [
   # ОВОЩИ
   {
     product_name: 'Картофель',
+    barcode: '4600000000012',
     price: 49.99,
     rating: 4.5,
     description: 'Молодой, мытый, 1кг',
@@ -73,6 +74,7 @@ products = [
   },
   {
     product_name: 'Помидоры',
+    barcode: '4600000000029',
     price: 189.99,
     rating: 4.7,
     description: 'Помидоры черри, 500г',
@@ -83,6 +85,7 @@ products = [
   },
   {
     product_name: 'Огурцы',
+    barcode: '4600000000036',
     price: 129.99,
     rating: 4.4,
     description: 'Свежие грунтовые, 1кг',
@@ -93,6 +96,7 @@ products = [
   },
   {
     product_name: 'Лук репчатый',
+    barcode: '4600000000043',
     price: 39.99,
     rating: 4.3,
     description: 'Желтый, 1кг',
@@ -103,6 +107,7 @@ products = [
   },
   {
     product_name: 'Морковь',
+    barcode: '4600000000050',
     price: 59.99,
     rating: 4.6,
     description: 'Свежая, мытая, 1кг',
@@ -113,7 +118,9 @@ products = [
   },
   {
     product_name: 'Капуста белокочанная',
+    barcode: '4600000000067',
     price: 45.99,
+    rating: 4.2,
     description: 'Свежая, 1кг',
     measurement_unit: 'кг',
     img_path: '/images/products/cabbage.jpg',
@@ -124,6 +131,7 @@ products = [
   # ФРУКТЫ
   {
     product_name: 'Яблоки Гренни Смит',
+    barcode: '4600000000074',
     price: 149.99,
     rating: 4.8,
     description: 'Зеленые, кисло-сладкие, 1кг',
@@ -134,6 +142,7 @@ products = [
   },
   {
     product_name: 'Бананы',
+    barcode: '4600000000081',
     price: 89.99,
     rating: 4.9,
     description: 'Спелые, 1кг',
@@ -144,6 +153,7 @@ products = [
   },
   {
     product_name: 'Апельсины',
+    barcode: '4600000000098',
     price: 129.99,
     rating: 4.7,
     description: 'Марокко, 1кг',
@@ -154,6 +164,7 @@ products = [
   },
   {
     product_name: 'Клубника',
+    barcode: '4600000000104',
     price: 399.99,
     rating: 4.9,
     description: 'Свежая, 500г',
@@ -164,6 +175,7 @@ products = [
   },
   {
     product_name: 'Виноград Кишмиш',
+    barcode: '4600000000111',
     price: 289.99,
     rating: 4.6,
     description: 'Без косточек, 1кг',
@@ -176,6 +188,7 @@ products = [
   # МОЛОЧНЫЕ ПРОДУКТЫ
   {
     product_name: 'Молоко 3.2%',
+    barcode: '4600000000128',
     price: 89.99,
     rating: 4.5,
     description: 'Простоквашино, ультрапастеризованное, 1л',
@@ -186,6 +199,7 @@ products = [
   },
   {
     product_name: 'Сметана 20%',
+    barcode: '4600000000135',
     price: 129.99,
     rating: 4.4,
     description: 'Домик в деревне, 400г',
@@ -196,6 +210,7 @@ products = [
   },
   {
     product_name: 'Творог 9%',
+    barcode: '4600000000142',
     price: 189.99,
     rating: 4.7,
     description: 'Простоквашино, 500г',
@@ -206,6 +221,7 @@ products = [
   },
   {
     product_name: 'Сыр Российский',
+    barcode: '4600000000159',
     price: 449.99,
     rating: 4.8,
     description: 'Полутвердый, 1кг',
@@ -216,6 +232,7 @@ products = [
   },
   {
     product_name: 'Йогурт питьевой',
+    barcode: '4600000000166',
     price: 59.99,
     rating: 4.3,
     description: 'Активиа, натуральный, 290мл',
@@ -226,6 +243,7 @@ products = [
   },
   {
     product_name: 'Масло сливочное 82.5%',
+    barcode: '4600000000173',
     price: 249.99,
     rating: 4.6,
     description: 'Крестьянское, 180г',
@@ -238,6 +256,7 @@ products = [
   # МЯСО И ПТИЦА
   {
     product_name: 'Курица охлажденная',
+    barcode: '4600000000180',
     price: 299.99,
     rating: 4.5,
     description: 'Тушка, 1.5-2кг',
@@ -248,6 +267,7 @@ products = [
   },
   {
     product_name: 'Говядина вырезка',
+    barcode: '4600000000197',
     price: 799.99,
     rating: 4.9,
     description: 'Охлажденная, 1кг',
@@ -258,6 +278,7 @@ products = [
   },
   {
     product_name: 'Свинина шея',
+    barcode: '4600000000203',
     price: 499.99,
     rating: 4.7,
     description: 'Охлажденная, 1кг',
@@ -268,6 +289,7 @@ products = [
   },
   {
     product_name: 'Фарш куриный',
+    barcode: '4600000000210',
     price: 349.99,
     rating: 4.4,
     description: 'Охлажденный, 500г',
@@ -278,6 +300,7 @@ products = [
   },
   {
     product_name: 'Чебупели Горячая штучка',
+    barcode: '4600000000227',
     price: 99.99,
     rating: 4.8,
     description: 'Сочные с мясом, 300г',
@@ -286,9 +309,11 @@ products = [
     category: 'meat',
     quantity: 1
   },
+  
   # РЫБА
   {
     product_name: 'Лосось свежий',
+    barcode: '4600000000234',
     price: 1299.99,
     rating: 4.8,
     description: 'Филе, 1кг',
@@ -299,6 +324,7 @@ products = [
   },
   {
     product_name: 'Форель радужная',
+    barcode: '4600000000241',
     price: 899.99,
     rating: 4.7,
     description: 'Охлажденная, 1кг',
@@ -309,6 +335,7 @@ products = [
   },
   {
     product_name: 'Креветки тигровые',
+    barcode: '4600000000258',
     price: 899.99,
     rating: 4.9,
     description: 'Замороженные, 1кг',
@@ -321,6 +348,7 @@ products = [
   # БАКАЛЕЯ
   {
     product_name: 'Рис Жасмин',
+    barcode: '4600000000265',
     price: 149.99,
     rating: 4.6,
     description: 'Тайский, 1кг',
@@ -331,6 +359,7 @@ products = [
   },
   {
     product_name: 'Гречневая крупа',
+    barcode: '4600000000272',
     price: 129.99,
     rating: 4.7,
     description: 'Ядрица, 1кг',
@@ -341,6 +370,7 @@ products = [
   },
   {
     product_name: 'Макароны спагетти',
+    barcode: '4600000000289',
     price: 89.99,
     rating: 4.5,
     description: 'Barilla №5, 450г',
@@ -351,6 +381,7 @@ products = [
   },
   {
     product_name: 'Мука пшеничная',
+    barcode: '4600000000296',
     price: 79.99,
     rating: 4.4,
     description: 'Высший сорт, 1кг',
@@ -361,7 +392,9 @@ products = [
   },
   {
     product_name: 'Сахар песок',
+    barcode: '4600000000302',
     price: 69.99,
+    rating: 4.3,
     description: 'Кристаллический, 1кг',
     measurement_unit: 'кг',
     img_path: '/images/products/sugar.jpg',
@@ -370,6 +403,7 @@ products = [
   },
   {
     product_name: 'Соль йодированная',
+    barcode: '4600000000319',
     price: 29.99,
     rating: 4.3,
     description: 'Помол №1, 1кг',
@@ -380,6 +414,7 @@ products = [
   },
   {
     product_name: 'Масло подсолнечное',
+    barcode: '4600000000326',
     price: 139.99,
     rating: 4.5,
     description: 'Олейна, рафинированное, 1л',
@@ -392,6 +427,7 @@ products = [
   # НАПИТКИ
   {
     product_name: 'Вода минеральная',
+    barcode: '4600000000333',
     price: 49.99,
     rating: 4.4,
     description: 'Боржоми, 0.5л',
@@ -402,6 +438,7 @@ products = [
   },
   {
     product_name: 'Сок яблочный',
+    barcode: '4600000000340',
     price: 119.99,
     rating: 4.6,
     description: 'Добрый, 1л',
@@ -412,6 +449,7 @@ products = [
   },
   {
     product_name: 'Кофе молотый',
+    barcode: '4600000000357',
     price: 399.99,
     rating: 4.8,
     description: 'Jacobs Monarch, 250г',
@@ -422,6 +460,7 @@ products = [
   },
   {
     product_name: 'Чай черный',
+    barcode: '4600000000364',
     price: 189.99,
     rating: 4.7,
     description: 'Greenfield English, 25 пакетиков',
@@ -434,6 +473,7 @@ products = [
   # ХЛЕБ И ВЫПЕЧКА
   {
     product_name: 'Хлеб Бородинский',
+    barcode: '4600000000371',
     price: 69.99,
     rating: 4.8,
     description: 'На закваске, 400г',
@@ -444,6 +484,7 @@ products = [
   },
   {
     product_name: 'Батон нарезной',
+    barcode: '4600000000388',
     price: 49.99,
     rating: 4.3,
     description: 'Пшеничный, 350г',
@@ -454,6 +495,7 @@ products = [
   },
   {
     product_name: 'Булочки сдобные',
+    barcode: '4600000000395',
     price: 89.99,
     rating: 4.6,
     description: 'С изюмом, 4 шт',
@@ -464,6 +506,7 @@ products = [
   },
   {
     product_name: 'Пряник грустный',
+    barcode: '4600000000401',
     price: 20.99,
     rating: 2.6,
     description: 'С изюмом, 4 шт',
@@ -476,7 +519,7 @@ products = [
 
 products.each do |product_data|
   Product.create!(product_data)
-  puts "🛒 Товар: #{product_data[:product_name]} - Категория: #{product_data[:category]} - Кол-во: #{product_data[:quantity]}"
+  puts "🛒 Товар: #{product_data[:product_name]} - Штрих-код: #{product_data[:barcode]} - Категория: #{product_data[:category]} - Кол-во: #{product_data[:quantity]}"
 end
 
 puts "✅ Товаров создано: #{Product.count}"
@@ -585,6 +628,12 @@ categories.values.uniq.each do |category|
   total_quantity = category_products.sum(:quantity)
   avg_price = category_products.average(:price).to_f.round(2)
   puts "  #{category.capitalize}: #{category_products.count} товаров, всего: #{total_quantity} шт., средняя цена: #{avg_price} руб."
+end
+
+# Вывод первых 10 баркодов для проверки
+puts "\n🔍 Примеры штрих-кодов:"
+Product.limit(10).each do |product|
+  puts "  #{product.product_name}: #{product.barcode}"
 end
 
 puts "\n📊 ИТОГО:"
