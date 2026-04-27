@@ -59,4 +59,6 @@ class Product < ApplicationRecord
       message: "не может быть отрицательным" 
     }
 
+  validates :barcode, uniqueness: { message: "бар код уже существует" }, allow_nil: true
+
 end
