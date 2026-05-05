@@ -60,7 +60,9 @@ export interface GetProductRes {
     description: string;
     unit: string;
     imageUrl: string;
-    quantity: 80;
+    quantity: number;
+    barcode?: string;
+    location?: string;
   };
   timestamps: {
     createdAt: string;

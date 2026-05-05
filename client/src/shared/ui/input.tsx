@@ -30,7 +30,13 @@ const Container = styled.div`
   border-radius: 5px;
   border: 1px solid #000;
   gap: 5px;
-  min-width: 400px;
+  min-width: 200px;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    min-width: 0;
+    padding: 8px 12px;
+  }
 `;
 
 const NativeInput = styled.input`

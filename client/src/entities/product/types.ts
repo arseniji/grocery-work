@@ -10,6 +10,8 @@ export interface Product {
     unit: string;
     imageUrl: string;
     quantity: number;
+    barcode?: string;
+    location?: string;
   };
   timestamps: {
     created_at: string;

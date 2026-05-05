@@ -7,6 +7,10 @@ export const FooterWrapper = styled.footer`
   border-top: 1px solid #e9ecef;
   margin-top: 100px;
   align-self: end;
+
+  @media (max-width: 768px) {
+    margin-top: 50px;
+  }
 `;
 
 export const FooterContainer = styled.div`
@@ -22,6 +26,17 @@ export const FooterTop = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   gap: 30px;
+
+  @media (max-width: 900px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
 `;
 
 export const LogoSection = styled.div`
@@ -37,6 +52,10 @@ export const LargeLogoWrapper = styled(NavLink)`
   gap: 15px;
   transform: scale(1.5);
   transform-origin: left;
+
+  @media (max-width: 768px) {
+    transform: scale(1.2);
+  }
 `;
 
 export const ContactsSection = styled.div`
@@ -79,4 +98,5 @@ export const FooterBottom = styled.div`
   justify-content: center;
   padding-top: 20px;
   border-top: 1px solid #e9ecef;
+  text-align: center;
 `;

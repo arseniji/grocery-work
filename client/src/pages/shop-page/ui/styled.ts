@@ -5,6 +5,10 @@ export const Main = styled.main`
   display: flex;
   flex-direction: column;
   gap: 100px;
+
+  @media (max-width: 768px) {
+    gap: 50px;
+  }
 `;
 
 export const ShopContainer = styled.section`
@@ -13,6 +17,11 @@ export const ShopContainer = styled.section`
   display: flex;
   flex-direction: column;
   gap: 50px;
+  padding: 0 15px;
+
+  @media (max-width: 768px) {
+    gap: 30px;
+  }
 `;
 
 export const ProductsList = styled.div`
@@ -20,6 +29,18 @@ export const ProductsList = styled.div`
   grid-template-columns: repeat(4, 1fr);
   justify-content: space-between;
   gap: 20px;
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 export const PaginationContainer = styled.div`
@@ -35,6 +56,10 @@ export const LoaderWrapper = styled.div`
   justify-content: center;
   width: 100%;
   height: 800px;
+
+  @media (max-width: 768px) {
+    height: 400px;
+  }
 `;
 
 export const CategoryContainer = styled.div`
@@ -42,6 +67,11 @@ export const CategoryContainer = styled.div`
   overflow-x: auto;
   display: flex;
   gap: 20px;
+  flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    gap: 10px;
+  }
 `;
 
 export const SortContainer = styled.div`

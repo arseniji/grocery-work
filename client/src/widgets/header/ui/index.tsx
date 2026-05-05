@@ -5,6 +5,7 @@ import {
   HeaderWrapper,
   LogoWrapper,
   NavContainer,
+  SearchWrapper,
   UserWrapper,
 } from "./styled";
 import { BodyM, TitleXS } from "@/shared/ui/captions";
@@ -87,14 +88,16 @@ export const Header = ({ isLogined }: HeaderProps) => {
           ))}
         </NavContainer>
 
-        <form onSubmit={handleSubmit}>
-          <Input
-            icon={SearchIcon}
-            placeholder="Поиск..."
-            value={search}
-            onChange={handleSearch}
-          />
-        </form>
+        <SearchWrapper>
+          <form onSubmit={handleSubmit}>
+            <Input
+              icon={SearchIcon}
+              placeholder="Поиск..."
+              value={search}
+              onChange={handleSearch}
+            />
+          </form>
+        </SearchWrapper>
 
         {isLogined && (
           <UserWrapper>

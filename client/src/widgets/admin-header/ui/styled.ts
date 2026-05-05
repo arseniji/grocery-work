@@ -8,10 +8,22 @@ export const Header = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media (max-width: 768px) {
+    padding: 12px 15px;
+    border-radius: 0;
+    gap: 10px;
+  }
 `;
 
 export const LogoWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
+
+  @media (max-width: 560px) {
+    span {
+      display: none;
+    }
+  }
 `;

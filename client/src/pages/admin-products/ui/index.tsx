@@ -55,6 +55,8 @@ export const AdminProductsPage = () => {
             description: editingProduct.details.description,
             measurementUnit: editingProduct.details.unit,
             quantity: editingProduct.details.quantity,
+            barcode: editingProduct.details.barcode ?? "",
+            location: editingProduct.details.location ?? "in_store",
           }
         : {},
     [isEditing, editingProduct],

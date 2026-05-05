@@ -20,6 +20,8 @@ export const AdminProductAddSchema = validator.object({
   quantity: validator
     .number()
     .min(0, { message: "Количество должно быть положительным" }),
+  barcode: validator.string(),
+  location: validator.string().min(1, { message: "Местонахождение обязательно" }),
 });
 
 export const AdminProductEditSchema = validator.object({
@@ -42,6 +44,8 @@ export const AdminProductEditSchema = validator.object({
   quantity: validator
     .number()
     .min(0, { message: "Количество должно быть положительным" }),
+  barcode: validator.string(),
+  location: validator.string().min(1, { message: "Местонахождение обязательно" }),
 });
 
 export type AdminProductAddType = Infer<typeof AdminProductAddSchema>;

@@ -73,7 +73,8 @@ export const ProductCard = ({
 };
 
 const ProductContainer = styled.div`
-  width: 340px;
+  width: 100%;
+  max-width: 340px;
   height: 430px;
   border-radius: 10px;
   padding: 10px 20px 30px;
@@ -85,6 +86,11 @@ const ProductContainer = styled.div`
   -webkit-box-shadow: 0px 0px 15px 0px rgba(34, 60, 80, 0.2);
   -moz-box-shadow: 0px 0px 15px 0px rgba(34, 60, 80, 0.2);
   box-shadow: 0px 0px 15px 0px rgba(34, 60, 80, 0.2);
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    height: 360px;
+  }
 `;
 
 const Image = styled.img`
