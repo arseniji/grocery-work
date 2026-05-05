@@ -61,4 +61,11 @@ class Product < ApplicationRecord
 
   validates :barcode, uniqueness: { message: "бар код уже существует" }, allow_nil: true
 
+  validates :location,
+    allow_nil: true,
+    inclusion: {
+      in: ['in_store', 'in_warehouse'],
+      message: "должна быть одной из допустимых: in_store или in_warehouse"
+    }
+
 end

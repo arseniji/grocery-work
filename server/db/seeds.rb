@@ -58,7 +58,7 @@ categories = {
   bakery: 'bakery'
 }
 
-# 3. Товары (продуктовый магазин) с новыми полями category, quantity и barcode
+# 3. Товары (продуктовый магазин) с полями category, quantity, barcode и location
 products = [
   # ОВОЩИ
   {
@@ -70,7 +70,8 @@ products = [
     measurement_unit: 'кг',
     img_path: '/images/products/potato.jpg',
     category: 'vegetables',
-    quantity: 150
+    quantity: 150,
+    location: 'in_store'
   },
   {
     product_name: 'Помидоры',
@@ -81,7 +82,8 @@ products = [
     measurement_unit: 'кг',
     img_path: '/images/products/tomatoes.jpg',
     category: 'vegetables',
-    quantity: 75
+    quantity: 75,
+    location: 'in_store'
   },
   {
     product_name: 'Огурцы',
@@ -92,7 +94,8 @@ products = [
     measurement_unit: 'кг',
     img_path: '/images/products/cucumbers.jpg',
     category: 'vegetables',
-    quantity: 90
+    quantity: 90,
+    location: 'in_store'
   },
   {
     product_name: 'Лук репчатый',
@@ -103,7 +106,8 @@ products = [
     measurement_unit: 'кг',
     img_path: '/images/products/onion.jpg',
     category: 'vegetables',
-    quantity: 200
+    quantity: 200,
+    location: 'in_warehouse'
   },
   {
     product_name: 'Морковь',
@@ -114,7 +118,8 @@ products = [
     measurement_unit: 'кг',
     img_path: '/images/products/carrots.jpg',
     category: 'vegetables',
-    quantity: 120
+    quantity: 120,
+    location: 'in_store'
   },
   {
     product_name: 'Капуста белокочанная',
@@ -125,7 +130,8 @@ products = [
     measurement_unit: 'кг',
     img_path: '/images/products/cabbage.jpg',
     category: 'vegetables',
-    quantity: 80
+    quantity: 80,
+    location: 'in_warehouse'
   },
 
   # ФРУКТЫ
@@ -138,7 +144,8 @@ products = [
     measurement_unit: 'кг',
     img_path: '/images/products/apples.jpg',
     category: 'fruits',
-    quantity: 180
+    quantity: 180,
+    location: 'in_store'
   },
   {
     product_name: 'Бананы',
@@ -149,7 +156,8 @@ products = [
     measurement_unit: 'кг',
     img_path: '/images/products/bananas.jpg',
     category: 'fruits',
-    quantity: 250
+    quantity: 250,
+    location: 'in_store'
   },
   {
     product_name: 'Апельсины',
@@ -160,7 +168,8 @@ products = [
     measurement_unit: 'кг',
     img_path: '/images/products/oranges.jpg',
     category: 'fruits',
-    quantity: 150
+    quantity: 150,
+    location: 'in_store'
   },
   {
     product_name: 'Клубника',
@@ -171,7 +180,8 @@ products = [
     measurement_unit: 'кг',
     img_path: '/images/products/strawberries.jpg',
     category: 'fruits',
-    quantity: 40
+    quantity: 40,
+    location: 'in_store'
   },
   {
     product_name: 'Виноград Кишмиш',
@@ -182,7 +192,8 @@ products = [
     measurement_unit: 'кг',
     img_path: '/images/products/grapes.jpg',
     category: 'fruits',
-    quantity: 60
+    quantity: 60,
+    location: 'in_warehouse'
   },
 
   # МОЛОЧНЫЕ ПРОДУКТЫ
@@ -195,7 +206,8 @@ products = [
     measurement_unit: 'л',
     img_path: '/images/products/milk.jpg',
     category: 'dairy',
-    quantity: 200
+    quantity: 200,
+    location: 'in_store'
   },
   {
     product_name: 'Сметана 20%',
@@ -206,7 +218,8 @@ products = [
     measurement_unit: 'г',
     img_path: '/images/products/sour_cream.jpg',
     category: 'dairy',
-    quantity: 120
+    quantity: 120,
+    location: 'in_store'
   },
   {
     product_name: 'Творог 9%',
@@ -217,7 +230,8 @@ products = [
     measurement_unit: 'г',
     img_path: '/images/products/cottage_cheese.jpg',
     category: 'dairy',
-    quantity: 100
+    quantity: 100,
+    location: 'in_store'
   },
   {
     product_name: 'Сыр Российский',
@@ -228,7 +242,8 @@ products = [
     measurement_unit: 'кг',
     img_path: '/images/products/cheese.jpg',
     category: 'dairy',
-    quantity: 70
+    quantity: 70,
+    location: 'in_warehouse'
   },
   {
     product_name: 'Йогурт питьевой',
@@ -239,7 +254,8 @@ products = [
     measurement_unit: 'шт',
     img_path: '/images/products/yogurt.jpg',
     category: 'dairy',
-    quantity: 300
+    quantity: 300,
+    location: 'in_warehouse'
   },
   {
     product_name: 'Масло сливочное 82.5%',
@@ -250,7 +266,8 @@ products = [
     measurement_unit: 'г',
     img_path: '/images/products/butter.jpg',
     category: 'dairy',
-    quantity: 150
+    quantity: 150,
+    location: 'in_store'
   },
 
   # МЯСО И ПТИЦА
@@ -263,7 +280,8 @@ products = [
     measurement_unit: 'кг',
     img_path: '/images/products/chicken.jpg',
     category: 'meat',
-    quantity: 50
+    quantity: 50,
+    location: 'in_store'
   },
   {
     product_name: 'Говядина вырезка',
@@ -274,7 +292,8 @@ products = [
     measurement_unit: 'кг',
     img_path: '/images/products/beef.jpg',
     category: 'meat',
-    quantity: 30
+    quantity: 30,
+    location: 'in_store'
   },
   {
     product_name: 'Свинина шея',
@@ -285,7 +304,8 @@ products = [
     measurement_unit: 'кг',
     img_path: '/images/products/pork.jpg',
     category: 'meat',
-    quantity: 40
+    quantity: 40,
+    location: 'in_store'
   },
   {
     product_name: 'Фарш куриный',
@@ -296,7 +316,8 @@ products = [
     measurement_unit: 'г',
     img_path: '/images/products/minced_meat.jpg',
     category: 'meat',
-    quantity: 80
+    quantity: 80,
+    location: 'in_warehouse'
   },
   {
     product_name: 'Чебупели Горячая штучка',
@@ -307,9 +328,10 @@ products = [
     measurement_unit: 'упак',
     img_path: '/images/products/chebupelli_hot.jpg',
     category: 'meat',
-    quantity: 1
+    quantity: 1,
+    location: 'in_warehouse'
   },
-  
+
   # РЫБА
   {
     product_name: 'Лосось свежий',
@@ -320,7 +342,8 @@ products = [
     measurement_unit: 'кг',
     img_path: '/images/products/salmon.jpg',
     category: 'fish',
-    quantity: 25
+    quantity: 25,
+    location: 'in_store'
   },
   {
     product_name: 'Форель радужная',
@@ -331,7 +354,8 @@ products = [
     measurement_unit: 'кг',
     img_path: '/images/products/trout.jpg',
     category: 'fish',
-    quantity: 35
+    quantity: 35,
+    location: 'in_store'
   },
   {
     product_name: 'Креветки тигровые',
@@ -342,7 +366,8 @@ products = [
     measurement_unit: 'кг',
     img_path: '/images/products/shrimp.jpg',
     category: 'fish',
-    quantity: 40
+    quantity: 40,
+    location: 'in_warehouse'
   },
 
   # БАКАЛЕЯ
@@ -355,7 +380,8 @@ products = [
     measurement_unit: 'кг',
     img_path: '/images/products/rice.jpg',
     category: 'grocery',
-    quantity: 200
+    quantity: 200,
+    location: 'in_warehouse'
   },
   {
     product_name: 'Гречневая крупа',
@@ -366,7 +392,8 @@ products = [
     measurement_unit: 'кг',
     img_path: '/images/products/buckwheat.jpg',
     category: 'grocery',
-    quantity: 150
+    quantity: 150,
+    location: 'in_warehouse'
   },
   {
     product_name: 'Макароны спагетти',
@@ -377,7 +404,8 @@ products = [
     measurement_unit: 'г',
     img_path: '/images/products/pasta.jpg',
     category: 'grocery',
-    quantity: 250
+    quantity: 250,
+    location: 'in_store'
   },
   {
     product_name: 'Мука пшеничная',
@@ -388,7 +416,8 @@ products = [
     measurement_unit: 'кг',
     img_path: '/images/products/flour.jpg',
     category: 'grocery',
-    quantity: 180
+    quantity: 180,
+    location: 'in_warehouse'
   },
   {
     product_name: 'Сахар песок',
@@ -399,7 +428,8 @@ products = [
     measurement_unit: 'кг',
     img_path: '/images/products/sugar.jpg',
     category: 'grocery',
-    quantity: 220
+    quantity: 220,
+    location: 'in_warehouse'
   },
   {
     product_name: 'Соль йодированная',
@@ -410,7 +440,8 @@ products = [
     measurement_unit: 'кг',
     img_path: '/images/products/salt.jpg',
     category: 'grocery',
-    quantity: 190
+    quantity: 190,
+    location: 'in_store'
   },
   {
     product_name: 'Масло подсолнечное',
@@ -421,7 +452,8 @@ products = [
     measurement_unit: 'л',
     img_path: '/images/products/oil.jpg',
     category: 'grocery',
-    quantity: 160
+    quantity: 160,
+    location: 'in_store'
   },
 
   # НАПИТКИ
@@ -434,7 +466,8 @@ products = [
     measurement_unit: 'шт',
     img_path: '/images/products/water.jpg',
     category: 'drinks',
-    quantity: 300
+    quantity: 300,
+    location: 'in_warehouse'
   },
   {
     product_name: 'Сок яблочный',
@@ -445,7 +478,8 @@ products = [
     measurement_unit: 'л',
     img_path: '/images/products/juice.jpg',
     category: 'drinks',
-    quantity: 180
+    quantity: 180,
+    location: 'in_store'
   },
   {
     product_name: 'Кофе молотый',
@@ -456,7 +490,8 @@ products = [
     measurement_unit: 'г',
     img_path: '/images/products/coffee.jpg',
     category: 'drinks',
-    quantity: 120
+    quantity: 120,
+    location: 'in_store'
   },
   {
     product_name: 'Чай черный',
@@ -467,7 +502,8 @@ products = [
     measurement_unit: 'упак',
     img_path: '/images/products/tea.jpg',
     category: 'drinks',
-    quantity: 140
+    quantity: 140,
+    location: 'in_warehouse'
   },
 
   # ХЛЕБ И ВЫПЕЧКА
@@ -480,7 +516,8 @@ products = [
     measurement_unit: 'шт',
     img_path: '/images/products/bread.jpg',
     category: 'bakery',
-    quantity: 100
+    quantity: 100,
+    location: 'in_store'
   },
   {
     product_name: 'Батон нарезной',
@@ -491,7 +528,8 @@ products = [
     measurement_unit: 'шт',
     img_path: '/images/products/loaf.jpg',
     category: 'bakery',
-    quantity: 120
+    quantity: 120,
+    location: 'in_store'
   },
   {
     product_name: 'Булочки сдобные',
@@ -502,7 +540,8 @@ products = [
     measurement_unit: 'упак',
     img_path: '/images/products/buns.jpg',
     category: 'bakery',
-    quantity: 80
+    quantity: 80,
+    location: 'in_store'
   },
   {
     product_name: 'Пряник грустный',
@@ -513,13 +552,14 @@ products = [
     measurement_unit: 'упак',
     img_path: '/images/products/pryanik.jpg',
     category: 'bakery',
-    quantity: 1
+    quantity: 1,
+    location: 'in_warehouse'
   }
 ]
 
 products.each do |product_data|
   Product.create!(product_data)
-  puts "🛒 Товар: #{product_data[:product_name]} - Штрих-код: #{product_data[:barcode]} - Категория: #{product_data[:category]} - Кол-во: #{product_data[:quantity]}"
+  puts "🛒 Товар: #{product_data[:product_name]} - Штрих-код: #{product_data[:barcode]} - Категория: #{product_data[:category]} - Кол-во: #{product_data[:quantity]} - Место: #{product_data[:location]}"
 end
 
 puts "✅ Товаров создано: #{Product.count}"

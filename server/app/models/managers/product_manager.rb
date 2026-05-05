@@ -17,7 +17,7 @@ class ProductManager < BaseManager
   end
 
   def self.get_product_page(page_size:, number_page:, category: '', search: {}, sorted_fields: {}, search_fields: [])
-    products = Product.all
+    products = Product.where('quantity > 0').where('location IS NULL OR location = ?', 'in_store')
     result = paginate_with_filters(
       products,
       page_size: page_size,

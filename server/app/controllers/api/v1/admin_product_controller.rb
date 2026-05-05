@@ -56,7 +56,8 @@ class Api::V1::AdminProductController < Api::V1::AdminBaseController
       measurement_unit: params[:measurement_unit] || params[:unit] || 'шт',
       quantity: params[:quantity],
       img_path: params[:img_path].to_s,
-      barcode: params[:barcode]
+      barcode: params[:barcode].presence,
+      location: params[:location].presence
     }.compact
   end
 end

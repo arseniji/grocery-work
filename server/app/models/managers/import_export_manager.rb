@@ -177,7 +177,8 @@ class ImportExportManager < BaseManager
 
   def self.sanitize_attributes(row, model)
     attrs = row.is_a?(Hash) ? row : {}
-    attrs = attrs.deep_symbolize_keys
+    # Convert camelCase keys to snake_case so imported files from the API work
+    attrs = attrs.transform_keys { |k| k.to_s.underscore.to_sym }
 
     allowed_columns =
       model.column_names
