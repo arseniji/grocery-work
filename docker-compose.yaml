@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   postgres:
     image: postgres:13
@@ -12,7 +10,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -U gshp -d shop_development"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -66,7 +64,38 @@ services:
     stdin_open: true
     tty: true
 
+  postgres_bff:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: bff_development
+      POSTGRES_USER: bff_user
+      POSTGRES_PASSWORD: bff_password
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_bff_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bff_user -d bff_development"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  bff:
+    build: ./bffGrocery
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./bffGrocery/.env
+    environment:
+      DB_URL: jdbc:postgresql://postgres_bff:5432/bff_development
+      RAILS_URL: http://api:3000
+    depends_on:
+      postgres_bff:
+        condition: service_healthy
+    restart: unless-stopped
+
 volumes:
   postgres_data:
   redis_data:
-  bundle_cache: # ДОБАВЬТЕ ЭТУ СТРОЧКУ
+  bundle_cache:
+  postgres_bff_data:

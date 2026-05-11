@@ -1,0 +1,14 @@
+meta {
+  name: get_by_barcode
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/api/v1/products/4607028490506
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}

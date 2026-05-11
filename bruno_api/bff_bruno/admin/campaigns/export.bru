@@ -1,0 +1,10 @@
+meta {
+  name: export_campaigns
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/admin/campaigns/export?format=json
+  auth: none
+}

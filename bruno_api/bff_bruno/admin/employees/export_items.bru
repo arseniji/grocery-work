@@ -1,0 +1,10 @@
+meta {
+  name: export_employee_items
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base_url}}/admin/employees/1/items/export?format=json
+  auth: none
+}
