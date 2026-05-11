@@ -1,0 +1,10 @@
+meta {
+  name: export_session_items
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/admin/sessions/export?format=json
+  auth: none
+}

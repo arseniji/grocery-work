@@ -1,0 +1,14 @@
+meta {
+  name: get_me
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/api/v1/employees/me
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}

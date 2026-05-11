@@ -1,0 +1,24 @@
+meta {
+  name: rails_login
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{rails_url}}/api/v1/login
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "login": "admin",
+    "password": "Admin123"
+  }
+}
+
+script:after-response {
+  if (res.status === 200) {
+    bru.setVar("rails_session_token", res.body.session.session_id);
+  }
+}

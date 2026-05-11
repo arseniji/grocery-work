@@ -1,0 +1,15 @@
+meta {
+  name: rails_get_by_barcode
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{rails_url}}/api/v1/admin/product?search=barcode:4607028490506
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{rails_session_token}}
+}

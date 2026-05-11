@@ -1,0 +1,21 @@
+meta {
+  name: rails_update_quantity
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{rails_url}}/api/v1/admin/product/1
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{rails_session_token}}
+}
+
+body:json {
+  {
+    "quantity": 10
+  }
+}

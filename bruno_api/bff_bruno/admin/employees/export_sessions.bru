@@ -1,0 +1,10 @@
+meta {
+  name: export_employee_sessions
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base_url}}/admin/employees/1/sessions/export?format=json
+  auth: none
+}

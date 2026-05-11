@@ -1,0 +1,16 @@
+meta {
+  name: admin_login
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/login
+  body: form
+  auth: none
+}
+
+body:form {
+  username: admin
+  password: Admin123
+}

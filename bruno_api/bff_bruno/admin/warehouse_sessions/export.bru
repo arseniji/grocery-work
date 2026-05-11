@@ -1,0 +1,10 @@
+meta {
+  name: export_warehouse_sessions
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/admin/warehouse_sessions/export?format=json
+  auth: none
+}

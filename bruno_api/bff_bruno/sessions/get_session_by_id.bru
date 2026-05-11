@@ -1,0 +1,15 @@
+meta {
+  name: get_session_by_id
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base_url}}/api/v1/sessions/1
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
