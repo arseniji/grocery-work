@@ -1,21 +1,29 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+# Retrofit + OkHttp
+-keepattributes Signature
+-keepattributes *Annotation*
+-dontwarn okhttp3.**
+-dontwarn okio.**
+-dontwarn javax.annotation.**
+-keep interface retrofit2.** { *; }
+-keepclassmembers,allowshrinking,allowobfuscation interface * {
+    @retrofit2.http.* <methods>;
+}
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# Gson — keep network DTOs, requests, responses
+-keep class com.github.arseniji.barcodescanner.network.dto.** { *; }
+-keep class com.github.arseniji.barcodescanner.network.request.** { *; }
+-keep class com.github.arseniji.barcodescanner.network.response.** { *; }
+-keep class com.github.arseniji.barcodescanner.model.ScannedItem { *; }
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# kotlinx.serialization
+-keepattributes RuntimeVisibleAnnotations,AnnotationDefault
+-dontnote kotlinx.serialization.**
+-keep class kotlinx.serialization.** { *; }
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# Koin
+-keep class org.koin.** { *; }
+-dontwarn org.koin.**
+
+# Preserve stack traces
+-keepattributes SourceFile,LineNumberTable
+-renamesourcefileattribute SourceFile

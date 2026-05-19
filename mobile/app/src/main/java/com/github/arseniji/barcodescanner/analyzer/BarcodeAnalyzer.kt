@@ -16,7 +16,6 @@ class BarcodeAnalyzer(
     private val timeoutBetweenScans: Long = 500L,
 ) : ImageAnalysis.Analyzer {
 
-    // Единый атомарный флаг вместо @Volatile var
     val isEnabled = AtomicBoolean(true)
 
     private val scanner = BarcodeScanning.getClient(
@@ -30,7 +29,6 @@ class BarcodeAnalyzer(
 
     @androidx.annotation.OptIn(ExperimentalGetImage::class)
     override fun analyze(imageProxy: ImageProxy) {
-        // Читаем оба флага атомарно до любой работы
         if (!isEnabled.get() || processing.get()) {
             imageProxy.close()
             return
@@ -48,7 +46,6 @@ class BarcodeAnalyzer(
             return
         }
 
-        // CAS: только один поток проходит дальше
         if (!processing.compareAndSet(false, true)) {
             imageProxy.close()
             return
@@ -73,8 +70,6 @@ class BarcodeAnalyzer(
                 Log.e("BarcodeAnalyzer", "Scanning failed", e)
             }
             .addOnCompleteListener {
-                // Тайм-аут обновляем всегда — и при успехе, и при ошибке,
-                // чтобы не допустить лавины повторных попыток при сбоях ML Kit
                 lastScanTime.set(System.currentTimeMillis())
                 processing.set(false)
                 imageProxy.close()

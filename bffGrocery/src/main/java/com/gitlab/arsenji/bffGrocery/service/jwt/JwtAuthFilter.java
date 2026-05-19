@@ -42,7 +42,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String token = authHeader.substring(7);
 
         if (!jwtService.isValid(token)) {
-            filterChain.doFilter(request, response);
+            // токен предоставлен, но невалиден/истёк — отдаём 401 чтобы клиент мог отрефрешить
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token expired or invalid");
             return;
         }
 
