@@ -6,6 +6,7 @@ import com.github.arseniji.barcodescanner.model.notifications.NotificationsUiSta
 import com.github.arseniji.barcodescanner.network.api.result.ApiResult
 import com.github.arseniji.barcodescanner.repository.AuthRepository
 import com.github.arseniji.barcodescanner.repository.NotificationsRepository
+import com.github.arseniji.barcodescanner.util.AudioHelper
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,6 +17,7 @@ import kotlinx.coroutines.launch
 class NotificationsViewModel(
     private val notificationsRepository: NotificationsRepository,
     private val authRepository: AuthRepository,
+    private val audioHelper: AudioHelper,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(NotificationsUiState())
@@ -33,12 +35,18 @@ class NotificationsViewModel(
                     val data = result.data
                     val lastSeen = authRepository.lastSeenNotificationId.first()
                     val maxId = data.notifications.maxOfOrNull { it.id } ?: 0
+                    val wasUnread = _state.value.hasUnread
+                    val nowUnread = maxId > lastSeen
+                    // Звук — только когда появляются новые уведомления, которых раньше не было
+                    if (nowUnread && !wasUnread) {
+                        audioHelper.playNotification()
+                    }
                     _state.update {
                         it.copy(
                             isLoading = false,
                             hasActiveCampaign = data.hasActiveCampaign,
                             notifications = data.notifications,
-                            hasUnread = maxId > lastSeen,
+                            hasUnread = nowUnread,
                         )
                     }
                 }

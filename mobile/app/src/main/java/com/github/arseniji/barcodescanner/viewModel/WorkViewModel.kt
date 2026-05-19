@@ -8,6 +8,7 @@ import com.github.arseniji.barcodescanner.model.work.WorkUiEffect
 import com.github.arseniji.barcodescanner.model.work.WorkUiEvent
 import com.github.arseniji.barcodescanner.model.work.WorkUiState
 import com.github.arseniji.barcodescanner.network.api.result.ApiResult
+import com.github.arseniji.barcodescanner.repository.DraftSessionRepository
 import com.github.arseniji.barcodescanner.repository.ProductRepository
 import com.github.arseniji.barcodescanner.repository.SessionRepository
 import kotlinx.coroutines.channels.Channel
@@ -15,6 +16,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -22,10 +24,36 @@ import kotlinx.coroutines.launch
 class WorkViewModel(
     private val sessionRepository: SessionRepository,
     private val productRepository: ProductRepository,
+    private val draftRepository: DraftSessionRepository,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(WorkUiState())
     val state: StateFlow<WorkUiState> = _state.asStateFlow()
+
+    init {
+        restoreDraft()
+        viewModelScope.launch {
+            _state.drop(1).collect { state ->
+                if (state.scannedItems.isNotEmpty()) {
+                    draftRepository.saveDraft(state.scannedItems, state.mode)
+                }
+            }
+        }
+    }
+
+    private fun restoreDraft() {
+        viewModelScope.launch {
+            val (items, mode) = draftRepository.loadDraft()
+            if (items.isNotEmpty()) {
+                _state.update {
+                    it.copy(
+                        scannedItems = items,
+                        mode = mode ?: ScanMode.INVENTORY
+                    )
+                }
+            }
+        }
+    }
 
     private val _effect = Channel<WorkUiEffect>(Channel.BUFFERED)
     val effect: Flow<WorkUiEffect> = _effect.receiveAsFlow()
@@ -150,6 +178,7 @@ class WorkViewModel(
     private fun clearItems() {
         _state.update { it.copy(scannedItems = emptyList(), pendingBarcode = null) }
         productRepository.clearCache()
+        viewModelScope.launch { draftRepository.clearDraft() }
     }
 
     private fun submitToServer() {
@@ -158,6 +187,7 @@ class WorkViewModel(
             _state.update { it.copy(isSubmitting = true) }
             when (val result = sessionRepository.submitSession(state.mode, state.scannedItems)) {
                 is ApiResult.Success -> {
+                    draftRepository.clearDraft()
                     clearItems()
                     _effect.send(WorkUiEffect.SubmitSuccess)
                 }

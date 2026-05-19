@@ -4,6 +4,7 @@ import com.github.arseniji.barcodescanner.network.provideApi
 import com.github.arseniji.barcodescanner.network.provideOkHttpClient
 import com.github.arseniji.barcodescanner.network.provideRetrofit
 import com.github.arseniji.barcodescanner.repository.AuthRepository
+import com.github.arseniji.barcodescanner.repository.DraftSessionRepository
 import com.github.arseniji.barcodescanner.repository.NotificationsRepository
 import com.github.arseniji.barcodescanner.repository.ProductRepository
 import com.github.arseniji.barcodescanner.repository.SessionRepository
@@ -24,6 +25,7 @@ import org.koin.dsl.module
 val appModule = module {
     single { SettingsRepository(androidContext()) }
     single { AuthRepository(androidContext(), get()) }
+    single { DraftSessionRepository(androidContext()) }
 
 
     single { provideOkHttpClient(androidContext()) }
