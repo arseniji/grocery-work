@@ -14,6 +14,15 @@ export const AboutContainer = styled.section`
   align-items: center;
   justify-content: space-between;
   gap: 100px;
+
+  @media (max-width: 1024px) {
+    gap: 40px;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 24px;
+  }
 `;
 
 export const ContentWrapper = styled.div`
@@ -26,4 +35,13 @@ export const ContentWrapper = styled.div`
 export const Image = styled.img`
   width: 500px;
   height: 400px;
+
+  @media (max-width: 1024px) {
+    width: 320px;
+    height: 260px;
+  }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;

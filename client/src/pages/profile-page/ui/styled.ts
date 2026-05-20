@@ -34,6 +34,11 @@ export const Form = styled.form`
   border-radius: 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   max-width: 500px;
+  width: 100%;
+
+  @media (max-width: 560px) {
+    padding: 20px;
+  }
 `;
 
 export const InputGroup = styled.div`
@@ -58,6 +63,14 @@ export const OrdersList = styled.div`
   grid-template-columns: repeat(4, 1fr);
   justify-content: space-between;
   gap: 20px;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 export const PaginationContainer = styled.div`

@@ -8,12 +8,23 @@ export const CartProductContainer = styled.div`
   border-radius: 10px;
   box-shadow: 0px 0px 15px 0px rgba(34, 60, 80, 0.2);
   gap: 40px;
+
+  @media (max-width: 768px) {
+    padding: 15px;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
 `;
 
 export const Image = styled.img`
   width: 200px;
   height: 100px;
   object-fit: contain;
+
+  @media (max-width: 768px) {
+    width: 100px;
+    height: 70px;
+  }
 `;
 
 export const InfoWrapper = styled.div`

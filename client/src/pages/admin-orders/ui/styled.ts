@@ -10,6 +10,13 @@ export const Main = styled.main`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  overflow: auto;
+
+  @media (max-width: 768px) {
+    padding: 15px;
+    border-radius: 10px;
+    gap: 12px;
+  }
 `;
 
 export const LoaderWrapper = styled.div`
@@ -25,12 +32,17 @@ export const ControlsWrapper = styled.div`
   width: 100%;
   justify-content: space-between;
   gap: 16px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 export const RowWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;
+  flex-wrap: wrap;
 `;
 
 export const ColWrapper = styled.div`

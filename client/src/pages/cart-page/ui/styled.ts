@@ -58,7 +58,13 @@ export const CreateWrapper = styled.div`
 
 export const Textarea = styled.textarea`
   ${BaseBodyM}
-  width: 600px;
+  width: 100%;
+  max-width: 600px;
   height: 200px;
   padding: 10px 30px;
+
+  @media (max-width: 768px) {
+    padding: 10px 15px;
+    height: 140px;
+  }
 `;

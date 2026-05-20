@@ -15,6 +15,11 @@ export const ProductContainer = styled.div`
   display: flex;
   gap: 50px;
   align-items: start;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 24px;
+  }
 `;
 
 export const Image = styled.img`
@@ -23,6 +28,16 @@ export const Image = styled.img`
   object-fit: contain;
   border-radius: 10px;
   box-shadow: 0px 0px 15px 0px rgba(34, 60, 80, 0.2);
+
+  @media (max-width: 1024px) {
+    width: 340px;
+    height: 340px;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 260px;
+  }
 `;
 
 export const Details = styled.div`
@@ -64,6 +79,18 @@ export const ProductsList = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 export const PriceRating = styled.div`
