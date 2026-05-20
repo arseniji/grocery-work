@@ -5,6 +5,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
             'http://195.19.64.155:5173',  # ДОБАВЬТЕ
             'http://localhost:4000',
             'http://195.19.64.155:4000'
+            
     
     resource '*',
       headers: :any,
