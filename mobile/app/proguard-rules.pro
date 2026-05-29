@@ -24,6 +24,17 @@
 -keep class org.koin.** { *; }
 -dontwarn org.koin.**
 
+# ML Kit barcode scanning 
+-keep class com.google.mlkit.** { *; }
+-keep class com.google.android.gms.internal.mlkit_** { *; }
+-keep class com.google.mlkit.vision.barcode.** { *; }
+-keep class com.google.mlkit.vision.common.** { *; }
+-dontwarn com.google.mlkit.**
+
+# CameraX
+-keep class androidx.camera.** { *; }
+-dontwarn androidx.camera.**
+
 # Preserve stack traces
 -keepattributes SourceFile,LineNumberTable
 -renamesourcefileattribute SourceFile
